@@ -122,3 +122,52 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
+" Set emmet to tap abbreviations
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+
+" Remap ctrlp
+let g:ctrlp_map = '<A-p>'
+
+" Remap multiline cursor
+let g:multi_cursor_next_key='<C-a>'
+" let g:multi_cursor_prev_key='<A-e>'
+let g:multi_cursor_skip_key='<C-x>'
+
+" Remap closing tags
+iabbrev <// </<C-X><C-O>
+
+" Remap next and prev buffer
+map <A-Left> <Esc>:bp<CR>
+map <A-Right> <Esc>:bn<CR>
+
+" Remap save
+map <A-s> <Esc>:w!<CR>
+
+" Remap close
+map <A-w> <Esc>:bd<CR>
+
+" Remap newline above
+nmap <CR> O<Esc>
+" Remap newline above
+nmap <CR><CR> o<Esc>
+nmap <C-p> :reg<CR>
+
+" Remap history keys
+" noremap : q:i
+" nnoremap / q/i
+" nnoremap ? q?i
+
+"inoremap {<CR> {<CR>}<C-o>O
+inoremap <A-N> <C-N>
+inoremap {<CR> {<CR>}<Esc>ko
+"inoremap [ []<Esc>a
+"inoremap ( ()<Esc>a
+"inoremap ( (<CR>)<Esc>ko
+
+imap jj <Esc>
+imap jjj <Esc>:w<CR>
+
+set tabstop=2 shiftwidth=2 expandtab
+
+" Change cursor shape between insert and normal mode in iTerm2.app
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1

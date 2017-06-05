@@ -31,3 +31,5 @@ fi
 
 export LSCOLORS=GxDxcxdxbxegedabagacFx
 export CLICOLOR=true
+export PATH=$RUBY_LOCAL_DIR:$PATH
+export PATH=$NODE_LOCAL_DIR:$PATH

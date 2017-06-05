@@ -10,5 +10,6 @@
 !.config
 .config/nvim/repos
 !.bashrc
+!.git-config
 !.git-prompt.sh
 !.git-completion.sh
