@@ -8,7 +8,7 @@ user="\n\[\e[30;m\](\[\e[34;m\]\u\[\e[30;m\]:\[\e[0m\]\[\e[0;33m\]$HOSTNAME\[\e[
 jobs="(\[\e[34;m\]\j jobs\[\e[30;m\])-"
 timedate="(\[\e[34;m\]\@ \d\[\e[30;m\])"
 location="\[\e[30;m\]\n\[\016\]\[\017\](\[\[\e[32;m\]\w\[\e[30;m\])-"
-files="(\[\e[32;m\]\$(/bin/ls -1 | /usr/bin/wc -l | /bin/sed 's: ::g') files, \$(/bin/ls -lah | /usr/bin/grep -m 1 total | /bin/sed 's/total //')b\[\e[30;m\])"
+files="(\[\e[32;m\]\$(/bin/ls -1 | /usr/bin/wc -l | `which sed` 's: ::g') files, \$(/bin/ls -lah | `which grep` -m 1 total | `which sed` 's/total //')b\[\e[30;m\])"
 
 
 source $HOME/.git-completion.sh
