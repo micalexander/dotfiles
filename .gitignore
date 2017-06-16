@@ -9,6 +9,7 @@
 !.gitignore
 !.config
 .config/nvim/repos
+!.bash_profile
 !.bashrc
 !.git-config
 !.git-prompt.sh
