@@ -5,12 +5,14 @@
 **/.DS_Store
 **.log
 
+
 # Whitelist files/folders in same directory as the .gitignore file
 !.gitignore
-!.config
-.config/nvim/repos
 !.bash_profile
 !.bashrc
+!.npmrc
+!.gemrc
 !.git-config
 !.git-prompt.sh
 !.git-completion.sh
+!.config/nvim/init.vim

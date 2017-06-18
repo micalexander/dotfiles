@@ -58,7 +58,7 @@ add_path $RUBY_LOCAL_DIR
 add_path $NODE_LOCAL_DIR
 add_path $PHP_LOCAL_DIR
 add_path $home/.gem/ruby/2.4.0/bin
-add_path $home/node_modules/.bin
+add_path $home/.npm/bin
 
 # Change the ruby gem install path
 export GEM_HOME=$home/.gem/ruby/2.4.0
