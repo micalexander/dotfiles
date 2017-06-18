@@ -8,12 +8,15 @@ set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 call dein#add('Shougo/dein.vim')
 call dein#add('haya14busa/dein-command.vim')
+call dein#add('tpope/vim-commentary')
 call dein#add('rakr/vim-one')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
+call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
 call dein#add('terryma/vim-multiple-cursors')
 call dein#add('ryanoasis/vim-devicons')
+call dein#add('ctrlpvim/ctrlp.vim')
 
 if dein#check_install()
   call dein#install()
@@ -171,7 +174,8 @@ function! <SID>SynStack()
 endfunc
 
 " Set emmet to tap abbreviations
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+" let g:user_emmet_expandabbr_key='<Tab'
+" imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " Remap ctrlp
 let g:ctrlp_map = '<A-p>'
