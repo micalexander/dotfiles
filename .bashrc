@@ -13,3 +13,5 @@ add_path()
     fi
     export PATH=$PATH:${1}
 }
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

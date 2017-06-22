@@ -64,4 +64,5 @@ if [[ "$unamestr" == "Linux" ]]; then
 
   # Change the ruby gem install path
   export GEM_HOME=$HOME/.gem/ruby/2.4.0
+  export FZF_DEFAULT_COMMAND='find find * -type f""'
 fi

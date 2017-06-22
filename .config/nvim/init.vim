@@ -8,7 +8,9 @@ set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 call dein#add('Shougo/dein.vim')
 call dein#add('haya14busa/dein-command.vim')
+call dein#add('ervandew/supertab')
 call dein#add('tpope/vim-commentary')
+call dein#add('joonty/vdebug')
 call dein#add('rakr/vim-one')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
@@ -16,7 +18,12 @@ call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
 call dein#add('terryma/vim-multiple-cursors')
 call dein#add('ryanoasis/vim-devicons')
-call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
+call dein#add('scrooloose/nerdtree')
+" call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('tpope/vim-vinegar')
+call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
 if dein#check_install()
   call dein#install()
@@ -178,7 +185,11 @@ endfunc
 " imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 " Remap ctrlp
-let g:ctrlp_map = '<A-p>'
+" let g:ctrlp_map = '<C-p>'
+"
+" :FZF
+nnoremap <C-p> <Esc>:Files<CR>
+set rtp+=~/.fzf
 
 " Remap multiline cursor
 let g:multi_cursor_next_key='<C-a>'
@@ -202,7 +213,6 @@ map <A-w> <Esc>:bd<CR>
 nmap <CR> O<Esc>
 " Remap newline above
 nmap <CR><CR> o<Esc>
-nmap <C-p> :reg<CR>
 
 " Remap history keys
 " noremap : q:i
@@ -230,3 +240,33 @@ set wrap
 set linebreak
 " note trailing space at end of next line
 set showbreak=>\ \ \
+
+let g:SuperTabDefaultCompletionType = ""
+
+" Show command typed
+set showcmd
+" you can add these colors to your .vimrc to help customizing
+let s:brown = "905532"
+let s:aqua =  "3AFFDB"
+let s:blue = "689FB6"
+let s:darkBlue = "44788E"
+let s:purple = "834F79"
+let s:lightPurple = "834F79"
+let s:red = "AE403F"
+let s:beige = "F5C06F"
+let s:yellow = "F09F17"
+let s:orange = "D4843E"
+let s:darkOrange = "F16529"
+let s:pink = "CB6F6F"
+let s:salmon = "EE6E73"
+let s:green = "8FAA54"
+let s:lightGreen = "31B53E"
+let s:white = "FFFFFF"
+let s:rspec_red = 'FE405F'
+let s:git_orange = 'F54D27'
+
+let g:NERDTreeDisableExactMatchHighlight = 1
+let g:NERDTreeDisablePatternMatchHighlight = 1
+
+let g:NERDTreeExtensionHighlightColor = {}
+let g:NERDTreeExtensionHighlightColor['php'] = s:blue
