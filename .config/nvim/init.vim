@@ -20,7 +20,12 @@ call dein#add('terryma/vim-multiple-cursors')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
 call dein#add('scrooloose/nerdtree')
-" call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('airblade/vim-gitgutter')
+call dein#add('xolox/vim-misc')
+call dein#add('xolox/vim-easytags')
+call dein#add('majutsushi/tagbar')
+call dein#add('mattn/emmet-vim')
+call dein#add('SirVer/ultisnips')
 call dein#add('tpope/vim-vinegar')
 call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
@@ -32,6 +37,12 @@ endif
 
 call dein#end()
 filetype plugin indent on
+
+" Map leader
+let mapleader = '\'
+map <Space> <Leader>
+
+let g:python_host_prog = '/usr/local/python/bin/python'
 
 colorscheme one
 set background=dark
@@ -164,6 +175,7 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-n> :call NumberToggle()<cr>
+nnoremap ; :
 
 au FocusLost * set number
 au FocusGained * set relativenumber
@@ -181,20 +193,21 @@ function! <SID>SynStack()
 endfunc
 
 " Set emmet to tap abbreviations
-" let g:user_emmet_expandabbr_key='<Tab'
-" imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+" let g:user_emmet_leader_key='<leader>'
+" imap <expr> <tab> emmet#expandAbbrIntelligent("<leader><tab>")
+let g:user_emmet_expandabbr_key = '<tab><tab>'
 
 " Remap ctrlp
 " let g:ctrlp_map = '<C-p>'
 "
 " :FZF
-nnoremap <C-p> <Esc>:Files<CR>
+nnoremap <leader>p <Esc>:Files<CR>
 set rtp+=~/.fzf
 
 " Remap multiline cursor
-let g:multi_cursor_next_key='<C-a>'
+" let g:multi_cursor_next_key='<C-a>'
 " let g:multi_cursor_prev_key='<A-e>'
-let g:multi_cursor_skip_key='<C-x>'
+" let g:multi_cursor_skip_key='<C-x>'
 
 " Remap closing tags
 iabbrev <// </<C-X><C-O>
@@ -228,8 +241,6 @@ inoremap {<CR> {<CR>}<Esc>ko
 
 imap jj <Esc>
 imap jjj <Esc>:w<CR>
-
-set tabstop=2 shiftwidth=2 expandtab
 
 " Change cursor shape between insert and normal mode in iTerm2.app
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1

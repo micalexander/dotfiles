@@ -59,10 +59,22 @@ if [[ "$unamestr" == "Linux" ]]; then
   add_path $RUBY_LOCAL_DIR
   add_path $NODE_LOCAL_DIR
   add_path $PHP_LOCAL_DIR
+  add_path $PYTHON_LOCAL_DIR
   add_path $HOME/.gem/ruby/2.4.0/bin
   add_path $HOME/.npm/bin
+  add_path $HOME/.local/bin
+  add_path $HOME/.composer/vendor/bin
+
+  export LD_LIBRARY_PATH=$RUBY_LOCAL_DIR/../lib
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NODE_LOCAL_DIR/../lib
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PHP_LOCAL_DIR/../lib
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON_LOCAL_DIR/../lib
 
   # Change the ruby gem install path
   export GEM_HOME=$HOME/.gem/ruby/2.4.0
+
   export FZF_DEFAULT_COMMAND='find find * -type f""'
+
+  export PYTHONPATH=$HOME/.pip
+
 fi

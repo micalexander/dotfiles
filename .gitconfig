@@ -1,0 +1,17 @@
+[hub]
+protocol = ssh
+
+[alias]
+co = checkout
+st = status
+br = branch
+logg = log --graph --pretty=format:'%C(yellow)%h%Creset%C(bold red)%d%Creset %s %C(green)(%ad) %C(white)<%an>%Creset' --abbrev-commit --date=local
+
+[user]
+name = micalexander
+email = micalexander@hotmail.com
+username = micalexander
+[push]
+  followTags = true
+[core]
+	pager = cat
