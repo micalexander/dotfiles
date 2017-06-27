@@ -25,7 +25,7 @@ call dein#add('xolox/vim-misc')
 call dein#add('xolox/vim-easytags')
 call dein#add('majutsushi/tagbar')
 call dein#add('mattn/emmet-vim')
-call dein#add('SirVer/ultisnips')
+" call dein#add('SirVer/ultisnips')
 call dein#add('tpope/vim-vinegar')
 call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
@@ -174,7 +174,7 @@ function! NumberToggle()
   endif
 endfunc
 
-nnoremap <C-n> :call NumberToggle()<cr>
+" nnoremap <C-n> :call NumberToggle()<cr>
 nnoremap ; :
 
 au FocusLost * set number
@@ -184,7 +184,7 @@ autocmd InsertEnter * set number
 autocmd InsertLeave * set relativenumber
 
 " Show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
+" nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
@@ -195,7 +195,7 @@ endfunc
 " Set emmet to tap abbreviations
 " let g:user_emmet_leader_key='<leader>'
 " imap <expr> <tab> emmet#expandAbbrIntelligent("<leader><tab>")
-let g:user_emmet_expandabbr_key = '<tab><tab>'
+" let g:user_emmet_expandabbr_key = '<tab><tab>'
 
 " Remap ctrlp
 " let g:ctrlp_map = '<C-p>'
@@ -233,7 +233,7 @@ nmap <CR><CR> o<Esc>
 " nnoremap ? q?i
 
 "inoremap {<CR> {<CR>}<C-o>O
-inoremap <A-N> <C-N>
+" inoremap <A-N> <C-N>
 inoremap {<CR> {<CR>}<Esc>ko
 "inoremap [ []<Esc>a
 "inoremap ( ()<Esc>a
@@ -249,6 +249,7 @@ autocmd BufWritePre * %s/\s\+$//e
 
 set wrap
 set linebreak
+
 " note trailing space at end of next line
 set showbreak=>\ \ \
 
@@ -256,6 +257,7 @@ let g:SuperTabDefaultCompletionType = ""
 
 " Show command typed
 set showcmd
+
 " you can add these colors to your .vimrc to help customizing
 let s:brown = "905532"
 let s:aqua =  "3AFFDB"
