@@ -8,7 +8,7 @@ set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 call dein#add('Shougo/dein.vim')
 call dein#add('haya14busa/dein-command.vim')
-call dein#add('ervandew/supertab')
+
 call dein#add('tpope/vim-commentary')
 call dein#add('joonty/vdebug')
 call dein#add('rakr/vim-one')
