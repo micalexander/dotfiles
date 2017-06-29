@@ -7,8 +7,10 @@ endif
 set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 call dein#add('Shougo/dein.vim')
+call dein#add('Shougo/deoplete.nvim')
 call dein#add('haya14busa/dein-command.vim')
 
+call dein#add('ervandew/supertab')
 call dein#add('tpope/vim-commentary')
 call dein#add('joonty/vdebug')
 call dein#add('rakr/vim-one')
@@ -22,7 +24,8 @@ call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
 call dein#add('scrooloose/nerdtree')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('xolox/vim-misc')
-call dein#add('xolox/vim-easytags')
+
+call dein#add('ludovicchabant/vim-gutentags')
 call dein#add('majutsushi/tagbar')
 call dein#add('mattn/emmet-vim')
 " call dein#add('SirVer/ultisnips')
@@ -38,15 +41,16 @@ endif
 call dein#end()
 filetype plugin indent on
 
+let g:deoplete#enable_at_startup = 1
+
 " Map leader
 let mapleader = '\'
 map <Space> <Leader>
 
 let g:python_host_prog = '/usr/local/python/bin/python'
 
-colorscheme one
-set background=dark
-let g:one_allow_italics = 1
+let g:user_emmet_leader_key=','
+let g:vim_tags_ignore_files = []
 
 "Credit joshdick
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -66,21 +70,35 @@ if (empty($TMUX))
 endif
 
 " Persistant Undo
+" Let's save undo info!
+if !isdirectory($HOME."/.config/nvim/undofiles")
+    call mkdir($HOME."/.config/nvim/undofiles", "", 0770)
+endif
+if !isdirectory($HOME."/.config/nvim/undofiles")
+    call mkdir($HOME."/.config/nvim/undofiles", "", 0700)
+endif
+set undodir=~/.config/nvim/undofiles
 set undofile
-set undodir="$HOME/.VIM_UNDO_FILES"
 
 " Automatically change into the directory of opened file
 set autochdir
 
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
-set path+=**
+" set path+=**
 
 " Display all matching files when we tab complete
-set wildmenu
+" set wildmenu
 
 " Treated as a word boundary (though not a WORD boundary)
-set iskeyword-=_
+" set iskeyword-=_
+
+" Set colorscheme
+colorscheme one
+set background=dark
+
+" Set theme for airline
+let g:airline_theme='one'
 
 " Automatically displays all buffers when there's only one tab open.
 let g:airline#extensions#tabline#enabled = 1
@@ -90,7 +108,9 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+
 let g:airline_symbols.space = "\ua0"
+
 " unicode symbols
 let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
@@ -116,9 +136,6 @@ let g:airline_symbols.linenr = ''
 
 " Make sure the staus bar for airline stays showing
 set laststatus=2
-
-" Set theme for airline
-let g:airline_theme='one'
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -164,63 +181,28 @@ set autoindent
 set nowrap
 set textwidth=0
 
+" Set line numbers
 set relativenumber
+set number
 
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
-endfunc
+" Search for visually selected word
+vnoremap // y/<C-R>"<CR>
 
-" nnoremap <C-n> :call NumberToggle()<cr>
-nnoremap ; :
-
-au FocusLost * set number
-au FocusGained * set relativenumber
-
-autocmd InsertEnter * set number
-autocmd InsertLeave * set relativenumber
-
-" Show syntax highlighting groups for word under cursor
-" nmap <C-S-P> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
-" Set emmet to tap abbreviations
-" let g:user_emmet_leader_key='<leader>'
-" imap <expr> <tab> emmet#expandAbbrIntelligent("<leader><tab>")
-" let g:user_emmet_expandabbr_key = '<tab><tab>'
-
-" Remap ctrlp
-" let g:ctrlp_map = '<C-p>'
-"
 " :FZF
 nnoremap <leader>p <Esc>:Files<CR>
+nnoremap <leader>t <Esc>:Tags<CR>
 set rtp+=~/.fzf
-
-" Remap multiline cursor
-" let g:multi_cursor_next_key='<C-a>'
-" let g:multi_cursor_prev_key='<A-e>'
-" let g:multi_cursor_skip_key='<C-x>'
+let g:fzf_tags_command = 'ctags -R'
 
 " Remap closing tags
 iabbrev <// </<C-X><C-O>
 
+" Switch buffers without saving
+set hidden
+
 " Remap next and prev buffer
-map <S-Left> <Esc>:bp<CR>
-map <S-Right> <Esc>:bn<CR>
-
-" Remap save
-map <A-s> <Esc>:w!<CR>
-
-" Remap close
-map <A-w> <Esc>:bd<CR>
+map { <Esc>:bp<CR>
+map } <Esc>:bn<CR>
 
 " Remap newline above
 nmap <CR> O<Esc>
@@ -233,11 +215,11 @@ nmap <CR><CR> o<Esc>
 " nnoremap ? q?i
 
 "inoremap {<CR> {<CR>}<C-o>O
-" inoremap <A-N> <C-N>
 inoremap {<CR> {<CR>}<Esc>ko
-"inoremap [ []<Esc>a
-"inoremap ( ()<Esc>a
-"inoremap ( (<CR>)<Esc>ko
+"inoremap [ []<c-o>a
+"inoremap ( ()<c-o>a
+"inoremap ( (<CR>)<c-o>ko
+
 
 imap jj <Esc>
 imap jjj <Esc>:w<CR>
