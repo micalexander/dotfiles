@@ -8,7 +8,20 @@ set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/deoplete.nvim')
+" call dein#add('Shougo/neoinclude.vim')
 call dein#add('haya14busa/dein-command.vim')
+" call dein#add('roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'})
+" call dein#add('roxma/nvim-completion-manager')
+" call dein#add('shawncplus/phpcomplete.vim')
+call dein#add('m2mdas/phpcomplete-extended')
+call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+call dein#add('Shougo/context_filetype.vim')
+call dein#add('jiangmiao/auto-pairs')
+call dein#add('valloric/MatchTagAlways')
+call dein#add('vim-scripts/closetag.vim')
+call dein#add('godlygeek/tabular')
+call dein#add('tpope/vim-repeat')
+call dein#add('nathanaelkane/vim-indent-guides')
 
 call dein#add('ervandew/supertab')
 call dein#add('tpope/vim-commentary')
@@ -42,12 +55,59 @@ call dein#end()
 filetype plugin indent on
 
 let g:deoplete#enable_at_startup = 1
+autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
+let g:deoplete#disable_auto_complete = 0
+let g:deoplete#enable_smart_case = 1
+set completeopt+=noinsert
+let g:deoplete#enable_ignore_case = 'ignorecase'
+let g:deoplete#omni_patterns = {}
+" let g:deoplete#omni_patterns.html = '<[^>]*'
+" let g:deoplete#omni_patterns.xml  = '<[^>]*'
+" let g:deoplete#omni_patterns.md   = '<[^>]*'
+" let g:deoplete#omni_patterns.css   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+" let g:deoplete#omni_patterns.scss   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+" let g:deoplete#omni_patterns.sass   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+" let g:deoplete#omni_patterns.javascript = '[^. \t]\.\%(\h\w*\)\?'
+" let g:deoplete#omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+" let g:deoplete#omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+" let g:deoplete#omni_patterns.go = '[^.[:digit:] *\t]\.\w*'
+" let g:deoplete#omni_patterns.ruby = ['[^. *\t]\.\w*', '\h\w*::']
+let g:deoplete#omni_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+" let g:deoplete#omni_patterns.python = ['[^. *\t]\.\h\w*\','\h\w*::']
+" let g:deoplete#omni_patterns.python3 = ['[^. *\t]\.\h\w*\','\h\w*::']
+autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
+let g:deoplete#sources = {}
+" let g:deoplete#sources._ = ['buffer']
+" let g:deoplete#sources.coffee = ['buffer', 'tag', 'member', 'file', 'omni']
+let g:deoplete#sources.php = []
+imap     <Nul> <C-Space>
+inoremap <expr><C-Space> deoplete#mappings#manual_complete()
+inoremap <expr><BS>      deoplete#mappings#smart_close_popup()."\<C-h>"
+inoremap <silent><expr> <Tab>
+  \ pumvisible() ? "\<C-n>" :
+  \ deoplete#mappings#manual_complete()
+let g:phpcomplete_parse_docblock_comments = 1
+
+" Close the documentation window when completion is done
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Map leader
 let mapleader = '\'
 map <Space> <Leader>
 
-let g:python_host_prog = '/usr/local/python/bin/python'
+let s:uname = system("echo -n \"$(uname)\"")
+
+if !v:shell_error && s:uname == "Linux"
+  let g:python2_host_prog = '/usr/local/python2/bin/python2'
+  let g:python3_host_prog = '/usr/local/python3/bin/python3'
+endif
+
+if !v:shell_error && s:uname == "Darwin"
+  " Do Mac stuff here
+  let g:python2_host_prog = '/usr/bin/local/python'
+  let g:python3_host_prog = '/usr/local/bin/python3'
+endif
+
 
 let g:user_emmet_leader_key=','
 let g:vim_tags_ignore_files = []
@@ -215,7 +275,7 @@ nmap <CR><CR> o<Esc>
 " nnoremap ? q?i
 
 "inoremap {<CR> {<CR>}<C-o>O
-inoremap {<CR> {<CR>}<Esc>ko
+" inoremap {<CR> {<CR>}<Esc>ko
 "inoremap [ []<c-o>a
 "inoremap ( ()<c-o>a
 "inoremap ( (<CR>)<c-o>ko
@@ -234,8 +294,6 @@ set linebreak
 
 " note trailing space at end of next line
 set showbreak=>\ \ \
-
-let g:SuperTabDefaultCompletionType = ""
 
 " Show command typed
 set showcmd
@@ -265,3 +323,24 @@ let g:NERDTreeDisablePatternMatchHighlight = 1
 
 let g:NERDTreeExtensionHighlightColor = {}
 let g:NERDTreeExtensionHighlightColor['php'] = s:blue
+
+let g:vdebug_options = {}
+let g:vdebug_options["port"] = 9009
+let g:vdebug_options["break_on_open"] = 0
+
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 1
+let g:indent_guides_guide_size = 2
+
+" Disable Arrow keys in Escape mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" Disable Arrow keys in Insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
