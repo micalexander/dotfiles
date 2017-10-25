@@ -15,6 +15,7 @@ call dein#add('haya14busa/dein-command.vim')
 " call dein#add('shawncplus/phpcomplete.vim')
 call dein#add('m2mdas/phpcomplete-extended')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('jiangmiao/auto-pairs')
 call dein#add('valloric/MatchTagAlways')
@@ -22,6 +23,7 @@ call dein#add('vim-scripts/closetag.vim')
 call dein#add('godlygeek/tabular')
 call dein#add('tpope/vim-repeat')
 call dein#add('nathanaelkane/vim-indent-guides')
+call dein#add('slim-template/vim-slim')
 
 call dein#add('ervandew/supertab')
 call dein#add('tpope/vim-commentary')
@@ -29,14 +31,16 @@ call dein#add('joonty/vdebug')
 call dein#add('rakr/vim-one')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
+call dein#add('tpope/vim-eunuch')
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
-call dein#add('terryma/vim-multiple-cursors')
+" call dein#add('terryma/vim-multiple-cursors')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
-call dein#add('scrooloose/nerdtree')
+" call dein#add('scrooloose/nerdtree')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('xolox/vim-misc')
+call dein#add('nelstrom/vim-visual-star-search')
 
 call dein#add('ludovicchabant/vim-gutentags')
 call dein#add('majutsushi/tagbar')
@@ -54,46 +58,122 @@ endif
 call dein#end()
 filetype plugin indent on
 
-let g:deoplete#enable_at_startup = 1
-autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
+let g:deoplete#enable_at_startup = 0
+set completeopt-=preview
 let g:deoplete#disable_auto_complete = 0
 let g:deoplete#enable_smart_case = 1
 set completeopt+=noinsert
 let g:deoplete#enable_ignore_case = 'ignorecase'
 let g:deoplete#omni_patterns = {}
-" let g:deoplete#omni_patterns.html = '<[^>]*'
-" let g:deoplete#omni_patterns.xml  = '<[^>]*'
-" let g:deoplete#omni_patterns.md   = '<[^>]*'
-" let g:deoplete#omni_patterns.css   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
-" let g:deoplete#omni_patterns.scss   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
-" let g:deoplete#omni_patterns.sass   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
-" let g:deoplete#omni_patterns.javascript = '[^. \t]\.\%(\h\w*\)\?'
-" let g:deoplete#omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
-" let g:deoplete#omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-" let g:deoplete#omni_patterns.go = '[^.[:digit:] *\t]\.\w*'
-" let g:deoplete#omni_patterns.ruby = ['[^. *\t]\.\w*', '\h\w*::']
-let g:deoplete#omni_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-" let g:deoplete#omni_patterns.python = ['[^. *\t]\.\h\w*\','\h\w*::']
-" let g:deoplete#omni_patterns.python3 = ['[^. *\t]\.\h\w*\','\h\w*::']
+let g:deoplete#omni_patterns.html = '<[^>]*'
+let g:deoplete#omni_patterns.xml  = '<[^>]*'
+let g:deoplete#omni_patterns.md   = '<[^>]*'
+let g:deoplete#omni_patterns.css   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+let g:deoplete#omni_patterns.scss   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+let g:deoplete#omni_patterns.sass   = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+let g:deoplete#omni_patterns.javascript = '[^. \t]\.\%(\h\w*\)\?'
+let g:deoplete#omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)\w*'
+let g:deoplete#omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+let g:deoplete#omni_patterns.go = '[^.[:digit:] *\t]\.\w*'
+let g:deoplete#omni_patterns.ruby = ['[^. *\t]\.\w*', '\h\w*::']
+" let g:deoplete#omni_patterns.php = '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+let g:deoplete#omni_patterns.python = ['[^. *\t]\.\h\w*\','\h\w*::']
+let g:deoplete#omni_patterns.python3 = ['[^. *\t]\.\h\w*\','\h\w*::']
 autocmd CmdwinEnter * let b:deoplete_sources = ['buffer']
 let g:deoplete#sources = {}
-" let g:deoplete#sources._ = ['buffer']
-" let g:deoplete#sources.coffee = ['buffer', 'tag', 'member', 'file', 'omni']
-let g:deoplete#sources.php = []
-imap     <Nul> <C-Space>
-inoremap <expr><C-Space> deoplete#mappings#manual_complete()
-inoremap <expr><BS>      deoplete#mappings#smart_close_popup()."\<C-h>"
+let g:deoplete#sources._ = ['buffer']
+" let g:deoplete#sources.php = ['buffer', 'tag', 'member', 'file', 'omni']
+let g:deoplete#sources.coffee = ['buffer', 'tag', 'member', 'file', 'omni']
+" imap     <Nul> <C-Space>
+" inoremap <expr><C-Space> deoplete#mappings#manual_complete()
 inoremap <silent><expr> <Tab>
   \ pumvisible() ? "\<C-n>" :
   \ deoplete#mappings#manual_complete()
-let g:phpcomplete_parse_docblock_comments = 1
 
-" Close the documentation window when completion is done
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+
+" use tab to forward cycle
+" inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" " use tab to backward cycle
+" inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" Leader mappings.
 
 " Map leader
-let mapleader = '\'
-map <Space> <Leader>
+let mapleader = "\<Space>"
+
+" Map localleader
+let maplocalleader = "\\"
+
+" Start terminal
+nnoremap <leader>t <Esc>:term /bin/bash -l <CR>
+
+" exit terminal
+tnoremap <leader><ESC> <C-\><C-n>
+
+" :FZF show all files
+nnoremap <leader>f <Esc>:Files<CR>
+
+" :FZF show all git files
+nnoremap <leader>g <Esc>:GFiles<CR>
+
+" :FZF show git status
+nnoremap <localleader>s <Esc>:GFiles?<CR>
+
+" :FZF show all files in current buffers
+nnoremap <leader>b <Esc>:Buffers<CR>
+
+" <Leader><Leader> -- Open last buffer.
+nnoremap <Leader><Leader> <C-^>
+
+" <Leader>p -- Show the path of the current file (mnemonic: path; useful when
+" you have a lot of splits and the status line gets truncated).
+nnoremap <Leader>p :echo expand('%')<CR>
+
+" <Leader>pp -- Like <Leader>p, but additionally yanks the filename and sends it
+" off to Clipper.
+nnoremap <Leader>pp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
+
+" Quit vim
+nnoremap <Leader>q :quit<CR>
+
+" <Leader>r -- Cycle through relativenumber + number, number (only), and no
+" numbering (mnemonic: relative).
+" nnoremap <silent> <Leader>r :call mappings#cycle_numbering()<CR>
+
+" Save the file
+nnoremap <Leader>w :write<CR>
+
+" Like :wq, but write only when changes have been made.
+nnoremap <Leader>x :xit<CR>
+
+" <Leader>zz -- Zap trailing whitespace in the current buffer.
+"
+"        As this one is somewhat destructive and relatively close to the
+"        oft-used <leader>a mapping, make this one a double key-stroke.
+nnoremap <silent> <Leader>zz :call mappings#zap()<CR>
+
+" <LocalLeader>c -- Fix (most) syntax highlighting problems in current buffer
+" (mnemonic: coloring).
+nnoremap <silent> <LocalLeader>c :syntax sync fromstart<CR>
+
+" <LocalLeader>e -- Edit file, starting in same directory as current file.
+nnoremap <LocalLeader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
+
+" Rename a buffer and the file on disk simultaneously.
+nnoremap <localleader>m :Move
+
+" Like :Move, but relative to the current file's containing directory.
+nnoremap <localleader>r :Rename
+
+" Delete a buffer and the file on disk simultaneously.
+nnoremap <localleader>d :Delete
+
+" Create a directory, defaulting to the parent of the current file.
+nnoremap <localleader>k :Mkdir
+
+nnoremap <localleader>p :call deoplete#toggle() <CR>
 
 let s:uname = system("echo -n \"$(uname)\"")
 
@@ -158,7 +238,7 @@ colorscheme one
 set background=dark
 
 " Set theme for airline
-let g:airline_theme='one'
+let g:airline_theme='onedark'
 
 " Automatically displays all buffers when there's only one tab open.
 let g:airline#extensions#tabline#enabled = 1
@@ -248,9 +328,6 @@ set number
 " Search for visually selected word
 vnoremap // y/<C-R>"<CR>
 
-" :FZF
-nnoremap <leader>p <Esc>:Files<CR>
-nnoremap <leader>t <Esc>:Tags<CR>
 set rtp+=~/.fzf
 let g:fzf_tags_command = 'ctags -R'
 
@@ -261,13 +338,13 @@ iabbrev <// </<C-X><C-O>
 set hidden
 
 " Remap next and prev buffer
-map { <Esc>:bp<CR>
-map } <Esc>:bn<CR>
+" map { <Esc>:bp<CR>
+" map } <Esc>:bn<CR>
 
 " Remap newline above
-nmap <CR> O<Esc>
+nmap <CR><CR> O<Esc>
 " Remap newline above
-nmap <CR><CR> o<Esc>
+nmap <CR> o<Esc>
 
 " Remap history keys
 " noremap : q:i
@@ -344,3 +421,18 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
+set clipboard=unnamed
+noremap <silent> <leader>, :bp\|bd #<CR>
+"
+" Find out what color is what by typing something like the following
+
+" For status line forground:
+" :echo synIDattr(synIDtrans(hlID('StatusLine')), 'fg');
+
+" For normal background:
+" :echo synIDattr(synIDtrans(hlID('Normal')), 'bg')
+
+" Change color of indent guides
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#282c34 ctermbg=NONE
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2c323c ctermbg=NONE

@@ -74,5 +74,11 @@ if [[ "$unamestr" == "Linux" ]]; then
 
   # Change the ruby gem install path
   export GEM_HOME=$HOME/.gem/ruby/2.4.0
+
+  if [ -e /var/run/docker.sock ]; then
+
+    sudo chown `whoami`:`whoami` /var/run/docker.sock;
+
+  fi
 fi
 
