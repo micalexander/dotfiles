@@ -13,6 +13,7 @@
 !.gemrc
 !.gitconfig
 !.git-prompt.sh
+!.globalgitignore
 !.git-completion.sh
 !.config/nvim/init.vim
 !.config/pip/pip.conf

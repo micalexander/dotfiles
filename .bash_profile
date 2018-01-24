@@ -8,13 +8,21 @@ unamestr=$(uname)
 if [[ "$unamestr" == "Darwin" ]]; then
 
   home=$HOME/Dropbox/Development
+
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
+
 elif [[ "$unamestr" == "Linux" ]]; then
 
   home=$HOME
+  . /usr/share/bash-completion/bash_completion
 fi
 
 # Source the bashrc
 . $home/.bashrc
+
+add_path $home/.local/bin
 
 # Set variable to be used in my bash prompt
 user="\n(\e[34;m\]\u\[\e[0;m\]:\[\e[0m\]\[\e[0;33m\]$HOSTNAME\[\e[0;33m\]\[\e[0;m\]\[\e[0;m\])-"
@@ -50,6 +58,8 @@ fi
 # Set colors
 export LSCOLORS=GxDxcxdxbxegedabagacFx
 export CLICOLOR=true
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 if [[ "$unamestr" == "Linux" ]]; then
 
@@ -58,6 +68,7 @@ if [[ "$unamestr" == "Linux" ]]; then
   # in the .bashrc file
   add_path $RUBY_LOCAL_DIR
   add_path $NODE_LOCAL_DIR
+  add_path $GO_LOCAL_DIR
   add_path $PHP_LOCAL_DIR
   add_path $PYTHON2_LOCAL_DIR
   add_path $PYTHON3_LOCAL_DIR
@@ -66,11 +77,16 @@ if [[ "$unamestr" == "Linux" ]]; then
   add_path $HOME/.local/bin
   add_path $HOME/.composer/vendor/bin
 
+  export FZF_DEFAULT_COMMAND='ag -g ""'
+  export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
+
   export LD_LIBRARY_PATH=$RUBY_LOCAL_DIR/../lib
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NODE_LOCAL_DIR/../lib
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PHP_LOCAL_DIR/../lib
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON2_LOCAL_DIR/../lib
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON3_LOCAL_DIR/../lib
+
+  export EDITOR='nvim'
 
   # Change the ruby gem install path
   export GEM_HOME=$HOME/.gem/ruby/2.4.0

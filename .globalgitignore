@@ -1,0 +1,6 @@
+# To set the location of this file, others ideas can be found here
+# https://hackernoon.com/exclude-files-from-git-without-committing-changes-to-gitignore-986fa712e78d?gi=156694da27b6
+# git config --global --get core.excludesFile ~/.globalgitignore
+tags
+tags.lock
+tags.temp

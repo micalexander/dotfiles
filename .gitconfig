@@ -15,3 +15,4 @@ username = micalexander
   followTags = true
 [core]
 	pager = cat
+	excludesFile = /home/micalexander/.globalgitignore
