@@ -86,7 +86,7 @@ if [[ "$unamestr" == "Linux" ]]; then
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON2_LOCAL_DIR/../lib
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON3_LOCAL_DIR/../lib
 
-  export EDITOR='nvim'
+  export EDITOR='nvr'
 
   # Change the ruby gem install path
   export GEM_HOME=$HOME/.gem/ruby/2.4.0
