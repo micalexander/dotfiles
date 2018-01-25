@@ -1,5 +1,6 @@
 # Blacklist files/folders in same directory as the .gitignore file
 /*
+.npm/
 
 # Ignore all files named .DS_Store or ending with .log
 **/.DS_Store
@@ -11,6 +12,7 @@
 !.bashrc
 !.npmrc
 !.gemrc
+!.inputrc
 !.gitconfig
 !.git-prompt.sh
 !.globalgitignore

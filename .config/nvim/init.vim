@@ -43,7 +43,7 @@ call dein#add('tpope/vim-eunuch')
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
 call dein#add('ryanoasis/vim-devicons')
-call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
+" call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('xolox/vim-misc')
 call dein#add('nelstrom/vim-visual-star-search')
@@ -65,7 +65,7 @@ call dein#end()
 filetype plugin indent on
 
 
-" let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 set completeopt-=preview
 let g:deoplete#disable_auto_complete = 0
 let g:deoplete#enable_smart_case = 1
@@ -112,6 +112,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:phpcd_auto_restart = 1
 " Leader mappings.
 " Map leader
+noremap <silent> <leader>d :bp\|bd #<CR>
 let mapleader = "\<Space>"
 " Map localleader
 let maplocalleader = "\\"
@@ -247,6 +248,7 @@ set wildmenu
 colorscheme one
 set background=dark
 let g:one_allow_italics = 1
+let g:airline_theme='one'
 
 " Set theme for airline
 " Automatically displays all buffers when there's only one tab open.
@@ -277,30 +279,40 @@ let g:airline_symbols.linenr = ''
 
 " Make sure the staus bar for airline stays showing
 set laststatus=2
+
 " Set to auto read when a file is changed from the outside
 set autoread
+
 " Always show current position
 set ruler
+
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
+
 " When searching try to be smart about cases
 set smartcase
 " Highlight search results
 set hlsearch
+
 " Makes search act like search in modern browsers
 set incsearch
+
 " For regular expressions turn magic on
 set magic
+
 " Show matching brackets when text indicator is over them
 set showmatch
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
+
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
+
 " Use spaces
 set expandtab
 set smarttab
@@ -311,15 +323,20 @@ set autoindent
 set smartindent
 set nowrap
 set textwidth=0
+
 " Set line numbers
 set relativenumber
 set number
+
 " Search for visually selected word
 vnoremap // y/<C-R>"<CR>
+
 " set rtp+=~/.fzf
 let g:fzf_tags_command = 'ctags -R'
+
 " Remap closing tags
 iabbrev <// </<C-X><C-O>
+
 " Switch buffers without saving
 set hidden
 " Remap next and prev buffer
@@ -346,12 +363,16 @@ imap jjj <Esc>:w<CR>
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
 autocmd BufWritePre * %s/\s\+$//e
+
 " set wrap
 set linebreak
+
 " note trailing space at end of next line
 set showbreak=>\ \ \
+
 " Show command typed
 set showcmd
+
 " you can add these colors to your .vimrc to help customizing
 let s:brown = "905532"
 let s:aqua =  "3AFFDB"
@@ -371,17 +392,14 @@ let s:lightGreen = "31B53E"
 let s:white = "FFFFFF"
 let s:rspec_red = 'FE405F'
 let s:git_orange = 'F54D27'
-" let g:NERDTreeDisableExactMatchHighlight = 1
-let g:NERDTreeDisablePatternMatchHighlight = 1
-let g:NERDTreeExtensionHighlightColor = {}
-let g:NERDTreeExtensionHighlightColor['php'] = s:blue
+
+" let g:NERDTreeDisablePatternMatchHighlight = 1
+" let g:NERDTreeExtensionHighlightColor = {}
+" let g:NERDTreeExtensionHighlightColor['php'] = s:blue
 
 let g:vdebug_options = {}
 let g:vdebug_options["port"] = 9009
 let g:vdebug_options["break_on_open"] = 0
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 1
-let g:indent_guides_guide_size = 2
 " Disable Arrow keys in Escape mode
 map <up> <nop>
 map <down> <nop>
@@ -393,8 +411,10 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 set clipboard=unnamed
-noremap <silent> <leader>d :bp\|bd #<CR>
-"
+
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 1
+let g:indent_guides_guide_size = 2
 " Find out what color is what by typing something like the following
 " " For status line forground:
 " :echo synIDattr(synIDtrans(hlID('StatusLine')), 'fg');
@@ -404,9 +424,9 @@ noremap <silent> <leader>d :bp\|bd #<CR>
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#282c34 ctermbg=NONE
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2c323c ctermbg=NONE
-set shell=/bin/bash\ -l
-"
+
 " Terminal
+set shell=/bin/bash\ -l
 tnoremap <esc> <C-\><C-n>
 let g:neoterm_fixedsize = 1
 let g:neoterm_autoinsert = 1

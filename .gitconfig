@@ -16,3 +16,4 @@ username = micalexander
 [core]
 	pager = cat
 	excludesFile = /home/micalexander/.globalgitignore
+	editor = nvr --remote-wait-silent
