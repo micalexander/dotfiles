@@ -64,12 +64,11 @@ endif
 call dein#end()
 filetype plugin indent on
 
-
 let g:deoplete#enable_at_startup = 1
-set completeopt-=preview
+" set completeopt=longest,menuone,noinsert
+set completeopt=noinsert
 let g:deoplete#disable_auto_complete = 0
 let g:deoplete#enable_smart_case = 1
-set completeopt+=noinsert
 let g:deoplete#enable_ignore_case = 'ignorecase'
 let g:deoplete#omni_patterns = {}
 let g:deoplete#omni_patterns.html = '<[^>]*'
@@ -92,13 +91,11 @@ autocmd FileType php setlocal omnifunc=phpcd#CompletePHP
 let g:deoplete#sources = { '_': ['buffer', 'file'] }
 " let g:deoplete#sources = {}
 " let g:deoplete#sources._ = ['buffer']
-" let g:deoplete#sources.php = ['buffer', 'tag', 'member', 'file', 'omni']
 let g:deoplete#sources.coffee = ['buffer', 'tag', 'member', 'file', 'omni']
 " imap     <Nul> <C-Space>
 let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
 let g:deoplete#ignore_sources.php = ['omni']
 " let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
-" let g:deoplete#ignore_sources.php = ['phpcd', 'omni']
 inoremap <expr><C-Space> deoplete#mappings#manual_complete()
 inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
@@ -110,12 +107,14 @@ inoremap <silent><expr> <Tab>
 " inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:phpcd_auto_restart = 1
+"
 " Leader mappings.
-" Map leader
-noremap <silent> <leader>d :bp\|bd #<CR>
 let mapleader = "\<Space>"
 " Map localleader
 let maplocalleader = "\\"
+
+noremap <silent> <leader>d :bp\|bd #<CR>
+"
 " Start terminal
 nnoremap <leader>t :Ttoggle<CR>
 inoremap <C-T> <esc>:Ttoggle<CR>
@@ -201,23 +200,6 @@ endif
 let g:user_emmet_expandabbr_key='<leader>,'
 
 let g:vim_tags_ignore_files = []
-"
-" "Credit joshdick
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
-  if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
-endif
 
 " Persistant Undo
 " Let's save undo info!
@@ -245,9 +227,34 @@ set wildmenu
 " set iskeyword-=_
 
 " Set colorscheme
-colorscheme one
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (has("nvim"))
+"For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+
 set background=dark
+colorscheme one
+call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
+call one#highlight('Cursor', '99c37e', '282c33', 'none')
+" call one#highlight('Normal', 'b2ad92', '99c37e', 'none')
+
 let g:one_allow_italics = 1
+
+
+set t_ZH=[3m
+set t_ZR=[23m
+
 let g:airline_theme='one'
 
 " Set theme for airline
@@ -360,7 +367,7 @@ imap jj <Esc>
 imap jjj <Esc>:w<CR>
 "
 " Change cursor shape between insert and normal mode in iTerm2.app
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
 
 autocmd BufWritePre * %s/\s\+$//e
 
@@ -400,11 +407,13 @@ let s:git_orange = 'F54D27'
 let g:vdebug_options = {}
 let g:vdebug_options["port"] = 9009
 let g:vdebug_options["break_on_open"] = 0
+
 " Disable Arrow keys in Escape mode
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
 map <right> <nop>
+
 " Disable Arrow keys in Insert mode
 imap <up> <nop>
 imap <down> <nop>
@@ -412,18 +421,18 @@ imap <left> <nop>
 imap <right> <nop>
 set clipboard=unnamed
 
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 1
-let g:indent_guides_guide_size = 2
 " Find out what color is what by typing something like the following
 " " For status line forground:
 " :echo synIDattr(synIDtrans(hlID('StatusLine')), 'fg');
 " " For normal background:
 " :echo synIDattr(synIDtrans(hlID('Normal')), 'bg')
 " Change color of indent guides
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#282c33 ctermbg=NONE
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2e3239 ctermbg=NONE
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 1
+let g:indent_guides_guide_size = 2
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#282c34 ctermbg=NONE
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2c323c ctermbg=NONE
 
 " Terminal
 set shell=/bin/bash\ -l
@@ -486,5 +495,5 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
 
 let g:startify_session_persistence=1
 " For Vim inside tmux
-set t_8b=^[[48;2;%lu;%lu;%lum
-set t_8f=^[[38;2;%lu;%lu;%lum
+set t_8b=[48;2;%lu;%lu;%lum
+set t_8f=[38;2;%lu;%lu;%lum

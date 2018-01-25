@@ -39,25 +39,31 @@ if [ -f $home/.git-completion.sh ]; then
 fi
 
 # Source git-prompt if found and set bash prompt
-if [ -f $home/.git-prompt.sh ]; then
+# if [ -f $home/.git-prompt.sh ]; then
 
-  . $home/.git-prompt.sh
+  # . $home/.git-prompt.sh
 
-  gitprompt='\n\n\[\e[0;m\]$(__git_ps1 "\[\e[0;m\](\[\e[0;33m\]"%s"\[\e[0;33m\]\[\e[0;m\])-\[\e[0;m\]")(\[\e[0;33m\]\$\[\e[0;33m\]\[\e[0;m\])-(\[\e[0m\] '
+  # gitprompt='\n\n\[\e[0;m\]$(__git_ps1 "\[\e[0;m\](\[\e[0;33m\]"%s"\[\e[0;33m\]\[\e[0;m\])-\[\e[0;m\]")(\[\e[0;33m\]\$\[\e[0;33m\]\[\e[0;m\])-(\[\e[0m\] '
 
-  export PS1="$user$docker$jobs$timedate$location$files$gitprompt"
+  # export PS1="$user$docker$jobs$timedate$location$files$gitprompt"
 
-else
+# else
 
-  prompt="\[\e[0;m\]\n\n\[\e[0;m\](\[\e[0;33m\]$\[\e[0;33m\]\[\e[0;m\])-(\[\e[0m\] "
+  # prompt="\[\e[0;m\]\n\n\[\e[0;m\](\[\e[0;33m\]$\[\e[0;33m\]\[\e[0;m\])-(\[\e[0m\] "
 
-  export PS1="$user$docker$jobs$timedate$location$files$prompt"
+  # export PS1="$user$docker$jobs$timedate$location$files$prompt"
+  # export PS1="\[\e[38;5;234m\]\[\e[48;5;250m\] \u \[\e[48;5;252m\]\[\e[38;5;250m\]\[\e[0m\]\[\e[38;5;234m\]\[\e[48;5;252m\] \h \[\e[48;5;15m\]\[\e[38;5;252m\]\[\e[0m\]\[\e[38;5;30m\]\[\e[48;5;15m\] ~ \[\e[48;5;223m\]\[\e[38;5;15m\]\[\e[0m\]\[\e[38;5;232m\]\[\e[48;5;223m\] master \[\e[48;5;15m\]\[\e[38;5;223m\]\[\e[0m\]\[\e[38;5;22m\]\[\e[48;5;15m\] 1✔ \[\e[48;5;15m\]\[\e[38;5;15m\]\[\e[0m\]\[\e[38;5;130m\]\[\e[48;5;15m\] 2✎ \[\e[48;5;7m\]\[\e[38;5;15m\]\[\e[0m\]\[\e[38;5;18m\]\[\e[48;5;7m\] \$ \[\e[0m\]\[\e[38;5;7m\]\[\e[0m\]"
 
-fi
+# fi
 
 # Set colors
 export LSCOLORS=GxDxcxdxbxegedabagacFx
 export CLICOLOR=true
+# export TERM=xterm-256color
+if [[ $TMUX = "" ]]; then
+  export TERM=xterm-256color
+fi
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 

@@ -9,6 +9,16 @@ then
   alias   vim='nvr -l'
 fi
 
+function _update_ps1() {
+    PS1="$(~/go/bin/powerline-go -error $?)"
+}
+
+if [ "$TERM" != "linux" ]; then
+  PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+# function tmux() {
+#    env TERM=screen-256color tmux $@
+# }
 # Prevent paths from being added to more than once
 # Usage: add_path /some/bin
 add_path() {
