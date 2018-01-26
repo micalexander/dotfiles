@@ -1,17 +1,16 @@
-#
 # Skip words
 "\e[1;3C": forward-word
 ";9C": forward-word
 "\e[1;3D": backward-word
 ";9D": backward-word
 
-# Type the first few characters of a command, then up and down arrows for history
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-
 # Type out a comand, then type Option-return to wrap it in a subcommand and place cursor in front of it
 "\e\C-l": '\C-a "$(\C-e)"\C-a'
 "\e\C-m": '\C-a "$(\C-e)"\C-a'
+
+# Type the first few characters of a command, then up and down arrows for history
+"\e[A": history-search-backward
+"\e[B": history-search-forward
 
 # "\M": end-of-line
 # "\M-\e[D": beginning-of-line
@@ -20,4 +19,11 @@ set vi-cmd-mode-string "\1\e[2 q\2"
 set vi-ins-mode-string "\1\e[6 q\2"
 
 set editing-mode vi
+set keymap vi-command
+"gg": beginning-of-history
+"G": end-of-history
 set keymap vi-insert
+"jj": vi-movement-mode
+set colored-stats On
+
+
