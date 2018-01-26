@@ -349,7 +349,7 @@ set hidden
 " Remap next and prev buffer
 " map { <Esc>:bp<CR>
 " map } <Esc>:bn<CR>
-" " Remap newline above
+" Remap newline above
 nmap <CR><CR> O<Esc>
 " Remap newline above
 nmap <CR> o<Esc>
