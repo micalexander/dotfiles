@@ -22,8 +22,22 @@ set editing-mode vi
 set keymap vi-command
 "gg": beginning-of-history
 "G": end-of-history
+"\eOD":""
+"\e[D":""
+"\eOC":""
+"\e[C":""
+"\eOA":""
+"\e[A":""
+"\eOB":""
+"\e[B":""
 set keymap vi-insert
 "jj": vi-movement-mode
+"\eOD":""
+"\e[D":""
+"\eOC":""
+"\e[C":""
+"\eOA":""
+"\e[A":""
+"\eOB":""
+"\e[B":""
 set colored-stats On
-
-

@@ -55,3 +55,4 @@ function vscp() {
     nvim ${targs[@]}
 }
 
+echo -en "\e]P1D75F5F" #darkred
