@@ -16,10 +16,7 @@ function _update_ps1() {
 if [ "$TERM" != "linux" ]; then
   PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 fi
-# function tmux() {
-#    env TERM=screen-256color tmux $@
-# }
-# Prevent paths from being added to more than once
+
 # Usage: add_path /some/bin
 add_path() {
   if [[ "$PATH" =~ (^|:)"${1}"(:|$) ]]
@@ -55,4 +52,3 @@ function vscp() {
     nvim ${targs[@]}
 }
 
-echo -en "\e]P1D75F5F" #darkred
