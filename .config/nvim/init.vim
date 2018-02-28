@@ -15,6 +15,8 @@ call dein#add('haya14busa/dein-command.vim')
 call dein#add('edkolev/promptline.vim')
 " call dein#add('edkolev/tmuxline.vim')
 call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
+call dein#add('tobyS/pdv')
+call dein#add('tobyS/vmustache')
 call dein#add('myusuf3/numbers.vim')
 call dein#add('mhinz/vim-startify')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
@@ -497,3 +499,9 @@ let g:startify_session_persistence=1
 " For Vim inside tmux
 set t_8b=[48;2;%lu;%lu;%lum
 set t_8f=[38;2;%lu;%lu;%lum
+
+let g:pdv_template_dir = $HOME ."/.config/nvim/repos/github.com/tobyS/pdv/templates"
+nnoremap <C-p> :call pdv#DocumentCurrentLine()<CR>
+nnoremap - :<C-u>execute '-'.v:count1.'copy.'<CR>
+nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
+cmap w!! w !sudo tee > /dev/null %<CR>

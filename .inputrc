@@ -32,6 +32,7 @@ set keymap vi-command
 "\e[B":""
 set keymap vi-insert
 "jj": vi-movement-mode
+RET: "\e\njj"
 "\eOD":""
 "\e[D":""
 "\eOC":""
@@ -41,3 +42,4 @@ set keymap vi-insert
 "\eOB":""
 "\e[B":""
 set colored-stats On
+
