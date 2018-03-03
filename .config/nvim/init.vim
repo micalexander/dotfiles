@@ -194,7 +194,7 @@ if !v:shell_error && s:uname == "Linux"
 endif
 if !v:shell_error && s:uname == "Darwin"
   " Do Mac stuff here
-  let g:python2_host_prog = '/usr/bin/local/python'
+  let g:python2_host_prog = '/usr/bin/python'
   let g:python3_host_prog = '/usr/local/bin/python3'
 endif
 
