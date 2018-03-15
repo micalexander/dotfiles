@@ -17,8 +17,14 @@ call dein#add('edkolev/promptline.vim')
 call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
 call dein#add('tobyS/pdv')
 call dein#add('tobyS/vmustache')
+call dein#add('henrik/vim-indexed-search')
 call dein#add('myusuf3/numbers.vim')
 call dein#add('mhinz/vim-startify')
+call dein#add('vim-scripts/argtextobj.vim')
+call dein#add('bkad/CamelCaseMotion')
+call dein#add('michaeljsmith/vim-indent-object')
+call dein#add('nelstrom/vim-textobj-rubyblock')
+call dein#add('kana/vim-textobj-user')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler.vim')
@@ -45,7 +51,6 @@ call dein#add('tpope/vim-eunuch')
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
 call dein#add('ryanoasis/vim-devicons')
-" call dein#add('tiagofumo/vim-nerdtree-syntax-highlight')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('xolox/vim-misc')
 call dein#add('nelstrom/vim-visual-star-search')
@@ -431,6 +436,10 @@ set clipboard=unnamed
 " Change color of indent guides
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#282c33 ctermbg=NONE
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2e3239 ctermbg=NONE
+autocmd VimEnter,Colorscheme * :call one#highlight('Search', '282c33', 'd4dce2', 'none')
+autocmd VimEnter,Colorscheme * :call one#highlight('IncSearch', 'ffffff', '62afec', 'none')
+autocmd VimEnter,Colorscheme * :call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
+autocmd VimEnter,Colorscheme * :call one#highlight('Cursor', '99c37e', '282c33', 'none')
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 1
 let g:indent_guides_guide_size = 2
@@ -505,3 +514,21 @@ nnoremap <C-p> :call pdv#DocumentCurrentLine()<CR>
 nnoremap - :<C-u>execute '-'.v:count1.'copy.'<CR>
 nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
 cmap w!! w !sudo tee > /dev/null %<CR>
+
+
+" bkad/CamelCaseMotion
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+map <silent> ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+sunmap ge
+
+omap <silent> iw <Plug>CamelCaseMotion_iw
+xmap <silent> iw <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
+omap <silent> ie <Plug>CamelCaseMotion_ie
+xmap <silent> ie <Plug>CamelCaseMotion_ie

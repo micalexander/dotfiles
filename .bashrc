@@ -9,8 +9,13 @@ then
   alias   vim='nvr -l'
 fi
 
+
 function _update_ps1() {
+  if [ "$HOSTNAME" == "alpine-bash" ] || [ $(uname) == "Darwin" ]; then
     PS1="$(~/go/bin/powerline-go -error $?)"
+  else
+    PS1="$(~/hostgo/bin/powerline-go -error $?)"
+  fi
 }
 
 if [ "$TERM" != "linux" ]; then
