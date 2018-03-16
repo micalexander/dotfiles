@@ -36,20 +36,22 @@ call dein#add('valloric/MatchTagAlways')
 call dein#add('chrisbra/colorizer')
 call dein#add('vim-scripts/closetag.vim')
 call dein#add('godlygeek/tabular')
-call dein#add('tpope/vim-repeat')
 call dein#add('nathanaelkane/vim-indent-guides')
 call dein#add('slim-template/vim-slim')
 call dein#add('bogado/file-line')
 call dein#add('christoomey/vim-tmux-navigator')
 call dein#add('ervandew/supertab')
-call dein#add('tpope/vim-commentary')
 call dein#add('joonty/vdebug')
 call dein#add('rakr/vim-one')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('tpope/vim-eunuch')
+call dein#add('tpope/vim-repeat')
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
+call dein#add('tpope/vim-rhubarb')
+call dein#add('tpope/vim-commentary')
+call dein#add('tpope/vim-unimpaired')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('xolox/vim-misc')
@@ -515,6 +517,27 @@ nnoremap - :<C-u>execute '-'.v:count1.'copy.'<CR>
 nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
 cmap w!! w !sudo tee > /dev/null %<CR>
 
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+function! s:escape(path)
+  return substitute(a:path, ' ', '\\ ', 'g')
+endfunction
+
+function! AgHandler(line)
+  let parts = split(a:line, ':')
+  let [fn, lno] = parts[0 : 1]
+  execute 'e '. s:escape(fn)
+  execute lno
+  normal! zz
+endfunction
+
+command! -nargs=+ Fag call fzf#run({
+  \ 'source': 'ag "<args>"',
+  \ 'sink': function('AgHandler'),
+  \ 'options': '+m',
+  \ 'tmux_height': '60%'
+\ })
 
 " bkad/CamelCaseMotion
 map <silent> w <Plug>CamelCaseMotion_w
