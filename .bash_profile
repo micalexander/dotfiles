@@ -38,6 +38,13 @@ if [ -f $home/.git-completion.sh ]; then
 
 fi
 
+# Source tmux-completion if found
+if [ -f $home/.tmux-completion.sh ]; then
+
+  . $home/.tmux-completion.sh
+
+fi
+
 # Source git-prompt if found and set bash prompt
 # if [ -f $home/.git-prompt.sh ]; then
 
