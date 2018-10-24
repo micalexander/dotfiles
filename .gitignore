@@ -18,5 +18,6 @@
 !.git-prompt.sh
 !.globalgitignore
 !.git-completion.sh
+!.tmux-completion.sh
 !.config/nvim/init.vim
 !.config/pip/pip.conf
