@@ -24,7 +24,7 @@ call dein#add('mhinz/vim-startify')
 " call dein#add('bkad/CamelCaseMotion')
 call dein#add('chaoren/vim-wordmotion')
 call dein#add('michaeljsmith/vim-indent-object')
-call dein#add('Shougo//unite.vim')
+call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('SirVer/ultisnips')
@@ -92,16 +92,9 @@ call dein#end()
 " Environment Dependencies ---------------------------------------------------------------{{{
 let s:uname = system("echo -n \"$(uname)\"")
 
-if !v:shell_error && s:uname == "Linux"
-  let g:python2_host_prog = '/usr/local/python2/bin/python2'
-  let g:python3_host_prog = '/usr/local/python3/bin/python3'
-endif
+let g:python_host_prog = system("echo -n \"$(which python)\"")
+let g:python3_host_prog = system("echo -n \"$(which python3)\"")
 
-if !v:shell_error && s:uname == "Darwin"
-  " Do Mac stuff here
-  let g:python2_host_prog = '/usr/bin/python'
-  let g:python3_host_prog = '/usr/local/bin/python3'
-endif
 "}}}
 
 " Leader Maps ---------------------------------------------------------------{{{
@@ -185,16 +178,6 @@ nnoremap <localleader>k :Mkdir
 "}}}
 
 " Editor Preferences ---------------------------------------------------------------{{{
-if !v:shell_error && s:uname == "Linux"
-  let g:python_host_prog = '/usr/local/python2/bin/python2'
-  let g:python3_host_prog = '/usr/local/python3/bin/python3'
-endif
-if !v:shell_error && s:uname == "Darwin"
-  " Do Mac stuff here
-  let g:python_host_prog = '/usr/local/bin/python2'
-  let g:python3_host_prog = '/usr/local/bin/python3'
-endif
-
 " let g:user_emmet_leader_key='<leader>,'
 let g:user_emmet_expandabbr_key='<leader>,'
 
