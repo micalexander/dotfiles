@@ -12,9 +12,15 @@ fi
 
 function _update_ps1() {
   if [ "$HOSTNAME" == "alpine-bash" ] || [ $(uname) == "Darwin" ]; then
-    PS1="$(~/go/bin/powerline-go -error $?)"
+    if [ -f "$HOME/go/bin/powerline-go" ]; then
+      PS1="$($HOME/go/bin/powerline-go -error $?)"
+    elif [ -f "$HOME/Dropbox/Development/go/bin/powerline-go" ]; then
+      PS1="$($HOME/Dropbox/Development/go/bin/powerline-go -error $?)"
+    fi
+  elif [ -f "$HOME/hostgo/bin/powerline-go" ]; then
+    PS1="$($HOME/hostgo/bin/powerline-go -error $?)"
   else
-    PS1="$(~/hostgo/bin/powerline-go -error $?)"
+    PS1="$PS1"
   fi
 }
 
@@ -29,6 +35,35 @@ add_path() {
       return 0
   fi
   export PATH=$PATH:${1}
+}
+
+append_line() {
+  set -e
+
+  local line file pat lno
+
+  file="$1"
+  pat="${2:-}"
+  line="$3"
+
+  echo "Update $file:"
+  echo "  - $line"
+
+  [ -f "$file" ] || touch "$file"
+  if [ $# -lt 3 ]; then
+    lno=$(\grep -nF "$line" "$file" | sed 's/:.*//' | tr '\n' ' ')
+  else
+    lno=$(\grep -nF "$pat" "$file" | sed 's/:.*//' | tr '\n' ' ')
+  fi
+  if [ -n "$lno" ]; then
+    echo "    - Already exists: line #$lno"
+  else
+    echo "$line" >> "$file"
+    echo "    + Added"
+  fi
+
+  echo
+  set +e
 }
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
