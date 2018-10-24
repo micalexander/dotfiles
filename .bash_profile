@@ -28,6 +28,10 @@ test -f $home/.tmux-completion.sh && . $home/.tmux-completion.sh || echo $home/.
 # add development bin directory
 add_path $home/.local/bin
 
+if [ ! -z $(which ruby) ]; then
+  add_path $home/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0/bin
+fi
+
 # find and source bash completion if possible
 if [ "$unamestr" == "Darwin" ] && [ ! -z $(which brew) ]; then
   . $(brew --prefix)/etc/bash_completion &> /dev/null || echo $(brew --prefix)/etc/bash_completion not found.
