@@ -41,7 +41,7 @@ if [ "$is_host" = true ]; then
   if [ ! -f "$HOME/.gitconfig" ]; then
 tee -a $HOME/.gitconfig << END > /dev/null
 [include]
-    path = $HOME/.gitconfig
+    path = $home/.gitconfig
 END
     echo created and updated $HOME/.gitconfig file.
   fi
