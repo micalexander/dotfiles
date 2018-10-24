@@ -7,63 +7,66 @@ endif
 
 set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
+
+" call dein#add('Shougo/neoinclude.vim')
+" call dein#add('edkolev/tmuxline.vim')
+call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/deoplete.nvim')
-call dein#add('evidens/vim-twig')
-" call dein#add('Shougo/neoinclude.vim')
-call dein#add('haya14busa/dein-command.vim')
-call dein#add('edkolev/promptline.vim')
-" call dein#add('edkolev/tmuxline.vim')
-call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
-call dein#add('tobyS/pdv')
-call dein#add('tobyS/vmustache')
-call dein#add('henrik/vim-indexed-search')
-call dein#add('myusuf3/numbers.vim')
-call dein#add('mhinz/vim-startify')
-call dein#add('vim-scripts/argtextobj.vim')
-call dein#add('bkad/CamelCaseMotion')
-call dein#add('michaeljsmith/vim-indent-object')
-call dein#add('nelstrom/vim-textobj-rubyblock')
-call dein#add('kana/vim-textobj-user')
-call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler.vim')
-call dein#add('kassio/neoterm')
-call dein#add('vimlab/split-term.vim')
-call dein#add('Shougo/context_filetype.vim')
-call dein#add('jiangmiao/auto-pairs')
-call dein#add('valloric/MatchTagAlways')
-call dein#add('chrisbra/colorizer')
-call dein#add('vim-scripts/closetag.vim')
-call dein#add('godlygeek/tabular')
-call dein#add('nathanaelkane/vim-indent-guides')
-call dein#add('slim-template/vim-slim')
-call dein#add('bogado/file-line')
-call dein#add('christoomey/vim-tmux-navigator')
-call dein#add('ervandew/supertab')
-call dein#add('joonty/vdebug')
-call dein#add('rakr/vim-one')
-call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('tpope/vim-eunuch')
-call dein#add('tpope/vim-repeat')
-call dein#add('tpope/vim-fugitive')
-call dein#add('tpope/vim-surround')
-call dein#add('tpope/vim-rhubarb')
-call dein#add('tpope/vim-commentary')
-call dein#add('tpope/vim-unimpaired')
-call dein#add('ryanoasis/vim-devicons')
-call dein#add('airblade/vim-gitgutter')
-call dein#add('xolox/vim-misc')
-call dein#add('nelstrom/vim-visual-star-search')
-call dein#add('ludovicchabant/vim-gutentags')
-call dein#add('majutsushi/tagbar')
-call dein#add('mattn/emmet-vim')
+call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('SirVer/ultisnips')
-call dein#add('tmux-plugins/vim-tmux')
-call dein#add('junegunn/vim-peekaboo')
+call dein#add('airblade/vim-gitgutter')
+call dein#add('bkad/CamelCaseMotion')
+call dein#add('bogado/file-line')
+call dein#add('chrisbra/colorizer')
+call dein#add('christoomey/vim-tmux-navigator')
+call dein#add('edkolev/promptline.vim')
+call dein#add('ervandew/supertab')
+call dein#add('evidens/vim-twig')
+call dein#add('godlygeek/tabular')
+call dein#add('haya14busa/dein-command.vim')
+call dein#add('henrik/vim-indexed-search')
+call dein#add('jiangmiao/auto-pairs')
+call dein#add('joonty/vdebug')
 call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+call dein#add('junegunn/vim-peekaboo')
+call dein#add('kana/vim-textobj-user')
+call dein#add('kassio/neoterm')
+call dein#add('ludovicchabant/vim-gutentags')
+call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
+call dein#add('majutsushi/tagbar')
+call dein#add('mattn/emmet-vim')
+call dein#add('mhinz/vim-startify')
+call dein#add('michaeljsmith/vim-indent-object')
+call dein#add('mtth/scratch.vim')
+call dein#add('myusuf3/numbers.vim')
+call dein#add('nathanaelkane/vim-indent-guides')
+call dein#add('nelstrom/vim-textobj-rubyblock')
+call dein#add('nelstrom/vim-visual-star-search')
+call dein#add('plasticboy/vim-markdown')
+call dein#add('rakr/vim-one')
+call dein#add('ryanoasis/vim-devicons')
+call dein#add('slim-template/vim-slim')
+call dein#add('tmux-plugins/vim-tmux')
+call dein#add('tobyS/pdv')
+call dein#add('tobyS/vmustache')
+call dein#add('tpope/vim-commentary')
+call dein#add('tpope/vim-eunuch')
+call dein#add('tpope/vim-fugitive')
+call dein#add('tpope/vim-repeat')
+call dein#add('tpope/vim-rhubarb')
+call dein#add('tpope/vim-surround')
+call dein#add('tpope/vim-unimpaired')
+call dein#add('valloric/MatchTagAlways')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+call dein#add('vim-scripts/argtextobj.vim')
+call dein#add('vim-scripts/closetag.vim')
+call dein#add('vimlab/split-term.vim')
+call dein#add('xolox/vim-misc')
 
 if dein#check_install()
   call dein#install()
@@ -196,12 +199,12 @@ nnoremap <localleader>k :Mkdir
 let s:uname = system("echo -n \"$(uname)\"")
 
 if !v:shell_error && s:uname == "Linux"
-  let g:python2_host_prog = '/usr/local/python2/bin/python2'
+  let g:python_host_prog = '/usr/local/python2/bin/python2'
   let g:python3_host_prog = '/usr/local/python3/bin/python3'
 endif
 if !v:shell_error && s:uname == "Darwin"
   " Do Mac stuff here
-  let g:python2_host_prog = '/usr/bin/python'
+  let g:python_host_prog = '/usr/local/bin/python2'
   let g:python3_host_prog = '/usr/local/bin/python3'
 endif
 
@@ -242,7 +245,7 @@ set wildmenu
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
 if (has("nvim"))
 "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
@@ -254,12 +257,8 @@ endif
 
 set background=dark
 colorscheme one
-call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
-call one#highlight('Cursor', '99c37e', '282c33', 'none')
-" call one#highlight('Normal', 'b2ad92', '99c37e', 'none')
 
 let g:one_allow_italics = 1
-
 
 set t_ZH=[3m
 set t_ZR=[23m
@@ -555,3 +554,6 @@ omap <silent> ib <Plug>CamelCaseMotion_ib
 xmap <silent> ib <Plug>CamelCaseMotion_ib
 omap <silent> ie <Plug>CamelCaseMotion_ie
 xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+let g:scratch_filetype = 'markdown'
+
