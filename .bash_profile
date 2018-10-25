@@ -95,9 +95,32 @@ END
     echo created and updated $HOME/.mackup.cfg file.
   fi
 fi
-# if [ "is_alpine_bash" = true ]; then
 
-# fi
+# check for gitconfig name, username, and email and set if not set
+if [ ! -z "$(git --version 2> /dev/null)" ]; then
+  if [ -z "$(git config user.name)" ]; then
+    echo "Your name could not be found in your gitconfig. What would you like your name to be set to?"
+    read name
+    git config --global user.name "$name"
+    test ! -z "$(git config user.name)" && echo "Thanks, your git usename has been set to "$name
+  fi
+
+  if [ -z "$(git config user.username)" ]; then
+    echo "Your username could not be found in your gitconfig. What would you like your username to be set to?"
+    read username
+    git config --global user.username $username
+    test ! -z "$(git config user.name)" && echo "Thanks, your git usename has been set to "$username
+  fi
+
+  if [ -z "$(git config user.email)" ]; then
+    echo "An email could not be found in your gitconfig. What would you like your git email to be?"
+    read email
+    git config --global user.email $email
+    test ! -z "$(git config user.email)" && echo "Thanks, your git usename has been set to "$email
+  fi
+fi
+
+# Set FZF envs
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
 
