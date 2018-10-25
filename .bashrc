@@ -21,11 +21,14 @@ alias   www='cd /sites'
 alias    ..='cd ..'
 alias   ...='cd ../..'
 
-if [[ "$VIM" = "/usr/share/nvim" ]]
-then
+if [[ "$VIM" = "/usr/share/nvim" ]]; then
   alias   vim='nvr -l'
 fi
 
+function is_interactive_shell() {
+  # https://www.gnu.org/software/bash/manual/html_node/Is-this-Shell-Interactive_003f.html
+  [[ "$-" =~ "i" ]]
+}
 
 function _update_ps1() {
   if [ "$HOSTNAME" == "alpine-bash" ] || [ $(uname) == "Darwin" ]; then
