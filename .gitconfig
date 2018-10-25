@@ -1,19 +1,15 @@
 [hub]
-protocol = ssh
+	protocol = ssh
 
 [alias]
-co = checkout
-st = status
-br = branch
-logg = log --graph --pretty=format:'%C(yellow)%h%Creset%C(bold red)%d%Creset %s %C(green)(%ad) %C(white)<%an>%Creset' --abbrev-commit --date=local
+	co = checkout
+	st = status
+	br = branch
+	logg = log --graph --pretty=format:'%C(yellow)%h%Creset%C(bold red)%d%Creset %s %C(green)(%ad) %C(white)<%an>%Creset' --abbrev-commit --date=local
 
-[user]
-name = micalexander
-email = micalexander@hotmail.com
-username = micalexander
 [push]
-  followTags = true
+  	followTags = true
 [core]
 	pager = cat
-	excludesFile = /home/micalexander/.globalgitignore
+	excludesFile = ~/.globalgitignore
 	editor = nvr --remote-wait-silent
