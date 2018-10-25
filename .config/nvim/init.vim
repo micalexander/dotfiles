@@ -365,6 +365,14 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 " }}}
 
+
+" Gutentags ---------------------------------------------------------------{{{
+" Don't load me if there's no ctags file
+if !executable('ctags')
+  let g:gutentags_dont_load = 1
+endif
+" }}}
+
 " Indent Guides ---------------------------------------------------------------{{{
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#282c33 ctermbg=NONE
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2e3239 ctermbg=NONE
@@ -544,3 +552,5 @@ xmap <silent> ie <Plug>CamelCaseMotion_ie
 let g:scratch_filetype = 'markdown'
 
 " }}}
+" }}}
+
