@@ -28,9 +28,17 @@ if is_interactive_shell; then
   test -f $home/.inputrc && bind -f $home/.inputrc || echo $home/.inputrc not found.
 fi
 
-
 # add development bin directory
-add_path $home/.local/bin
+add_path $HOME/.local/bin
+
+export EDITOR=vim
+
+if [ ! -z "$(pip show powerline-status 2> /dev/null)" ]; then
+ powerline-daemon -q
+ POWERLINE_BASH_CONTINUATION=1
+ POWERLINE_BASH_SELECT=1
+ . $(pip show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
+fi
 
 if [ ! -z $(which ruby) ]; then
   add_path $HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0/bin
