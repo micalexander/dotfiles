@@ -108,7 +108,7 @@ noremap <silent> <leader>d :bp\|bd! #<CR>
 nnoremap <leader>t :Ttoggle<CR>
 inoremap <C-T> <esc>:Ttoggle<CR>
 tnoremap <C-T> <C-\><C-n>:Ttoggle<CR>
-" nnoremap <leader>t <Esc>:term /bin/bash -l <CR>
+
 " exit terminal
 tnoremap <leader><ESC> <C-\><C-n>
 " Buffers
@@ -118,7 +118,7 @@ nnoremap <leader>l <Esc>:bn<CR>
 autocmd! FileType fzf tnoremap <buffer> <ESC> <c-c>
 
 " :FZF show all files
-nnoremap <leader>c <Esc>:Files <C-R>=expand("%:p:h") <CR><CR>
+" nnoremap <leader>c <Esc>:Files <C-R>=expand("%:p:h") <CR><CR>
 " nnoremap <leader># <Esc>:Files <C-R>=expand("%:p:h") <CR>
 nnoremap <leader>f <Esc>:Files <CR>
 
@@ -306,13 +306,27 @@ set clipboard=unnamed
 " Terminal
 set shell=/bin/bash\ -l
 
+" insert mode - line
+let &t_SI .= "\<Esc>[5 q"
+"replace mode - underline
+let &t_SR .= "\<Esc>[4 q"
+"common - block
+let &t_EI .= "\<Esc>[3 q"
+
 set splitbelow
 set splitright
 
 let g:netrw_banner=0
 
-au BufWinLeave *.* mkview
-au BufWinEnter *.* silent loadview
+" set foldmethod=marker
+autocmd FileType vim setlocal foldmethod=marker
+
+set cursorline
+
+au BufWinLeave *.c mkview
+au BufWinEnter *.c silent! loadview
+
+let g:wordmotion_prefix = '<Leader>'
 " }}}
 
 " Plugin Preferences ---------------------------------------------------------------{{{
