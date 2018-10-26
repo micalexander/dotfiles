@@ -103,6 +103,7 @@ let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
 noremap <silent> <leader>d :bp\|bd! #<CR>
+noremap <silent> <leader>w :bd<CR>
 "
 " Start terminal
 nnoremap <leader>t :Ttoggle<CR>
