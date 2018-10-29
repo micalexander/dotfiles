@@ -33,17 +33,6 @@ add_path $HOME/.local/bin
 
 export EDITOR=vim
 
-if [ ! -z "$(pip show powerline-status 2> /dev/null)" ]; then
- powerline-daemon -q
- POWERLINE_BASH_CONTINUATION=1
- POWERLINE_BASH_SELECT=1
- . $(pip show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
-fi
-
-if [ ! -z $(which ruby) ]; then
-  add_path $HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0/bin
-fi
-
 # find and source bash completion if possible
 if [ "$unamestr" == "Darwin" ] && [ ! -z $(which brew) ]; then
   . $(brew --prefix)/etc/bash_completion &> /dev/null || echo $(brew --prefix)/etc/bash_completion not found.
@@ -153,7 +142,7 @@ if [ "$is_alpine_bash" = true ]; then
   add_path $PHP_LOCAL_DIR
   add_path $PYTHON2_LOCAL_DIR
   add_path $PYTHON3_LOCAL_DIR
-  add_path $HOME/.gem/ruby/2.4.0/bin
+  add_path $HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0
   add_path $HOME/.npm/bin
   add_path $HOME/.local/bin
   add_path $HOME/.composer/vendor/bin
@@ -161,7 +150,7 @@ if [ "$is_alpine_bash" = true ]; then
   export EDITOR='nvr'
 
   # Change the ruby gem install path
-  export GEM_HOME=$HOME/.gem/ruby/2.4.0
+  export GEM_HOME=$HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0
 
   export LD_LIBRARY_PATH=$RUBY_LOCAL_DIR/../lib
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NODE_LOCAL_DIR/../lib
@@ -174,5 +163,16 @@ if [ "$is_alpine_bash" = true ]; then
     sudo chown `whoami`:`whoami` /var/run/docker.sock;
 
   fi
+fi
+
+if [ ! -z "$(pip show powerline-status 2> /dev/null)" ]; then
+ powerline-daemon -q
+ POWERLINE_BASH_CONTINUATION=1
+ POWERLINE_BASH_SELECT=1
+ . $(pip show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
+fi
+
+if [ ! -z $(which ruby) ]; then
+  add_path $HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0/bin
 fi
 
