@@ -70,12 +70,12 @@ append_line() {
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+if [ - d ~/.ssh ] && [ ! -S ~/.ssh/ssh_auth_sock ]; then
   eval `ssh-agent`
   ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+  export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+  ssh-add -l > /dev/null || ssh-add
 fi
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-ssh-add -l > /dev/null || ssh-add
 
 #! /bin/bash
 
