@@ -30,24 +30,6 @@ function is_interactive_shell() {
   [[ "$-" =~ "i" ]]
 }
 
-function _update_ps1() {
-  if [ "$HOSTNAME" == "alpine-bash" ] || [ $(uname) == "Darwin" ]; then
-    if [ -f "$HOME/go/bin/powerline-go" ]; then
-      PS1="$($HOME/go/bin/powerline-go -error $?)"
-    elif [ -f "$HOME/Dropbox/Development/go/bin/powerline-go" ]; then
-      PS1="$($HOME/Dropbox/Development/go/bin/powerline-go -error $?)"
-    fi
-  elif [ -f "$HOME/hostgo/bin/powerline-go" ]; then
-    PS1="$($HOME/hostgo/bin/powerline-go -error $?)"
-  else
-    PS1="$PS1"
-  fi
-}
-
-if [ "$TERM" != "linux" ]; then
-  PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
-
 # Usage: add_path /some/bin
 add_path() {
   if [[ "$PATH" =~ (^|:)"${1}"(:|$) ]]
