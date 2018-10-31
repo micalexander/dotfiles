@@ -136,12 +136,6 @@ if [ "$is_alpine_bash" = true ]; then
   # Add locations
   # The add_path function can be found
   # in the .bashrc file
-  add_path $RUBY_LOCAL_DIR
-  add_path $NODE_LOCAL_DIR
-  add_path $GO_LOCAL_DIR
-  add_path $PHP_LOCAL_DIR
-  add_path $PYTHON2_LOCAL_DIR
-  add_path $PYTHON3_LOCAL_DIR
   add_path $HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0
   add_path $HOME/.npm/bin
   add_path $HOME/.local/bin
@@ -151,12 +145,6 @@ if [ "$is_alpine_bash" = true ]; then
 
   # Change the ruby gem install path
   export GEM_HOME=$HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0
-
-  export LD_LIBRARY_PATH=$RUBY_LOCAL_DIR/../lib
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NODE_LOCAL_DIR/../lib
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PHP_LOCAL_DIR/../lib
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON2_LOCAL_DIR/../lib
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PYTHON3_LOCAL_DIR/../lib
 
   if [ -e /var/run/docker.sock ]; then
 
