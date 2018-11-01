@@ -153,11 +153,11 @@ if [ "$is_alpine_bash" = true ]; then
   fi
 fi
 
-if [ ! -z "$(pip show powerline-status 2> /dev/null)" ]; then
+if [ ! -z "$(pip --disable-pip-version-check show powerline-status 2> /dev/null)" ]; then
  powerline-daemon -q
  POWERLINE_BASH_CONTINUATION=1
  POWERLINE_BASH_SELECT=1
- . $(pip show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
+ . $(pip --disable-pip-version-check show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
 fi
 
 if [ ! -z $(which ruby) ]; then
