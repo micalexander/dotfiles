@@ -11,43 +11,42 @@ call dein#begin(expand('~/.config/nvim'))
 call dein#add('editorconfig/editorconfig-vim')
 call dein#add('evidens/vim-twig')
 " call dein#add('rafaqz/ranger.vim')
-call dein#add('micalexander/neoranger')
+" call dein#add('micalexander/neoranger')
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/deoplete.nvim')
-call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
 call dein#add('tobyS/pdv')
 call dein#add('tobyS/vmustache')
 call dein#add('henrik/vim-indexed-search')
-call dein#add('myusuf3/numbers.vim')
-call dein#add('mhinz/vim-startify')
-" call dein#add('bkad/CamelCaseMotion')
+call dein#add('metakirby5/codi.vim')
 call dein#add('chaoren/vim-wordmotion')
-call dein#add('michaeljsmith/vim-indent-object')
+call dein#add('chrisbra/csv.vim')
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('SirVer/ultisnips')
 call dein#add('airblade/vim-gitgutter')
-call dein#add('bkad/CamelCaseMotion')
+call dein#add('vifm/vifm.vim')
+" call dein#add('bkad/CamelCaseMotion')
 call dein#add('bogado/file-line')
 call dein#add('chrisbra/colorizer')
 call dein#add('christoomey/vim-tmux-navigator')
 call dein#add('edkolev/promptline.vim')
 call dein#add('ervandew/supertab')
-call dein#add('evidens/vim-twig')
 call dein#add('godlygeek/tabular')
 call dein#add('haya14busa/dein-command.vim')
-call dein#add('henrik/vim-indexed-search')
 call dein#add('jiangmiao/auto-pairs')
 call dein#add('joonty/vdebug')
+call dein#add('idanarye/vim-vebugger')
 call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 call dein#add('junegunn/vim-peekaboo')
 call dein#add('kana/vim-textobj-user')
 call dein#add('kassio/neoterm')
 call dein#add('ludovicchabant/vim-gutentags')
-call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
+call dein#add('phpactor/phpactor', { 'build': 'composer install'})
+call dein#add('kristijanhusak/deoplete-phpactor')
+" call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
 call dein#add('majutsushi/tagbar')
 call dein#add('mattn/emmet-vim')
 call dein#add('mhinz/vim-startify')
@@ -57,12 +56,11 @@ call dein#add('myusuf3/numbers.vim')
 call dein#add('nathanaelkane/vim-indent-guides')
 call dein#add('nelstrom/vim-textobj-rubyblock')
 call dein#add('nelstrom/vim-visual-star-search')
+call dein#add('leafgarland/typescript-vim')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('rakr/vim-one')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('slim-template/vim-slim')
-call dein#add('tobyS/pdv')
-call dein#add('tobyS/vmustache')
 call dein#add('tpope/vim-commentary')
 call dein#add('tpope/vim-eunuch')
 call dein#add('tpope/vim-fugitive')
@@ -73,13 +71,16 @@ call dein#add('tpope/vim-unimpaired')
 call dein#add('valloric/MatchTagAlways')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
+call dein#add('chrisbra/vim-diff-enhanced')
 call dein#add('vim-scripts/argtextobj.vim')
 call dein#add('vim-scripts/closetag.vim')
 call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
-call dein#add('pangloss/vim-javascript')
+call dein#add('chemzqm/vim-jsx-improve')
+call dein#add('carlitux/deoplete-ternjs', { 'build': 'yarn global add tern'})
 call dein#add('w0rp/ale')
 call dein#add('tmux-plugins/vim-tmux')
+call dein#add('svermeulen/vim-yoink')
 
 if dein#check_install()
   call dein#install()
@@ -103,7 +104,7 @@ let mapleader = "\<Space>"
 let maplocalleader = "\\"
 
 noremap <silent> <leader>d :bp\|bd! #<CR>
-noremap <silent> <leader>w :bd<CR>
+" noremap <silent> <leader>w :bd<CR>
 "
 " Start terminal
 nnoremap <leader>t :Ttoggle<CR>
@@ -136,7 +137,6 @@ nnoremap <localleader>s <Esc>:GFiles?<CR>
 " :FZF show all files in current buffers
 nnoremap <leader>b <Esc>:Buffers<CR>
 
-nnoremap <leader>r <Esc>:20split \| Ranger<CR>
 " <Leader><Leader> -- Open last buffer.
 nnoremap <Leader><Leader> <C-^>
 " <Leader>p -- Show the path of the current file (mnemonic: path; useful when
@@ -145,6 +145,7 @@ nnoremap <localleader>p :echo expand('%')<CR>
 " <Leader>pp -- Like <Leader>p, but additionally yanks the filename and sends it
 " off to Clipper.
 nnoremap <Leader>cp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
+nnoremap <Leader>. :%s///g<left><left>
 " Quit vim
 nnoremap Q :qall<CR>
 " <Leader>r -- Cycle through relativenumber + number, number (only), and no
@@ -211,17 +212,17 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-set t_ZH=[3m
-set t_ZR=[23m
+set t_ZH=[3m
+set t_ZR=[23m
 
-set background=dark
-colorscheme one
+" set background=dark
+" colorscheme one
 
 let g:one_allow_italics = 1
 
 " For Vim inside tmux
-set t_8b=[48;2;%lu;%lu;%lum
-set t_8f=[38;2;%lu;%lu;%lum
+set t_8b=[48;2;%lu;%lu;%lum
+set t_8f=[38;2;%lu;%lu;%lum
 
 filetype plugin indent on
 
@@ -327,7 +328,22 @@ set cursorline
 au BufWinLeave *.c mkview
 au BufWinEnter *.c silent! loadview
 
-let g:wordmotion_prefix = '<Leader>'
+let g:wordmotion_spaces = '_-.'
+
+xnoremap <Leader>iw iw
+xnoremap <Leader>aw aw
+onoremap <Leader>iw iw
+onoremap <Leader>aw aw
+" let g:wordmotion_prefix = '<Leader>'
+" let g:wordmotion_mappings = {
+" \ 'w' : '<M-w>',
+" \ 'b' : '<M-b>',
+" \ 'e' : '<M-e>',
+" \ 'ge' : 'g<M-e>',
+" \ 'aw' : 'a<M-w>',
+" \ 'iw' : 'i<M-w>',
+" \ '<C-R><C-W>' : '<C-R><M-w>'
+" \ }
 " }}}
 
 " Plugin Preferences ---------------------------------------------------------------{{{
@@ -389,8 +405,9 @@ endif
 " }}}
 
 " Indent Guides ---------------------------------------------------------------{{{
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#282c33 ctermbg=NONE
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=NONE
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2e3239 ctermbg=NONE
+
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 1
 let g:indent_guides_guide_size = 2
@@ -398,7 +415,39 @@ let g:indent_guides_auto_colors = 0
 " }}}
 
 " Deoplete ---------------------------------------------------------------{{{
+let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
 let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option({
+  \ 'deoplete-options-on_text_changed_i': 0
+  \})
+:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" let g:deoplete#auto_complete_start_length = 1
+" call deoplete#custom#option('sources', {
+ " \ '_': ['buffer'],
+ " \ 'jsx': [],
+ " \ 'js': ['tern'],
+ " \})
+
+let g:deoplete#sources#ternjs#filetypes = [
+	\ 'jsx',
+	\ 'javascript.jsx',
+	\ 'javascript.js',
+	\ 'typscript.ts',
+  \ 'ts',
+  \ 'js'
+	\ ]
+let g:deoplete#sources#phpactor = ['php', 'php.php']
+let g:deoplete#sources#ternjs#timeout = 3
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#docs = 1
+
+" call deoplete#custom#var('omni', 'input_patterns', {
+    " \ 'r': '[^. *\t]\.\w*',
+" Use deoplete.
+" let g:tern_request_timeout = 1
+" let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
+
+"Add extra filetypes
 " }}}
 
 " Emmet Vim ---------------------------------------------------------------{{{
@@ -410,7 +459,12 @@ let g:phpcd_auto_restart = 1
 " }}}
 
 " Supertab ---------------------------------------------------------------{{{
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+" let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+"
+" let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+" let g:SuperTabContextDiscoverDiscovery =
+    " \ ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 " }}}
 
 " FZF ---------------------------------------------------------------{{{
@@ -452,12 +506,18 @@ nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
 " }}}
 
 " Startify ---------------------------------------------------------------{{{
-let g:startify_session_persistence=1
+" let g:startify_session_persistence=1
 " }}}
 
 " ale Lint Engine ---------------------------------------------------------------{{{
+
+let g:ale_linters = {
+\   'javascript': ['standard'],
+\}
+let g:ale_fixers = {'javascript': ['standard']}
+
 let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
+let g:ale_fix_on_save = 1
 " }}}
 
 " Vim Javascript ---------------------------------------------------------------{{{
@@ -465,7 +525,7 @@ let g:javascript_plugin_flow = 1
 " }}}
 
 " Vim JSX ---------------------------------------------------------------{{{
-let g:jsx_ext_required = 0
+" let g:jsx_ext_required = 0
 " }}}
 
 " neoterm ---------------------------------------------------------------{{{
@@ -474,6 +534,7 @@ tnoremap <esc> <C-\><C-n>
 let g:neoterm_fixedsize = 1
 let g:neoterm_autoinsert = 1
 let g:neoterm_size = 10
+let g:neoterm_default_mod = 'rightbelow'
 let g:neoterm_automap_keys = ',tt'
 
 nnoremap <silent> <f10> :TREPLSendFile<cr>
@@ -548,24 +609,24 @@ nnoremap <c-l> <c-w><c-l>
 cmap w!! w !sudo tee > /dev/null %<CR>
 
 " bkad/CamelCaseMotion
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-map <silent> ge <Plug>CamelCaseMotion_ge
-sunmap w
-sunmap b
-sunmap e
-sunmap ge
+" map <silent> w <Plug>CamelCaseMotion_w
+" map <silent> b <Plug>CamelCaseMotion_b
+" map <silent> e <Plug>CamelCaseMotion_e
+" map <silent> ge <Plug>CamelCaseMotion_ge
+" sunmap w
+" sunmap b
+" sunmap e
+" sunmap ge
 
-omap <silent> iw <Plug>CamelCaseMotion_iw
-xmap <silent> iw <Plug>CamelCaseMotion_iw
-omap <silent> ib <Plug>CamelCaseMotion_ib
-xmap <silent> ib <Plug>CamelCaseMotion_ib
-omap <silent> ie <Plug>CamelCaseMotion_ie
-xmap <silent> ie <Plug>CamelCaseMotion_ie
-
+" omap <silent> iw <Plug>CamelCaseMotion_iw
+" xmap <silent> iw <Plug>CamelCaseMotion_iw
+" omap <silent> ib <Plug>CamelCaseMotion_ib
+" xmap <silent> ib <Plug>CamelCaseMotion_ib
+" omap <silent> ie <Plug>CamelCaseMotion_ie
+" xmap <silent> ie <Plug>CamelCaseMotion_ie
 let g:scratch_filetype = 'markdown'
+let g:codi#rightalign = 0
+let g:codi#width = '50%'
 
 " }}}
 " }}}
-
