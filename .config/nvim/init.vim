@@ -348,6 +348,10 @@ onoremap <Leader>aw aw
 
 " Plugin Preferences ---------------------------------------------------------------{{{
 
+" Vifm --------------------------------------------------------------- {{{
+ let g:vifm_replace_netrw = 1
+" }}}
+
 " Vim One (colorscheme) --------------------------------------------------------------- {{{
 syntax enable
 colorscheme one
