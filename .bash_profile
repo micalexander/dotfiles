@@ -24,7 +24,8 @@ test -f $home/.bashrc && . $home/.bashrc || echo $home/.bashrc not found.
 test -f $home/.git-completion.sh && . $home/.git-completion.sh || echo $home/.git-completion not found.
 test -f $home/.tmux-completion.sh && . $home/.tmux-completion.sh || echo $home/.tmux-completion not found.
 
-if is_interactive_shell; then
+#  test if we are in an interactive shell
+if [ -t "$fd" ]; then
   test -f $home/.inputrc && bind -f $home/.inputrc || echo $home/.inputrc not found.
 fi
 
