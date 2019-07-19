@@ -348,10 +348,6 @@ onoremap <Leader>aw aw
 
 " Plugin Preferences ---------------------------------------------------------------{{{
 
-" Vifm --------------------------------------------------------------- {{{
- let g:vifm_replace_netrw = 1
-" }}}
-
 " Vim One (colorscheme) --------------------------------------------------------------- {{{
 syntax enable
 colorscheme one
@@ -361,6 +357,8 @@ call one#highlight('Cursor', '99c37e', '282c33', 'none')
 " call one#highlight('Normal', 'b2ad92', '99c37e', 'none')
 
 let g:one_allow_italics = 1
+
+autocmd VimEnter,ColorScheme * :call one#highlight ('StartifyHeader', '61afef', 'none', 'none')
 
 autocmd VimEnter,Colorscheme * :call one#highlight('Search', '282c33', 'd4dce2', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('IncSearch', 'ffffff', '62afec', 'none')
@@ -510,7 +508,29 @@ nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
 " }}}
 
 " Startify ---------------------------------------------------------------{{{
-" let g:startify_session_persistence=1
+let g:startify_session_persistence=1
+let g:startify_custom_header = [
+\'',
+\'                         -+.          /:     ',
+\'                       -osoo:         +ys:   ',
+\'                     /osssooo/`       +yyys: ',
+\'                    /+ossssooo+.      +yyyyys',
+\'                    +++osssooooo:     +yyyyyy',
+\'                    +ooooosssssso/`   +yyyyyy',
+\'                    +ooooo++sssssso.  +yyyyyy',
+\'                    +ooooo/`:sssssso- +hhhyyy',
+\'                    oooooo/` -ossssss/+hhhhhy',
+\'                    oooooo/`  `+ssssssyhhhhhy',
+\'                    osssss/`   `/sssssyyhhhhy',
+\'                    osssss/`     -syyyyhhhhhy',
+\'                    `/ssss/`      `oyyyhhhho:',
+\'                      ./ss/`       `/yyhho:.`',
+\'                        .//`         -so:.`  ',
+\'',
+\'                             Neovim',
+\'              hyperextensible Vim-based text editor',
+\'',
+\]
 " }}}
 
 " ale Lint Engine ---------------------------------------------------------------{{{
@@ -632,5 +652,7 @@ let g:scratch_filetype = 'markdown'
 let g:codi#rightalign = 0
 let g:codi#width = '50%'
 
+
 " }}}
 " }}}
+
