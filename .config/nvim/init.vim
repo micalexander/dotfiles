@@ -509,28 +509,85 @@ nnoremap + :<C-u>execute '+'.v:count1.'copy.'<CR>
 
 " Startify ---------------------------------------------------------------{{{
 let g:startify_session_persistence=1
+" let g:startify_custom_header = [
+" \'',
+" \'                         -+.          /:     ',
+" \'                       -osoo:         +ys:   ',
+" \'                     /osssooo/`       +yyys: ',
+" \'                    /+ossssooo+.      +yyyyys',
+" \'                    +++osssooooo:     +yyyyyy',
+" \'                    +ooooosssssso/`   +yyyyyy',
+" \'                    +ooooo++sssssso.  +yyyyyy',
+" \'                    +ooooo/`:sssssso- +hhhyyy',
+" \'                    oooooo/` -ossssss/+hhhhhy',
+" \'                    oooooo/`  `+ssssssyhhhhhy',
+" \'                    osssss/`   `/sssssyyhhhhy',
+" \'                    osssss/`     -syyyyhhhhhy',
+" \'                    `/ssss/`      `oyyyhhhho:',
+" \'                      ./ss/`       `/yyhho:.`',
+" \'                        .//`         -so:.`  ',
+" \'',
+" \'                             Neovim',
+" \'              hyperextensible Vim-based text editor',
+" \'',
+" \]
+" if !exists(':Startify')
+    " finish
+" endif
+
+
+" if has('nvim')
+    " let g:startify_ascii = [
 let g:startify_custom_header = [
-\'',
-\'                         -+.          /:     ',
-\'                       -osoo:         +ys:   ',
-\'                     /osssooo/`       +yyys: ',
-\'                    /+ossssooo+.      +yyyyys',
-\'                    +++osssooooo:     +yyyyyy',
-\'                    +ooooosssssso/`   +yyyyyy',
-\'                    +ooooo++sssssso.  +yyyyyy',
-\'                    +ooooo/`:sssssso- +hhhyyy',
-\'                    oooooo/` -ossssss/+hhhhhy',
-\'                    oooooo/`  `+ssssssyhhhhhy',
-\'                    osssss/`   `/sssssyyhhhhy',
-\'                    osssss/`     -syyyyhhhhhy',
-\'                    `/ssss/`      `oyyyhhhho:',
-\'                      ./ss/`       `/yyhho:.`',
-\'                        .//`         -so:.`  ',
-\'',
-\'                             Neovim',
-\'              hyperextensible Vim-based text editor',
-\'',
+\ "                      .            .      ",
+\ "                    .,;'           :,.    ",
+\ "                  .,;;;,,.         ccc;.  ",
+\ "                .;c::::,,,'        ccccc: ",
+\ "                .::cc::,,,,,.      cccccc.",
+\ "                .cccccc;;;;;;'     llllll.",
+\ "                .cccccc.,;;;;;;.   llllll.",
+\ "                .cccccc  ';;;;;;'  oooooo.",
+\ "                'lllllc   .;;;;;;;.oooooo'",
+\ "                'lllllc     ,::::::looooo'",
+\ "                'llllll      .:::::lloddd'",
+\ "                .looool       .;::coooodo.",
+\ "                  .cool         'ccoooc.  ",
+\ "                    .co          .:o:.    ",
+\ "                      .           .'      ",
+\ "",
+\"                          neovim",
+\"            hyperextensible Vim-based text editor",
 \]
+" else
+    " let g:startify_ascii = [
+                " \ '     ________ ;;     ________',
+                " \ '    /********\;;;;  /********\',
+                " \ '    \********/;;;;;;\********/',
+                " \ '     |******|;;;;;;;;/*****/',
+                " \ '     |******|;;;;;;/*****/''',
+                " \ '    ;|******|;;;;/*****/'';',
+                " \ '  ;;;|******|;;/*****/'';;;;;',
+                " \ ';;;;;|******|/*****/'';;;;;;;;;',
+                " \ '  ;;;|***********/'';;;;;;;;;',
+                " \ '    ;|*********/'';;;;;;;;;',
+                " \ '     |*******/'';;;;;;;;;',
+                " \ '     |*****/'';;;;;;;;;',
+                " \ '     |***/'';;;;;;;;;',
+                " \ '     |*/''   ;;;;;;',
+                " \ '              ;;',
+                " \]
+" endif
+
+" let g:startify_custom_header = map(g:startify_ascii, '"     ".v:val')
+" let g:startify_skiplist = [
+      " \ 'COMMIT_EDITMSG',
+      " \ '^/tmp',
+      " \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
+      " \ 'bundle/.*/doc',
+      " \ ]
+
+
+
 " }}}
 
 " ale Lint Engine ---------------------------------------------------------------{{{

@@ -1,3 +1,4 @@
+#! /bin/bash
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -15,15 +16,49 @@ shopt -s checkwinsize
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias    ll='clear ; ls -la --color=auto'
-alias   vim='NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim'
-alias   www='cd /sites'
-alias    ..='cd ..'
-alias   ...='cd ../..'
 
-if [[ "$VIM" = "/usr/share/nvim" ]]; then
-  alias   vim='nvr -l'
+if [ $(uname) == "Darwin" ]; then
+  alias ll='clear; ls -laO'
+else
+  alias ll='clear ; ls -la --color=auto'
 fi
+
+alias  ranger='ranger --cmd="set_bookmark h"'
+alias    vimt='tmux select-pane -R | nvr'
+alias     vim='nvim'
+alias     www='cd /sites'
+alias     dot='git --git-dir=$HOME/Dropbox/Development/dotfiles --work-tree=$HOME/Dropbox/Development/'
+alias      ..='cd ..'
+alias     ...='cd ../..'
+alias  cowsay='cowsay -f tux'
+
+vcd () {
+  tmux send-keys -t 1 :cd "$(pwd | sed 's/ /\\ /g')" Enter \; \
+    select-pane -t 1
+}
+
+cdv () {
+  tmux send-keys -t 1 'yd' \; && sleep 2 && cd "$(pbpaste)"
+}
+
+
+# if [ "$(declare -f tmux_nvim  > /dev/null; echo $?)" = 0 ]; then
+  # echo here
+export ANSIBLE_NOCOWS=1
+export EDITOR=vim
+export VISUAL=vim
+  # echo empty
+# else
+  # alias vim='tmux_nvim'
+  # export EDITOR=tmux_nvim
+  # export VISUAL=tmux_nvim
+# fi
+
+  # if [[ "$VIM" = "/usr/share/nvim" ]]; then
+    # alias vim='editor'
+  # fi
+
+# fi
 
 function is_interactive_shell() {
   # https://www.gnu.org/software/bash/manual/html_node/Is-this-Shell-Interactive_003f.html
@@ -68,7 +103,6 @@ append_line() {
   set +e
 }
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 if [ -d ~/.ssh ] && [ ! -S ~/.ssh/ssh_auth_sock ]; then
   eval `ssh-agent`
@@ -76,8 +110,6 @@ if [ -d ~/.ssh ] && [ ! -S ~/.ssh/ssh_auth_sock ]; then
   export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
   ssh-add -l > /dev/null || ssh-add
 fi
-
-#! /bin/bash
 
 function vscp() {
     if [[ -z $1 ]]

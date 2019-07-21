@@ -2,13 +2,13 @@
 unamestr=$(uname)
 
 # determine where the guest home is located
-guest_home=$(test -d $HOME/Dropbox && echo $HOME/Dropbox/Development || echo $HOME/Development )
+guest_home=$(test -d $HOME/Dropbox && echo $HOME/Dropbox/Development || echo ${HOME}/OneDrive\ -\ Tivity\ Health/Development )
 
 # check if we are in the host or in a container
 is_host=$(if [ "$unamestr" == "Darwin" ] || [ $(cat /proc/1/cgroup | grep -cim1 'docker\|lxc') -eq 0 ]; then echo true; else echo false; fi)
 
 # set the home directory location of dev and dot files
-home=$(test "$is_host" = true && echo $guest_home || echo $HOME)
+home=$(test "$is_host" = true && echo "$guest_home" || echo $HOME)
 
 # check to see we are in a linux distro
 is_distro=$(test -f /etc/os-release && echo true || echo false)
@@ -20,19 +20,20 @@ distro=$(test "$is_distro" = true && cat /etc/os-release | grep '^ID=' | awk -F\
 is_alpine_bash=$(if [ "$is_host" = false ] && [[ "$distro" == "alpine" ]]; then echo true; else echo false; fi)
 
 # source necessary files if they exist
-test -f $home/.bashrc && . $home/.bashrc || echo $home/.bashrc not found.
-test -f $home/.git-completion.sh && . $home/.git-completion.sh || echo $home/.git-completion not found.
-test -f $home/.tmux-completion.sh && . $home/.tmux-completion.sh || echo $home/.tmux-completion not found.
+test -f "$home/.bashrc" && . "$home/.bashrc" || echo $home/.bashrc not found.
+test -f "$home/.git-completion.sh" && . "$home/.git-completion.sh" || echo $home/.git-completion not found.
+test -f "$home/.tmux-completion.sh" && . "$home/.tmux-completion.sh" || echo $home/.tmux-completion not found.
 
-#  test if we are in an interactive shell
-if [ -t "$fd" ]; then
-  test -f $home/.inputrc && bind -f $home/.inputrc || echo $home/.inputrc not found.
+if is_interactive_shell; then
+  test -f "$home/.inputrc" && bind -f "$home/.inputrc" || echo $home/.inputrc not found.
 fi
 
+PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 # add development bin directory
 add_path $HOME/.local/bin
-
-export EDITOR=vim
+add_path $home/.local/bin
+add_path $HOME/Library/Python/2.7/bin
+add_path $HOME/Library/Python/3.7/bin
 
 # find and source bash completion if possible
 if [ "$unamestr" == "Darwin" ] && [ ! -z $(which brew) ]; then
@@ -50,6 +51,11 @@ tee -a $HOME/.gitconfig << END > /dev/null
     path = $home/.gitconfig
 END
     echo created and updated $HOME/.gitconfig file.
+  fi
+
+  if [ ! -f "$HOME/.bash_profile" ]; then
+    echo ". $home/.bash_profile" >> $HOME/.bash_profile
+    echo created and updated $HOME/.bash_profile file.
   fi
 
   if [ ! -f "$HOME/.ssh/config" ]; then
@@ -110,12 +116,14 @@ if [ ! -z "$(git --version 2> /dev/null)" ]; then
   fi
 fi
 
+export PIP_DISABLE_PIP_VERSION_CHECK=1
+
 # Set FZF envs
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
 
 # Set colors
-export LSCOLORS=GxDxcxdxbxegedabagacFx
+export LSCOLORS=ExFxBxDxCxegedabagacad
 export CLICOLOR=true
 
 # export TERM=xterm-256color
@@ -140,6 +148,7 @@ if [ "$is_alpine_bash" = true ]; then
   add_path $HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0
   add_path $HOME/.npm/bin
   add_path $HOME/.local/bin
+  add_path $HOME/.nodenv/bin
   add_path $HOME/.composer/vendor/bin
 
   export EDITOR='nvr'
@@ -159,9 +168,20 @@ if [ ! -z "$(pip --disable-pip-version-check show powerline-status 2> /dev/null)
  POWERLINE_BASH_CONTINUATION=1
  POWERLINE_BASH_SELECT=1
  . $(pip --disable-pip-version-check show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
+# elif [ ! -z "$(pip3 --disable-pip-version-check show powerline-status 2> /dev/null)" ]; then
+ # ln -s $home/.config/powerline $HOME/.config/
+ # powerline-daemon -q
+ # POWERLINE_BASH_CONTINUATION=1
+ # POWERLINE_BASH_SELECT=1
+ # . $(pip3 --disable-pip-version-check show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
 fi
 
 if [ ! -z $(which ruby) ]; then
   add_path $HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0/bin
 fi
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+if [ "$unamestr" == "Darwin" ] && [ ! -z $(which nodenv) ]; then
+  eval "$(nodenv init -)"
+fi
