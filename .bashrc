@@ -23,14 +23,15 @@ else
   alias ll='clear ; ls -la --color=auto'
 fi
 
-alias  ranger='ranger --cmd="set_bookmark h"'
-alias    vimt='tmux select-pane -R | nvr'
-alias     vim='nvim'
-alias     www='cd /sites'
-alias     dot='git --git-dir=$HOME/Dropbox/Development/dotfiles --work-tree=$HOME/Dropbox/Development/'
+alias     vim='dmux vim'
+alias      bp='dmux vim ~/Cloud/Development/.bash_profile'
+alias     sbp='. ~/Cloud/Development/.bash_profile'
+alias     www='cd /Cloud/Development/www'
+alias     dot='git --git-dir=$HOME/Cloud/Development/dotfiles --work-tree=$HOME/Cloud/Development/'
 alias      ..='cd ..'
 alias     ...='cd ../..'
 alias  cowsay='cowsay -f tux'
+
 
 vcd () {
   tmux send-keys -t 1 :cd "$(pwd | sed 's/ /\\ /g')" Enter \; \
@@ -42,23 +43,12 @@ cdv () {
 }
 
 
-# if [ "$(declare -f tmux_nvim  > /dev/null; echo $?)" = 0 ]; then
-  # echo here
+export CDPATH=.:$HOME/Cloud/Development/binaries:$HOME/Cloud/Development/www:$HOME/Cloud/Development:$HOME/Cloud
+
 export ANSIBLE_NOCOWS=1
-export EDITOR=vim
-export VISUAL=vim
-  # echo empty
-# else
-  # alias vim='tmux_nvim'
-  # export EDITOR=tmux_nvim
-  # export VISUAL=tmux_nvim
-# fi
+export EDITOR=dvim
+export VISUAL=dvim
 
-  # if [[ "$VIM" = "/usr/share/nvim" ]]; then
-    # alias vim='editor'
-  # fi
-
-# fi
 
 function is_interactive_shell() {
   # https://www.gnu.org/software/bash/manual/html_node/Is-this-Shell-Interactive_003f.html

@@ -2,7 +2,7 @@
 unamestr=$(uname)
 
 # determine where the guest home is located
-guest_home=$(test -d $HOME/Dropbox && echo $HOME/Dropbox/Development || echo ${HOME}/OneDrive\ -\ Tivity\ Health/Development )
+guest_home=$(test -d $HOME/Cloud && echo $HOME/Cloud/Development || echo ${HOME}/Development )
 
 # check if we are in the host or in a container
 is_host=$(if [ "$unamestr" == "Darwin" ] || [ $(cat /proc/1/cgroup | grep -cim1 'docker\|lxc') -eq 0 ]; then echo true; else echo false; fi)
@@ -24,7 +24,7 @@ test -f "$home/.bashrc" && . "$home/.bashrc" || echo $home/.bashrc not found.
 test -f "$home/.git-completion.sh" && . "$home/.git-completion.sh" || echo $home/.git-completion not found.
 test -f "$home/.tmux-completion.sh" && . "$home/.tmux-completion.sh" || echo $home/.tmux-completion not found.
 
-if is_interactive_shell; then
+if [[ ! -z "$PS1" ]]; then
   test -f "$home/.inputrc" && bind -f "$home/.inputrc" || echo $home/.inputrc not found.
 fi
 
@@ -49,6 +49,8 @@ if [ "$is_host" = true ]; then
 tee -a $HOME/.gitconfig << END > /dev/null
 [include]
     path = $home/.gitconfig
+[core]
+    excludesfile = $home/.globalgitignore
 END
     echo created and updated $HOME/.gitconfig file.
   fi

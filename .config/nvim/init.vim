@@ -31,6 +31,7 @@ call dein#add('vifm/vifm.vim')
 call dein#add('bogado/file-line')
 call dein#add('chrisbra/colorizer')
 call dein#add('christoomey/vim-tmux-navigator')
+call dein#add('urbainvaes/vim-tmux-pilot')
 call dein#add('edkolev/promptline.vim')
 call dein#add('ervandew/supertab')
 call dein#add('godlygeek/tabular')
@@ -78,7 +79,7 @@ call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('chemzqm/vim-jsx-improve')
 call dein#add('carlitux/deoplete-ternjs', { 'build': 'yarn global add tern'})
-call dein#add('w0rp/ale')
+call dein#add('dense-analysis/ale')
 call dein#add('tmux-plugins/vim-tmux')
 call dein#add('svermeulen/vim-yoink')
 
@@ -155,7 +156,8 @@ nnoremap Q :qall<CR>
 " nnoremap <Leader>w :write<CR>
 
 nnoremap cgn *cgn
-nnoremap <Leader>a ggVG:normal.<CR>``
+nnoremap <Leader>a :FindAll<Space>
+" nnoremap <Leader>a ggVG:normal.<CR>``
 " Like :wq, but write only when changes have been made.
 nnoremap <Leader>x :xit<CR>
 " <Leader>zz -- Zap trailing whitespace in the current buffer.
@@ -348,6 +350,10 @@ onoremap <Leader>aw aw
 
 " Plugin Preferences ---------------------------------------------------------------{{{
 
+" Vifm  --------------------------------------------------------------- {{{
+let g:vifm_replace_netrw = 1
+" }}}
+
 " Vim One (colorscheme) --------------------------------------------------------------- {{{
 syntax enable
 colorscheme one
@@ -490,7 +496,7 @@ function! AgHandler(line)
   normal! zz
 endfunction
 
-command! -nargs=+ Fag call fzf#run({
+command! -nargs=+ FindAll call fzf#run({
   \ 'source': 'ag "<args>"',
   \ 'sink': function('AgHandler'),
   \ 'options': '+m',
@@ -595,7 +601,7 @@ let g:startify_custom_header = [
 let g:ale_linters = {
 \   'javascript': ['standard'],
 \}
-let g:ale_fixers = {'javascript': ['standard']}
+let g:ale_fixers = {'javascript': ['prettier_standard']}
 
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
@@ -713,3 +719,50 @@ let g:codi#width = '50%'
 " }}}
 " }}}
 
+
+" ----------------------------------------------------------------------------
+" BTags
+" ----------------------------------------------------------------------------
+function! s:align_lists(lists)
+  let maxes = {}
+  for list in a:lists
+    let i = 0
+    while i < len(list)
+      let maxes[i] = max([get(maxes, i, 0), len(list[i])])
+      let i += 1
+    endwhile
+  endfor
+  for list in a:lists
+    call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
+  endfor
+  return a:lists
+endfunction
+
+function! s:btags_source()
+  let lines = map(split(system(printf(
+    \ 'ctags -f - --sort=no --excmd=pattern --language-force=%s %s',
+    \ &filetype, expand('%:S'))), "\n"), 'split(v:val, "\t")')
+  if v:shell_error
+    throw 'failed to extract tags'
+  endif
+  return map(s:align_lists(lines), 'join(v:val, "\t")')
+endfunction
+
+function! s:btags_sink(line)
+  execute split(a:line, "\t")[2]
+endfunction
+
+function! s:btags()
+  try
+    call fzf#run({'source':  s:btags_source(),
+                 \'down':    '40%',
+                 \'options': '+m -d "\t" --with-nth 1,4..',
+                 \'sink':    function('s:btags_sink')})
+  catch
+    echohl WarningMsg
+    echom v:exception
+    echohl None
+  endtry
+endfunction
+
+command! BTags call s:btags()

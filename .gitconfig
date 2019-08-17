@@ -11,5 +11,5 @@
   	followTags = true
 [core]
 	pager = cat
-	excludesFile = ~/.globalgitignore
+	; excludesFile = ~/Cloud/Development/.globalgitignore
 	editor = nvr --remote-wait-silent
