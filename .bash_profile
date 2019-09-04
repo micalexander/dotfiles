@@ -165,18 +165,19 @@ if [ "$is_alpine_bash" = true ]; then
   fi
 fi
 
-if [ ! -z "$(pip --disable-pip-version-check show powerline-status 2> /dev/null)" ]; then
- powerline-daemon -q
- POWERLINE_BASH_CONTINUATION=1
- POWERLINE_BASH_SELECT=1
- . $(pip --disable-pip-version-check show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
+# if [ ! -z "$(pip --disable-pip-version-check show powerline-status 2> /dev/null)" ]; then
+ # powerline-daemon -q
+ # POWERLINE_BASH_CONTINUATION=1
+ # POWERLINE_BASH_SELECT=1
+ # . $(pip --disable-pip-version-check show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
 # elif [ ! -z "$(pip3 --disable-pip-version-check show powerline-status 2> /dev/null)" ]; then
  # ln -s $home/.config/powerline $HOME/.config/
  # powerline-daemon -q
  # POWERLINE_BASH_CONTINUATION=1
  # POWERLINE_BASH_SELECT=1
  # . $(pip3 --disable-pip-version-check show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
-fi
+# fi
+
 
 if [ ! -z $(which ruby) ]; then
   add_path $HOME/.gem/ruby/$(ruby -v | awk -F ' ' '{print $2}' | cut -d '.' -f 1,2).0/bin

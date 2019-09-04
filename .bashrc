@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/usr/bin/env bash
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -116,3 +117,16 @@ function vscp() {
     nvim ${targs[@]}
 }
 
+TRUELINE_SHOW_VIMODE=true
+declare -a TRUELINE_SEGMENTS=(
+  'user,grey,special_grey'
+  'working_dir,mono,cursor_grey'
+  'git,grey,special_grey'
+)
+
+declare -A TRUELINE_SYMBOLS=(
+  [vimode_cmd]='NORMAL'
+  [vimode_ins]='INSERT'
+)
+
+source ~/trueline/trueline.sh
