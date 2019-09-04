@@ -24,6 +24,8 @@ test -f "$home/.bashrc" && . "$home/.bashrc" || echo $home/.bashrc not found.
 test -f "$home/.git-completion.sh" && . "$home/.git-completion.sh" || echo $home/.git-completion not found.
 test -f "$home/.tmux-completion.sh" && . "$home/.tmux-completion.sh" || echo $home/.tmux-completion not found.
 
+test -f "$home/.trueline.sh" && . "$home/.trueline.sh" || echo $home/.trueline.sh not found.
+
 if [[ ! -z "$PS1" ]]; then
   test -f "$home/.inputrc" && bind -f "$home/.inputrc" || echo $home/.inputrc not found.
 fi
@@ -177,6 +179,7 @@ fi
  # POWERLINE_BASH_SELECT=1
  # . $(pip3 --disable-pip-version-check show powerline-status | grep Location | awk -F' ' '{print $2}')/powerline/bindings/bash/powerline.sh
 # fi
+
 
 
 if [ ! -z $(which ruby) ]; then

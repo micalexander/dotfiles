@@ -128,5 +128,3 @@ declare -A TRUELINE_SYMBOLS=(
   [vimode_cmd]='NORMAL'
   [vimode_ins]='INSERT'
 )
-
-source ~/trueline/trueline.sh
