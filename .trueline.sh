@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # shellcheck disable=SC2155
 #---------+
 # Helpers |
@@ -346,7 +347,7 @@ _trueline_prompt_command() {
 
     _trueline_vimode_segment
     PS1+=$(_trueline_content "$_last_color" default_bg bold "${TRUELINE_SYMBOLS[segment_separator]}")
-    PS1+=" "  # non-breakable space
+    PS1+=" "  # non-breakable space
     _trueline_continuation_prompt
 
     unset _first_color_fg
@@ -485,3 +486,4 @@ if [ -z "$_PROMPT_COMMAND_OLD" ]; then
 fi
 unset PROMPT_COMMAND
 PROMPT_COMMAND=_trueline_prompt_command
+
