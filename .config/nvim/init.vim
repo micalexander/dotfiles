@@ -12,9 +12,10 @@ call dein#add('editorconfig/editorconfig-vim')
 call dein#add('evidens/vim-twig')
 " call dein#add('rafaqz/ranger.vim')
 " call dein#add('micalexander/neoranger')
+call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/dein.vim')
-call dein#add('Shougo/deoplete.nvim')
+" call dein#add('Shougo/deoplete.nvim')
 call dein#add('tobyS/pdv')
 call dein#add('tobyS/vmustache')
 call dein#add('henrik/vim-indexed-search')
@@ -24,10 +25,9 @@ call dein#add('chrisbra/csv.vim')
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-call dein#add('SirVer/ultisnips')
+" call dein#add('SirVer/ultisnips')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('vifm/vifm.vim')
-" call dein#add('bkad/CamelCaseMotion')
 call dein#add('bogado/file-line')
 call dein#add('chrisbra/colorizer')
 call dein#add('christoomey/vim-tmux-navigator')
@@ -46,7 +46,7 @@ call dein#add('kana/vim-textobj-user')
 call dein#add('kassio/neoterm')
 call dein#add('ludovicchabant/vim-gutentags')
 call dein#add('phpactor/phpactor', { 'build': 'composer install'})
-call dein#add('kristijanhusak/deoplete-phpactor')
+" call dein#add('kristijanhusak/deoplete-phpactor')
 " call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
 call dein#add('majutsushi/tagbar')
 call dein#add('mattn/emmet-vim')
@@ -77,9 +77,11 @@ call dein#add('vim-scripts/argtextobj.vim')
 call dein#add('vim-scripts/closetag.vim')
 call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
-call dein#add('chemzqm/vim-jsx-improve')
-call dein#add('carlitux/deoplete-ternjs', { 'build': 'yarn global add tern'})
-call dein#add('dense-analysis/ale')
+call dein#add('pangloss/vim-javascript')
+call dein#add('maxmellon/vim-jsx-pretty')
+" call dein#add('chemzqm/vim-jsx-improve')
+" call dein#add('carlitux/deoplete-ternjs', { 'build': 'yarn global add tern'})
+" call dein#add('dense-analysis/ale')
 call dein#add('tmux-plugins/vim-tmux')
 call dein#add('svermeulen/vim-yoink')
 
@@ -90,6 +92,7 @@ endif
 call dein#end()
 
 " }}}
+"
 
 " Environment Dependencies ---------------------------------------------------------------{{{
 let s:uname = system("echo -n \"$(uname)\"")
@@ -115,7 +118,7 @@ tnoremap <C-T> <C-\><C-n>:Ttoggle<CR>
 " exit terminal
 tnoremap <leader><ESC> <C-\><C-n>
 " Buffers
-nnoremap <leader>h <Esc>:bp<CR>
+nnoremap <leader>ll <Esc>:bp<CR>
 nnoremap <leader>l <Esc>:bn<CR>
 
 autocmd! FileType fzf tnoremap <buffer> <ESC> <c-c>
@@ -123,30 +126,50 @@ autocmd! FileType fzf tnoremap <buffer> <ESC> <c-c>
 " :FZF show all files
 " nnoremap <leader>c <Esc>:Files <C-R>=expand("%:p:h") <CR><CR>
 " nnoremap <leader># <Esc>:Files <C-R>=expand("%:p:h") <CR>
-nnoremap <leader>f <Esc>:Files <CR>
 
 " Edit a file from current location
 " nnoremap <leader>e <Esc>:e <C-R>=expand("%:p:h") <CR>
 
 " Edit a file from current location
-nnoremap <leader>v <Esc>:vs <C-R>=expand("%:p:h") <CR>
+nnoremap <leader>v :vs <C-R>=expand("%:p:h") <CR>
 
 " :FZF show all git files
-nnoremap <leader>g <Esc>:GFiles<CR>
+nnoremap <leader>g :GFiles<CR>
+
 " :FZF show git status
-nnoremap <localleader>s <Esc>:GFiles?<CR>
-" :FZF show all files in current buffers
-nnoremap <leader>b <Esc>:Buffers<CR>
+nnoremap <localleader>s :GFiles?<CR>
+
+" :FZF show all files open in buffers
+nnoremap <leader>b :Buffers<CR>
+
+" :FZF show all commands
+nnoremap <leader>c :Commands<CR>
+
+" :FZF file history
+nnoremap <leader>r :Recent<CR>
+
+" :FZF command history
+nnoremap <leader>cr :HistoryCommand<CR>
+
+" :FZF search history
+nnoremap <leader>s :HistorySearch<CR>
+
+" :FZF all files in current directory
+nnoremap <leader>f :FilesWithIcon <CR>
 
 " <Leader><Leader> -- Open last buffer.
 nnoremap <Leader><Leader> <C-^>
+
 " <Leader>p -- Show the path of the current file (mnemonic: path; useful when
 " you have a lot of splits and the status line gets truncated).
 nnoremap <localleader>p :echo expand('%')<CR>
+
 " <Leader>pp -- Like <Leader>p, but additionally yanks the filename and sends it
 " off to Clipper.
 nnoremap <Leader>cp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
+
 nnoremap <Leader>. :%s///g<left><left>
+
 " Quit vim
 nnoremap Q :qall<CR>
 " <Leader>r -- Cycle through relativenumber + number, number (only), and no
@@ -185,8 +208,6 @@ nnoremap <localleader>k :Mkdir
 " let g:user_emmet_leader_key='<leader>,'
 let g:user_emmet_expandabbr_key='<leader>,'
 
-let g:vim_tags_ignore_files = []
-
 " Persistant Undo
 " Let's save undo info!
 if !isdirectory($HOME."/.config/nvim/undofiles")
@@ -216,9 +237,6 @@ endif
 
 set t_ZH=[3m
 set t_ZR=[23m
-
-" set background=dark
-" colorscheme one
 
 let g:one_allow_italics = 1
 
@@ -308,7 +326,7 @@ set showcmd
 set clipboard=unnamed
 
 " Terminal
-set shell=/bin/bash\ -l
+" set shell=/bin/bash\ -l
 
 " insert mode - line
 let &t_SI .= "\<Esc>[5 q"
@@ -319,6 +337,12 @@ let &t_EI .= "\<Esc>[3 q"
 
 set splitbelow
 set splitright
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
 
 let g:netrw_banner=0
 
@@ -358,9 +382,9 @@ let g:vifm_replace_netrw = 1
 syntax enable
 colorscheme one
 set background=dark
+
 call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
 call one#highlight('Cursor', '99c37e', '282c33', 'none')
-" call one#highlight('Normal', 'b2ad92', '99c37e', 'none')
 
 let g:one_allow_italics = 1
 
@@ -407,6 +431,12 @@ let g:airline_symbols.linenr = ''
 
 " Gutentags ---------------------------------------------------------------{{{
 " Don't load me if there's no ctags file
+let g:gutentags_ctags_exclude = [
+  \ 'node_modules/*'
+  \ ]
+let g:gutentags_file_list_command = 'ag -l'
+  let g:gutentags_dont_load = 1
+let g:gutentags_trace = 1
 if !executable('ctags')
   let g:gutentags_dont_load = 1
 endif
@@ -414,21 +444,22 @@ endif
 
 " Indent Guides ---------------------------------------------------------------{{{
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=NONE
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2e3239 ctermbg=NONE
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2c323c ctermbg=NONE
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_start_level = 1
 let g:indent_guides_guide_size = 2
 let g:indent_guides_auto_colors = 0
+let g:indent_guides_exclude_filetypes = ['fzf', 'startify']
 " }}}
 
 " Deoplete ---------------------------------------------------------------{{{
 let g:AutoClosePumvisible = {"ENTER": "<C-Y>", "ESC": "<ESC>"}
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option({
-  \ 'deoplete-options-on_text_changed_i': 0
-  \})
-:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option({
+  " \ 'deoplete-options-on_text_changed_i': 0
+  " \})
+" :inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " let g:deoplete#auto_complete_start_length = 1
 " call deoplete#custom#option('sources', {
  " \ '_': ['buffer'],
@@ -436,18 +467,18 @@ call deoplete#custom#option({
  " \ 'js': ['tern'],
  " \})
 
-let g:deoplete#sources#ternjs#filetypes = [
-	\ 'jsx',
-	\ 'javascript.jsx',
-	\ 'javascript.js',
-	\ 'typscript.ts',
-  \ 'ts',
-  \ 'js'
-	\ ]
-let g:deoplete#sources#phpactor = ['php', 'php.php']
-let g:deoplete#sources#ternjs#timeout = 3
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#docs = 1
+" let g:deoplete#sources#ternjs#filetypes = [
+	" \ 'jsx',
+	" \ 'javascript.jsx',
+	" \ 'javascript.js',
+	" \ 'typscript.ts',
+  " \ 'ts',
+  " \ 'js'
+	" \ ]
+" let g:deoplete#sources#phpactor = ['php', 'php.php']
+" let g:deoplete#sources#ternjs#timeout = 3
+" let g:deoplete#sources#ternjs#types = 1
+" let g:deoplete#sources#ternjs#docs = 1
 
 " call deoplete#custom#var('omni', 'input_patterns', {
     " \ 'r': '[^. *\t]\.\w*',
@@ -478,11 +509,157 @@ let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 " FZF ---------------------------------------------------------------{{{
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': '--prompt All\ Files:\ '}), <bang>0)
+
+command! -bang -nargs=? -complete=dir Buffers
+  \ call fzf#vim#buffers(<q-args>, {'options': '--prompt Active\ Buffers:\ '}, <bang>0)
+
+command! -bang -nargs=? -complete=dir Commands
+  \ call fzf#vim#commands({'options': '--prompt All\ Commands:\ '}, <bang>0)
+
+command! -bang -nargs=? -complete=dir Commits
+  \ call fzf#vim#commits({'options': '--propmt Commits:\ '}, <bang>0)
+
+command! -bang -nargs=? -complete=dir Recent
+  \ call fzf#vim#history({'options': ['-m', '--header-lines', !empty(expand('%')), '--prompt', 'Recent Files: ']}, <bang>0)
+
+command! -bang -nargs=? -complete=dir HistorySearch
+  \ call fzf#vim#search_history({'options': '+m --ansi --prompt="Recent Searches: " --header-lines=1 --expect=ctrl-e --tiebreak=index'}, <bang>0)
+
+command! -bang -nargs=? -complete=dir HistoryCommand
+  \ call fzf#vim#command_history({'options': '+m --ansi --prompt="Recent Commands: " --header-lines=1 --expect=ctrl-e --tiebreak=index'}, <bang>0)
 
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
     \ "find . -path '*/\.*' -prune -o -print \| sed '1d;s:^..::'",
     \ fzf#wrap({'dir': expand('%:p:h')}))
+
+if has('nvim') && exists('&winblend') && &termguicolors
+
+  hi NormalFloat guibg=#2c323c
+  if exists('g:fzf_colors.bg')
+    call remove(g:fzf_colors, 'bg')
+  endif
+
+  if stridx($FZF_DEFAULT_OPTS, '--border') == -1
+    let $FZF_DEFAULT_OPTS .= ' --border'
+  endif
+
+  function! FloatingFZF()
+    autocmd! FileType fzf tnoremap <buffer> <esc> :call nvim_win_close(0, 1) <CR>
+    let width = float2nr(&columns * 0.8)
+    let height = float2nr(&lines * 0.6)
+    let opts = { 'relative': 'editor',
+               \ 'style': 'minimal',
+               \ 'row': 0,
+               \ 'col': (&columns - width) / 2,
+               \ 'width': width,
+               \ 'height': height }
+
+    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+  endfunction
+
+  let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+endif
+
+let $FZF_DEFAULT_OPTS = '--reverse'
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+" Files + devicons
+function! Fzf_dev()
+  let l:fzf_files_options = '--preview "bat --style=numbers --color always {2..-1} | head -'.&lines.'"'
+
+  function! s:files()
+    let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
+    return s:prepend_icon(l:files)
+  endfunction
+
+  function! s:prepend_icon(candidates)
+    let l:result = []
+    for l:candidate in a:candidates
+      let l:filename = fnamemodify(l:candidate, ':p:t')
+      let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
+      call add(l:result, printf('%s %s', l:icon, l:candidate))
+    endfor
+
+    return l:result
+  endfunction
+
+  function! s:edit_file(item)
+    let l:pos = stridx(a:item, ' ')
+    let l:file_path = a:item[pos+1:-1]
+    execute 'silent e' l:file_path
+  endfunction
+
+  call fzf#run({
+        \ 'source': <sid>files(),
+        \ 'sink':   function('s:edit_file'),
+        \ 'options': '-m '.l:fzf_files_options. ' --reverse --prompt All\ Files:\ ' ,
+        \ 'window':    'call FloatingFZF()' })
+endfunction
+
+" ----------------------------------------------------------------------------
+" BTags
+" ----------------------------------------------------------------------------
+function! s:align_lists(lists)
+  let maxes = {}
+  for list in a:lists
+    let i = 0
+    while i < len(list)
+      let maxes[i] = max([get(maxes, i, 0), len(list[i])])
+      let i += 1
+    endwhile
+  endfor
+  for list in a:lists
+    call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
+  endfor
+  return a:lists
+endfunction
+
+function! s:btags_source()
+  let lines = map(split(system(printf(
+    \ 'ctags -f - --sort=no --excmd=pattern --language-force=%s %s',
+    \ &filetype, expand('%:S'))), "\n"), 'split(v:val, "\t")')
+  if v:shell_error
+    throw 'failed to extract tags'
+  endif
+  return map(s:align_lists(lines), 'join(v:val, "\t")')
+endfunction
+
+function! s:btags_sink(line)
+  execute split(a:line, "\t")[2]
+endfunction
+
+function! s:btags()
+  try
+    call fzf#run({'source':  s:btags_source(),
+                 \'down':    '40%',
+                 \'options': '+m -d "\t" --with-nth 1,4..',
+                 \'sink':    function('s:btags_sink')})
+  catch
+    echohl WarningMsg
+    echom v:exception
+    echohl None
+  endtry
+endfunction
+
+command! BTags call s:btags()
+
+command! FilesWithIcon :call Fzf_dev()
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 function! s:escape(path)
   return substitute(a:path, ' ', '\\ ', 'g')
@@ -593,18 +770,19 @@ let g:startify_custom_header = [
       " \ ]
 
 
+autocmd FileType startify map <buffer> l <CR>
 
 " }}}
 
 " ale Lint Engine ---------------------------------------------------------------{{{
 
-let g:ale_linters = {
-\   'javascript': ['standard'],
-\}
-let g:ale_fixers = {'javascript': ['prettier_standard']}
+" let g:ale_linters = {
+" \   'javascript': ['standard'],
+" \}
+" let g:ale_fixers = {'javascript': ['prettier_standard']}
 
-let g:ale_lint_on_save = 1
-let g:ale_fix_on_save = 1
+" let g:ale_lint_on_save = 1
+" let g:ale_fix_on_save = 1
 " }}}
 
 " Vim Javascript ---------------------------------------------------------------{{{
@@ -720,49 +898,53 @@ let g:codi#width = '50%'
 " }}}
 
 
-" ----------------------------------------------------------------------------
-" BTags
-" ----------------------------------------------------------------------------
-function! s:align_lists(lists)
-  let maxes = {}
-  for list in a:lists
-    let i = 0
-    while i < len(list)
-      let maxes[i] = max([get(maxes, i, 0), len(list[i])])
-      let i += 1
-    endwhile
-  endfor
-  for list in a:lists
-    call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
-  endfor
-  return a:lists
+let g:tagbar_type_javascript = {
+      \ 'ctagstype': 'javascript',
+      \ 'kinds': [
+      \ 'A:arrays',
+      \ 'P:properties',
+      \ 'T:tags',
+      \ 'O:objects',
+      \ 'G:generator functions',
+      \ 'F:functions',
+      \ 'C:constructors/classes',
+      \ 'M:methods',
+      \ 'V:variables',
+      \ 'I:imports',
+      \ 'E:exports',
+      \ 'S:styled components',
+      \ 'a:arrays',
+      \ 'p:properties',
+      \ 't:tags',
+      \ 'o:objects',
+      \ 'g:generator functions',
+      \ 'f:functions',
+      \ 'c:constructors/classes',
+      \ 'm:methods',
+      \ 'v:variables',
+      \ 'i:imports',
+      \ 'e:exports',
+      \ 's:styled components'
+      \ ]}
+
+let g:lightline#bufferline#enable_devicons = 1
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-function! s:btags_source()
-  let lines = map(split(system(printf(
-    \ 'ctags -f - --sort=no --excmd=pattern --language-force=%s %s',
-    \ &filetype, expand('%:S'))), "\n"), 'split(v:val, "\t")')
-  if v:shell_error
-    throw 'failed to extract tags'
-  endif
-  return map(s:align_lists(lines), 'join(v:val, "\t")')
-endfunction
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
-function! s:btags_sink(line)
-  execute split(a:line, "\t")[2]
-endfunction
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
-function! s:btags()
-  try
-    call fzf#run({'source':  s:btags_source(),
-                 \'down':    '40%',
-                 \'options': '+m -d "\t" --with-nth 1,4..',
-                 \'sink':    function('s:btags_sink')})
-  catch
-    echohl WarningMsg
-    echom v:exception
-    echohl None
-  endtry
-endfunction
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+" Terminal buffer options for fzf
+" autocmd! FileType fzf
+" autocmd  FileType fzf set noshowmode noruler nonu
 
-command! BTags call s:btags()

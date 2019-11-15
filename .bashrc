@@ -26,6 +26,8 @@ fi
 
 alias     vim='dmux vim'
 alias      bp='dmux vim ~/Cloud/Development/.bash_profile'
+alias      bc='dmux vim ~/Cloud/Development/.bashrc'
+alias     cat='bat --theme="OneHalfDark" --style=numbers,changes --color always'
 alias     sbp='. ~/Cloud/Development/.bash_profile'
 alias     www='cd /Cloud/Development/www'
 alias     dot='git --git-dir=$HOME/Cloud/Development/dotfiles --work-tree=$HOME/Cloud/Development/'
@@ -47,8 +49,8 @@ cdv () {
 export CDPATH=.:$HOME/Cloud/Development/binaries:$HOME/Cloud/Development/www:$HOME/Cloud/Development:$HOME/Cloud
 
 export ANSIBLE_NOCOWS=1
-export EDITOR=dvim
-export VISUAL=dvim
+export EDITOR=vim
+export VISUAL=vim
 
 
 function is_interactive_shell() {
@@ -128,6 +130,6 @@ declare -a TRUELINE_SEGMENTS=(
   'user,grey,special_grey'
   'working_dir,mono,cursor_grey'
   'git,grey,special_grey'
-  )
+)
 
 
