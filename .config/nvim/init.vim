@@ -78,7 +78,8 @@ call dein#add('vim-scripts/closetag.vim')
 call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('pangloss/vim-javascript')
-call dein#add('kkoomen/gfi.vim')
+call dein#add('zoubin/vim-gotofile')
+" call dein#add('kkoomen/gfi.vim')
 call dein#add('maxmellon/vim-jsx-pretty')
 call dein#add('HerringtonDarkholme/yats.vim')
 " call dein#add('chemzqm/vim-jsx-improve')
@@ -949,20 +950,20 @@ nmap <leader>rn <Plug>(coc-rename)
 " Terminal buffer options for fzf
 " autocmd! FileType fzf
 " autocmd  FileType fzf set noshowmode noruler nonu
+autocmd BufWinEnter * call system("vifm --remote -c 'go ". expand("%:p"). "' -c 'redraw'")
 
-" set path=.,src
-" set suffixesadd=.js,.jsx
+set path=.,src
+set suffixesadd+=.js,.jsx
 
-" function! LoadMainNodeModule(fname)
-"     let nodeModules = "./node_modules/"
-"     let packageJsonPath = nodeModules . a:fname . "/package.json"
+function! LoadMainNodeModule(fname)
+    let nodeModules = "./node_modules/"
+    let packageJsonPath = nodeModules . a:fname . "/package.json"
 
-"     if filereadable(packageJsonPath)
-"         return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
-"     else
-"         return nodeModules . a:fname
-"     endif
-" endfunction
+    if filereadable(packageJsonPath)
+        return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
+    else
+        return nodeModules . a:fname
+    endif
+endfunction
 
-" set includeexpr=LoadMainNodeModule(v:fname)
-autocmd BufWinEnter * call system("vifm --remote -c 'go ". expand("%:p"). "'")
+set includeexpr=LoadMainNodeModule(v:fname)

@@ -25,6 +25,7 @@ else
 fi
 
 alias     vim='dmux vim'
+alias    vifm='vifm -c ":only" -c "set vicmd=dmux\ vim";bash -l'
 alias      bp='dmux vim ~/Cloud/Development/.bash_profile'
 alias      bc='dmux vim ~/Cloud/Development/.bashrc'
 alias     cat='bat --theme="OneHalfDark" --style=numbers,changes --color always'
