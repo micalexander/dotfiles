@@ -132,9 +132,9 @@ export CLICOLOR=true
 
 # export TERM=xterm-256color
 if [[ $TMUX = "" ]]; then
-  export TERM=xterm-256color
+  export TERM=xterm-256color-italic
 else
-  export TERM=screen-256color
+  export TERM=screen-256color-italic
 fi
 
 export LC_ALL=en_US.UTF-8

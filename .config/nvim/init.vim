@@ -241,7 +241,7 @@ endif
 set t_ZH=[3m
 set t_ZR=[23m
 
-let g:one_allow_italics = 1
+highlight Comment cterm=italic
 
 " For Vim inside tmux
 set t_8b=[48;2;%lu;%lu;%lum
@@ -382,6 +382,8 @@ let g:vifm_replace_netrw = 1
 " }}}
 
 " Vim One (colorscheme) --------------------------------------------------------------- {{{
+let g:one_allow_italics = 1
+
 syntax enable
 colorscheme one
 set background=dark
@@ -389,7 +391,6 @@ set background=dark
 call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
 call one#highlight('Cursor', '99c37e', '282c33', 'none')
 
-let g:one_allow_italics = 1
 
 autocmd VimEnter,ColorScheme * :call one#highlight ('StartifyHeader', '61afef', 'none', 'none')
 
