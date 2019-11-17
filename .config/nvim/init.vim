@@ -78,7 +78,9 @@ call dein#add('vim-scripts/closetag.vim')
 call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('pangloss/vim-javascript')
+call dein#add('kkoomen/gfi.vim')
 call dein#add('maxmellon/vim-jsx-pretty')
+call dein#add('HerringtonDarkholme/yats.vim')
 " call dein#add('chemzqm/vim-jsx-improve')
 " call dein#add('carlitux/deoplete-ternjs', { 'build': 'yarn global add tern'})
 " call dein#add('dense-analysis/ale')
@@ -771,7 +773,7 @@ let g:startify_custom_header = [
 
 
 autocmd FileType startify map <buffer> l <CR>
-
+let g:startify_change_to_dir = 0
 " }}}
 
 " ale Lint Engine ---------------------------------------------------------------{{{
@@ -948,3 +950,19 @@ nmap <leader>rn <Plug>(coc-rename)
 " autocmd! FileType fzf
 " autocmd  FileType fzf set noshowmode noruler nonu
 
+" set path=.,src
+" set suffixesadd=.js,.jsx
+
+" function! LoadMainNodeModule(fname)
+"     let nodeModules = "./node_modules/"
+"     let packageJsonPath = nodeModules . a:fname . "/package.json"
+
+"     if filereadable(packageJsonPath)
+"         return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
+"     else
+"         return nodeModules . a:fname
+"     endif
+" endfunction
+
+" set includeexpr=LoadMainNodeModule(v:fname)
+autocmd BufWinEnter * call system("vifm --remote -c 'go ". expand("%:p"). "'")
