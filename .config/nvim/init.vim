@@ -993,7 +993,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Terminal buffer options for fzf
 " autocmd! FileType fzf
 " autocmd  FileType fzf set noshowmode noruler nonu
-autocmd BufWinEnter * call system("vifm --remote -c 'go ". expand("%:p"). "' -c 'redraw'")
+autocmd BufWinEnter * call system("vifm --remote -c 'go ". escape(expand("%:p"), ' '). "' -c 'redraw'")
 
 set path=.,src
 set suffixesadd+=.js,.jsx
