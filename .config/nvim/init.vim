@@ -535,7 +535,7 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
 
 if has('nvim') && exists('&winblend') && &termguicolors
 
-  hi NormalFloat guibg=#2c323c
+  hi NormalFloat guibg=#313543 guifg=#ABB2BF
   if exists('g:fzf_colors.bg')
     call remove(g:fzf_colors, 'bg')
   endif
@@ -545,12 +545,12 @@ if has('nvim') && exists('&winblend') && &termguicolors
   endif
 
   function! FloatingFZF()
-    autocmd! FileType fzf tnoremap <buffer> <esc> :call nvim_win_close(0, 1) <CR>
+    autocmd! FileType fzf tnoremap <buffer> <ESC> :call nvim_win_close(0, 0)<CR><ESC>
     let width = float2nr(&columns * 0.8)
     let height = float2nr(&lines * 0.6)
     let opts = { 'relative': 'editor',
                \ 'style': 'minimal',
-               \ 'row': 0,
+               \ 'row': 1,
                \ 'col': (&columns - width) / 2,
                \ 'width': width,
                \ 'height': height }
@@ -645,21 +645,21 @@ command! BTags call s:btags()
 
 command! FilesWithIcon :call Fzf_dev()
 
-" Customize fzf colors to match your color scheme
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+" " Customize fzf colors to match your color scheme
+" let g:fzf_colors =
+" \ { 'fg':      ['fg', 'Normal'],
+"   \ 'bg':      ['bg', 'Normal'],
+"   \ 'hl':      ['fg', 'Comment'],
+"   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+"   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+"   \ 'hl+':     ['fg', 'Statement'],
+"   \ 'info':    ['fg', 'PreProc'],
+"   \ 'border':  ['fg', 'Ignore'],
+"   \ 'prompt':  ['fg', 'Conditional'],
+"   \ 'pointer': ['fg', 'Exception'],
+"   \ 'marker':  ['fg', 'Keyword'],
+"   \ 'spinner': ['fg', 'Label'],
+"   \ 'header':  ['fg', 'Comment'] }
 
 function! s:escape(path)
   return substitute(a:path, ' ', '\\ ', 'g')
@@ -864,7 +864,6 @@ imap <right> <nop>
 " Change color of indent guides
 " au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
-command Q qall
 " splits
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>

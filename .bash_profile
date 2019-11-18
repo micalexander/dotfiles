@@ -123,9 +123,14 @@ fi
 export PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # Set FZF envs
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 
+export FZF_DEFAULT_OPTS='
+--height 40% --border --inline-info
+--color=dark
+--color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
+--color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef
+'
 # Set colors
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export CLICOLOR=true
