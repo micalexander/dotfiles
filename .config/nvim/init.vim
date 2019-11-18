@@ -114,7 +114,7 @@ noremap <silent> <leader>d :bp\|bd! #<CR>
 " noremap <silent> <leader>w :bd<CR>
 "
 " Start terminal
-nnoremap <leader>t :Ttoggle<CR>
+" nnoremap <leader>t :Ttoggle<CR>
 inoremap <C-T> <esc>:Ttoggle<CR>
 tnoremap <C-T> <C-\><C-n>:Ttoggle<CR>
 
@@ -159,6 +159,9 @@ nnoremap <leader>s :HistorySearch<CR>
 
 " :FZF all files in current directory
 nnoremap <leader>f :FilesWithIcon <CR>
+
+" :FZF text search
+nnoremap <leader>t :TextSearch <CR>
 
 " <Leader><Leader> -- Open last buffer.
 nnoremap <Leader><Leader> <C-^>
@@ -512,6 +515,11 @@ let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 " FZF ---------------------------------------------------------------{{{
 
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!{.git,node_modules,vendor}/*" '
+
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': '--prompt All\ Files:\ '}), <bang>0)
 
@@ -532,6 +540,8 @@ command! -bang -nargs=? -complete=dir HistorySearch
 
 command! -bang -nargs=? -complete=dir HistoryCommand
   \ call fzf#vim#command_history({'options': '+m --ansi --prompt="Recent Commands: " --header-lines=1 --expect=ctrl-e --tiebreak=index'}, <bang>0)
+
+command! -bang -nargs=* TextSearch call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
     \ "find . -path '*/\.*' -prune -o -print \| sed '1d;s:^..::'",
@@ -967,3 +977,5 @@ function! LoadMainNodeModule(fname)
 endfunction
 
 set includeexpr=LoadMainNodeModule(v:fname)
+
+
