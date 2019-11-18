@@ -78,7 +78,10 @@ call dein#add('vim-scripts/closetag.vim')
 call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('pangloss/vim-javascript')
+call dein#add('zoubin/vim-gotofile')
+" call dein#add('kkoomen/gfi.vim')
 call dein#add('maxmellon/vim-jsx-pretty')
+call dein#add('HerringtonDarkholme/yats.vim')
 " call dein#add('chemzqm/vim-jsx-improve')
 " call dein#add('carlitux/deoplete-ternjs', { 'build': 'yarn global add tern'})
 " call dein#add('dense-analysis/ale')
@@ -238,7 +241,7 @@ endif
 set t_ZH=[3m
 set t_ZR=[23m
 
-let g:one_allow_italics = 1
+highlight Comment cterm=italic
 
 " For Vim inside tmux
 set t_8b=[48;2;%lu;%lu;%lum
@@ -379,6 +382,8 @@ let g:vifm_replace_netrw = 1
 " }}}
 
 " Vim One (colorscheme) --------------------------------------------------------------- {{{
+let g:one_allow_italics = 1
+
 syntax enable
 colorscheme one
 set background=dark
@@ -386,7 +391,6 @@ set background=dark
 call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
 call one#highlight('Cursor', '99c37e', '282c33', 'none')
 
-let g:one_allow_italics = 1
 
 autocmd VimEnter,ColorScheme * :call one#highlight ('StartifyHeader', '61afef', 'none', 'none')
 
@@ -771,7 +775,7 @@ let g:startify_custom_header = [
 
 
 autocmd FileType startify map <buffer> l <CR>
-
+let g:startify_change_to_dir = 0
 " }}}
 
 " ale Lint Engine ---------------------------------------------------------------{{{
@@ -946,4 +950,20 @@ nmap <leader>rn <Plug>(coc-rename)
 " Terminal buffer options for fzf
 " autocmd! FileType fzf
 " autocmd  FileType fzf set noshowmode noruler nonu
+autocmd BufWinEnter * call system("vifm --remote -c 'go ". expand("%:p"). "' -c 'redraw'")
 
+set path=.,src
+set suffixesadd+=.js,.jsx
+
+function! LoadMainNodeModule(fname)
+    let nodeModules = "./node_modules/"
+    let packageJsonPath = nodeModules . a:fname . "/package.json"
+
+    if filereadable(packageJsonPath)
+        return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
+    else
+        return nodeModules . a:fname
+    endif
+endfunction
+
+set includeexpr=LoadMainNodeModule(v:fname)
