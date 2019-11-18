@@ -241,7 +241,7 @@ endif
 set t_ZH=[3m
 set t_ZR=[23m
 
-highlight Comment cterm=italic
+" highlight Comment cterm=italic
 
 " For Vim inside tmux
 set t_8b=[48;2;%lu;%lu;%lum
@@ -388,13 +388,12 @@ syntax enable
 colorscheme one
 set background=dark
 
-call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
-call one#highlight('Cursor', '99c37e', '282c33', 'none')
+" call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
+" call one#highlight('Cursor', '99c37e', '282c33', 'none')
 
 
 autocmd VimEnter,ColorScheme * :call one#highlight ('StartifyHeader', '61afef', 'none', 'none')
-
-autocmd VimEnter,Colorscheme * :call one#highlight('Search', '282c33', 'd4dce2', 'none')
+autocmd VimEnter,Colorscheme * :call one#highlight('Search', '282c33', '61afef', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('IncSearch', 'ffffff', '62afec', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('Cursor', '99c37e', '282c33', 'none')
@@ -776,6 +775,40 @@ let g:startify_custom_header = [
 
 autocmd FileType startify map <buffer> l <CR>
 let g:startify_change_to_dir = 0
+
+" https://github.com/mhinz/vim-startify/issues/331
+autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
+
+" function! s:cd() abort
+"   if &buftype =~# '\v(nofile|terminal)' || expand('%') =~# '^fugitive'
+"     return
+"   endif
+"   if !exists('s:cache')
+"     let s:cache = {}
+"   endif
+"   let dirs   = [ '.git', '.hg', '.svn' ]
+"   let curdir = resolve(expand('%:p:h'))
+"   if !isdirectory(curdir)
+"     echohl WarningMsg | echo 'No such directory: '. curdir | echohl NONE
+"     return
+"   endif
+"   if has_key(s:cache, curdir)
+"     execute 'lcd' fnameescape(s:cache[curdir])
+"     return
+"   endif
+"   for dir in dirs
+"     let founddir = finddir(dir, curdir .';')
+"     if !empty(founddir)
+"       break
+"     endif
+"   endfor
+"   let dir = empty(founddir) ? curdir : resolve(fnamemodify(founddir, ':p:h:h'))
+"   let s:cache[curdir] = dir
+"   execute 'lcd' fnameescape(dir)
+" endfunction
+
+" command! Cd call s:cd()
+" autocmd BufEnter * call s:cd()
 " }}}
 
 " ale Lint Engine ---------------------------------------------------------------{{{
@@ -868,7 +901,6 @@ imap <right> <nop>
 " Change color of indent guides
 " au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
-command Q qall
 " splits
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
