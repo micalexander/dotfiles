@@ -72,6 +72,7 @@ call dein#add('tpope/vim-unimpaired')
 call dein#add('valloric/MatchTagAlways')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
+call dein#add('edkolev/tmuxline.vim')
 call dein#add('chrisbra/vim-diff-enhanced')
 call dein#add('vim-scripts/argtextobj.vim')
 call dein#add('vim-scripts/closetag.vim')
@@ -516,7 +517,7 @@ let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
-  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "*.{js,tsx,jsx,scss,css,less,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
   \ -g "!{.git,node_modules,vendor}/*" '
 
 command! -bang -nargs=? -complete=dir Files
@@ -548,7 +549,7 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
 
 if has('nvim') && exists('&winblend') && &termguicolors
 
-  hi NormalFloat guibg=#313543 guifg=#ABB2BF
+  hi NormalFloat guibg=#2c323c guifg=#ABB2BF
   if exists('g:fzf_colors.bg')
     call remove(g:fzf_colors, 'bg')
   endif
@@ -994,6 +995,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " autocmd! FileType fzf
 " autocmd  FileType fzf set noshowmode noruler nonu
 autocmd BufWinEnter * call system("vifm --remote -c 'go ". escape(expand("%:p"), ' '). "' -c 'redraw'")
+autocmd BufWinEnter * call system("tmux set -g status-right \"#[fg=#3b4048,bg=#2c323c,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#3b4048]  #[fg=#98c379,bg=#3b4048,nobold,nounderscore,noitalics]#[fg=#3b4048,bg=#98c379] ".expand("%:p")." #[fg=#3b4048,bg=#98c379,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#3b4048]\"")
 
 set path=.,src
 set suffixesadd+=.js,.jsx
@@ -1012,3 +1014,39 @@ endfunction
 set includeexpr=LoadMainNodeModule(v:fname)
 
 
+" change status of Tmuxline when Vim mode changes
+" if exists('$TMUX')
+"   function! AddTmuxlineStatus()
+"     if exists(':Tmuxline')
+"       augroup airline_tmuxline
+"         au!
+"         au InsertEnter * call SetInsert()
+"         au InsertChange * call SetInsert()
+"         autocmd InsertLeave * call SetNormal()
+"         vnoremap <silent> <expr> <SID>SetVisual SetVisual()
+"         nnoremap <silent> <script> v v<SID>SetVisual
+"         nnoremap <silent> <script> V V<SID>SetVisual
+"         nnoremap <silent> <script> <C-v> <C-v><SID>SetVisual
+"         autocmd CursorHold * call SetNormal()
+"       augroup END
+"     endif
+"   endfunction
+"   function! SetInsert()
+"     if v:insertmode == 'i'
+"       Tmuxline airline_insert
+"     else
+"       Tmuxline airline_replace
+"     endif
+"   endfunction
+"   function! SetVisual()
+"     set updatetime=0
+"     Tmuxline airline_visual
+"     return ''
+"   endfunction
+"   function! SetNormal()
+"     set updatetime=4000
+"     Tmuxline airline
+"   endfunction
+"   au VimEnter * :call AddTmuxlineStatus()
+" endif   " exists('$TMUX')
+let g:airline#extensions#tmuxline#enabled = 0
