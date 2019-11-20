@@ -19,7 +19,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 if [ $(uname) == "Darwin" ]; then
-  alias ll='clear; ls -laO'
+  alias ll='clear; colorls -la'
 else
   alias ll='clear ; ls -la --color=auto'
 fi
