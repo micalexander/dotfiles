@@ -542,12 +542,12 @@ let $VIFM="%4*"
 
 " GIT SUPPORT "
 """""""""""""""
-let $GIT="%5* %{system('sh ~/.config/vifm/git-status.sh')} %6*"
+let $GIT="%5* %{system('sh ~/.config/vifm/git-status.sh')}"
 
 
 
 " SET STATUSLINE "
 """"""""""""""""""
-execute 'set' 'statusline="' .$VIFM .$GIT .'"'
+execute 'set' 'statusline="'.$VIFM.$GIT.'"'
 
 
