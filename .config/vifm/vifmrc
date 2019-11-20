@@ -513,8 +513,8 @@ let R_T=""
 highlight User1      ctermbg=black          ctermfg=black         cterm=none
 highlight User2      ctermbg=black          ctermfg=black         cterm=none
 highlight User3      ctermbg=black          ctermfg=green         cterm=none
-highlight User4      ctermbg=black          ctermfg=yellow         cterm=none
-highlight User5      ctermbg=black         ctermfg=yellow          cterm=none
+highlight User4      ctermbg=none          ctermfg=yellow         cterm=none
+highlight User5      ctermbg=none         ctermfg=yellow          cterm=none
 highlight User6      ctermbg=yellow     ctermfg=black         cterm=none
 highlight User8      ctermbg=black     ctermfg=black      cterm=none
 highlight User9      ctermbg=black          ctermfg=black        cterm=none
@@ -548,6 +548,6 @@ let $GIT="%5* %{system('sh ~/.config/vifm/git-status.sh')}"
 
 " SET STATUSLINE "
 """"""""""""""""""
-execute 'set' 'statusline="'.$VIFM.$GIT.'"'
+execute 'set' 'statusline="' .$VIFM .$GIT .'"'
 
 
