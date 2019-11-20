@@ -491,7 +491,63 @@ set classify+=' ::*.avi,,*.flv,,*.mkv,,*.mov,,*.mov,,*.mp4,,*.mpeg,,*.mpg,,*.
 set classify+=' ::*.epub,,*.pdf,,*.fb2,,*.djvu::'
 set classify+=' ::*.7z,,*.apk,,*.bz2,,*.cab,,*.cpio,,*.deb,,*.gem,,*.gz,,*.gzip,,*.lh,,*.lzh,,*.lzma,,*.rar,,*.rpm,,*.tar,,*.tgz,,*.xz,,*.zip::'
 set classify+=' ::*.cbr,,*.cbz::'
-set classify+=' ::*.log::'
+set classify+=' ::*.log::'
 set classify+=' ::*.doc,,*.docx,,*.adoc::'
 set classify+=' ::*.xls,,*.xls,,*.xlsmx::'
 set classify+=' ::*.pptx,,*.ppt::'
+
+" STATUS LINE "
+"""""""""""""""
+
+" SEPARATORS "
+let L_B=""
+let L_T=""
+let R_B=""
+let R_T=""
+
+" COLORS "
+""""""""""
+
+" USER COLORS "
+"""""""""""""""
+highlight User1      ctermbg=black          ctermfg=black         cterm=none
+highlight User2      ctermbg=black          ctermfg=black         cterm=none
+highlight User3      ctermbg=black          ctermfg=green         cterm=none
+highlight User4      ctermbg=black          ctermfg=yellow         cterm=none
+highlight User5      ctermbg=black         ctermfg=yellow          cterm=none
+highlight User6      ctermbg=yellow     ctermfg=black         cterm=none
+highlight User8      ctermbg=black     ctermfg=black      cterm=none
+highlight User9      ctermbg=black          ctermfg=black        cterm=none
+highlight User7      ctermbg=black          ctermfg=black         cterm=none
+
+"""""""""""""""""
+"   SEGMENTS    "
+"""""""""""""""""
+
+" LEFT SEGMENT "
+""""""""""""""""
+let $CUR_DIR="%1* %t %2*"               " current dir
+let $CUR_FILE_SZ="%3* %E %4*"       " current file size
+
+" SEPARATOR "
+"""""""""""""
+let $SEPARATOR="%="                 " middle separator
+
+" RIGHT SEGMENT "
+"""""""""""""""""
+let $PERMS="%8*%9* %A "            " perms
+let $USER="%7*%1* %u "                 " user
+
+let $VIFM="%4*"
+
+" GIT SUPPORT "
+"""""""""""""""
+let $GIT="%5* %{system('sh ~/.config/vifm/git-status.sh')} %6*"
+
+
+
+" SET STATUSLINE "
+""""""""""""""""""
+execute 'set' 'statusline="' .$VIFM .$GIT .'"'
+
+

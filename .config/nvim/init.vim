@@ -787,6 +787,7 @@ let g:startify_custom_header = [
 autocmd FileType startify map <buffer> l <CR>
 let g:startify_change_to_dir = 0
 
+let g:startify_session_dir = '~/.local/share/nvim/session'
 " https://github.com/mhinz/vim-startify/issues/331
 autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
 
