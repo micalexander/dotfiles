@@ -407,9 +407,9 @@ autocmd VimEnter,Colorscheme * :call one#highlight('Normal', 'none', 'none', 'no
 " Airline ---------------------------------------------------------------{{{
 let g:airline_theme='one'
 let g:airline#extensions#tabline#fnamemod = ':t'
-hi airline_tabmod guifg=#2c323c
-hi airline_tabmod_right  guifg=#2c323c
-hi airline_tabmod_unsel_to_airline_tabmod  guifg=#2c323c
+hi airline_tabmod guifg=#282c33
+hi airline_tabmod_right  guifg=#282c33
+hi airline_tabmod_unsel_to_airline_tabmod  guifg=#282c33
 
 " Set theme for airline
 " Automatically displays all buffers when there's only one tab open.
