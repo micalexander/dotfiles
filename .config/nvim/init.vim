@@ -398,7 +398,7 @@ set background=dark
 
 autocmd VimEnter,ColorScheme * :call one#highlight ('StartifyHeader', '61afef', 'none', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('Search', '282c33', '61afef', 'none')
-autocmd VimEnter,Colorscheme * :call one#highlight('IncSearch', 'ffffff', '62afec', 'none')
+autocmd VimEnter,Colorscheme * :call one#highlight('IncSearch', '282c33', '62afec', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('Cursor', '99c37e', '282c33', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('Normal', 'none', 'none', 'none')
@@ -406,6 +406,10 @@ autocmd VimEnter,Colorscheme * :call one#highlight('Normal', 'none', 'none', 'no
 
 " Airline ---------------------------------------------------------------{{{
 let g:airline_theme='one'
+let g:airline#extensions#tabline#fnamemod = ':t'
+hi airline_tabmod guifg=#2c323c
+hi airline_tabmod_right  guifg=#2c323c
+hi airline_tabmod_unsel_to_airline_tabmod  guifg=#2c323c
 
 " Set theme for airline
 " Automatically displays all buffers when there's only one tab open.
@@ -889,7 +893,7 @@ nmap <CR><CR> O<Esc>
 " Remap newline above
 nmap <CR> o<Esc>
 
-imap jj <Esc>
+imap jk <Esc>
 imap jjj <Esc>:w<CR>
 
 autocmd BufWritePre * %s/\s\+$//e
