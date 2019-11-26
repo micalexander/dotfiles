@@ -28,13 +28,13 @@ fi
 alias     vim='dmux vim'
 alias    difm='vifm -c ":only" -c "set vicmd=dmux\ vim";bash -l'
 alias      bp='dmux vim ~/Cloud/Development/.bash_profile'
-alias      bc='dmux vim ~/Cloud/Development/.bashrc'
+alias     brc='dmux vim ~/Cloud/Development/.bashrc'
+alias     vrc='dmux vim ~/Cloud/Development/.config/nvim/init.vim'
+alias      tc='dmux vim ~/Cloud/Development/.tmux.conf'
 alias     cat='bat --theme="OneHalfDark" --style=numbers,changes --color always'
 alias     sbp='. ~/Cloud/Development/.bash_profile'
 alias     www='cd /Cloud/Development/www'
 alias     dot='git --git-dir=$HOME/Cloud/Development/dotfiles --work-tree=$HOME/Cloud/Development/'
-alias      ..='cd ..'
-alias     ...='cd ../..'
 alias  cowsay='cowsay -f tux'
 
 

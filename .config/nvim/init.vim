@@ -10,12 +10,11 @@ call dein#begin(expand('~/.config/nvim'))
 
 call dein#add('editorconfig/editorconfig-vim')
 call dein#add('evidens/vim-twig')
-" call dein#add('rafaqz/ranger.vim')
-" call dein#add('micalexander/neoranger')
+call dein#add('elzr/vim-json')
 call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/dein.vim')
-" call dein#add('Shougo/deoplete.nvim')
+call dein#add('vim-scripts/xterm-color-table.vim')
 call dein#add('tobyS/pdv')
 call dein#add('tobyS/vmustache')
 call dein#add('henrik/vim-indexed-search')
@@ -25,7 +24,6 @@ call dein#add('chrisbra/csv.vim')
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-" call dein#add('SirVer/ultisnips')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('vifm/vifm.vim')
 call dein#add('bogado/file-line')
@@ -45,9 +43,6 @@ call dein#add('junegunn/vim-peekaboo')
 call dein#add('kana/vim-textobj-user')
 call dein#add('kassio/neoterm')
 call dein#add('ludovicchabant/vim-gutentags')
-call dein#add('phpactor/phpactor', { 'build': 'composer install'})
-" call dein#add('kristijanhusak/deoplete-phpactor')
-" call dein#add('lvht/phpcd.vim', { 'build': 'composer install'})
 call dein#add('majutsushi/tagbar')
 call dein#add('mattn/emmet-vim')
 call dein#add('mhinz/vim-startify')
@@ -55,6 +50,7 @@ call dein#add('michaeljsmith/vim-indent-object')
 call dein#add('mtth/scratch.vim')
 call dein#add('myusuf3/numbers.vim')
 call dein#add('nathanaelkane/vim-indent-guides')
+call dein#add('Yggdroot/indentLine')
 call dein#add('nelstrom/vim-textobj-rubyblock')
 call dein#add('nelstrom/vim-visual-star-search')
 call dein#add('leafgarland/typescript-vim')
@@ -80,12 +76,9 @@ call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('pangloss/vim-javascript')
 call dein#add('zoubin/vim-gotofile')
-" call dein#add('kkoomen/gfi.vim')
+call dein#add('neoclide/vim-jsx-improve')
+call dein#add('mg979/vim-visual-multi')
 call dein#add('maxmellon/vim-jsx-pretty')
-call dein#add('HerringtonDarkholme/yats.vim')
-" call dein#add('chemzqm/vim-jsx-improve')
-" call dein#add('carlitux/deoplete-ternjs', { 'build': 'yarn global add tern'})
-" call dein#add('dense-analysis/ale')
 call dein#add('tmux-plugins/vim-tmux')
 call dein#add('svermeulen/vim-yoink')
 
@@ -454,14 +447,26 @@ endif
 " }}}
 
 " Indent Guides ---------------------------------------------------------------{{{
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=NONE
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2c323c ctermbg=NONE
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=NONE
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2c323c ctermbg=NONE
+" autocmd InsertEnter *.json setlocal concealcursor=
+" autocmd InsertLeave *.json setlocal concealcursor=inc
+let g:vim_json_syntax_conceal = 0
+let g:indentLine_setColors = 0
+let g:indentLine_fileTypeExclude = ['fzf', 'startify']
+" let g:indentLine_char = '|'
+let g:indentLine_conceallevel=1
+let g:indentLine_color_term = 255
+set conceallevel=0
+set concealcursor+=v
 
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 1
-let g:indent_guides_guide_size = 2
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_exclude_filetypes = ['fzf', 'startify']
+
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_start_level = 1
+" let g:indent_guides_guide_size = 2
+" let g:indent_guides_auto_colors = 0
+" let g:indent_guides_exclude_filetypes = ['fzf', 'startify']
+
 " }}}
 
 " Deoplete ---------------------------------------------------------------{{{
@@ -992,8 +997,21 @@ inoremap <silent><expr> <Tab>
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
 
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
+let g:coc_global_extensions = [
+      \ "coc-emmet",
+      \ "coc-tsserver",
+      \ "coc-css",
+      \ "coc-json",
+      \ "coc-yaml",
+      \ "coc-phpls",
+      \ "coc-html"
+      \]
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 " Terminal buffer options for fzf
@@ -1055,3 +1073,11 @@ set includeexpr=LoadMainNodeModule(v:fname)
 "   au VimEnter * :call AddTmuxlineStatus()
 " endif   " exists('$TMUX')
 let g:airline#extensions#tmuxline#enabled = 0
+let g:VM_maps = {}
+let g:VM_maps["Find Under"] = '<C-m>'
+let g:VM_maps["Find Subword Under"] = '<C-m>'
+" let g:rainbow_active = 1
+" let g:rainbow_conf = {
+" \	'guifgs': ['magenta', 'darkorange3', 'seagreen3', 'firebrick'],
+" \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+" \}
