@@ -1010,6 +1010,7 @@ let g:coc_global_extensions = [
       \ "coc-json",
       \ "coc-yaml",
       \ "coc-phpls",
+      \ 'coc-prettier',
       \ "coc-html"
       \]
 " Remap for rename current word
