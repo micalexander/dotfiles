@@ -1074,6 +1074,31 @@ let g:airline#extensions#tmuxline#enabled = 0
 let g:VM_maps = {}
 let g:VM_maps["Find Under"] = '<C-m>'
 let g:VM_maps["Find Subword Under"] = '<C-m>'
+
+function! Install_plugins(path)
+  let l:plugin = system("$HOME/Cloud/Development/vim/fzf-plugin-source '".a:path."'")
+  let l:choice = confirm('Are you sure you want to install '.substitute(l:plugin, '\n\+$', '', '').'?', "&Yes\n&No", 1)
+  if l:choice == 1
+    call dein#direct_install(substitute(l:plugin, '\n\+$', '', ''))
+  else
+    echo 'nothing will install'
+  endif
+endfunction
+
+
+function! s:fzf_plugins()
+  " let command = "command cat plugins.txt | fzf -m | awk '{print $4\"/\"$1}' | sed -E 's/(.*)/dein#add(\"\1\")/g' | pbcopy"
+  let command = "command cat ".expand('$HOME/Cloud/Development/node/jsonFzf/plugins.txt')
+
+  call fzf#run({
+        \ 'source': command,
+        \ 'sink':   function('Install_plugins'),
+        \ 'options': '-m --exact',
+        \ 'window':  'call FloatingFZF()' })
+endfunction
+
+command! Plugins call s:fzf_plugins()
+
 " let g:rainbow_active = 1
 " let g:rainbow_conf = {
 " \	'guifgs': ['magenta', 'darkorange3', 'seagreen3', 'firebrick'],
