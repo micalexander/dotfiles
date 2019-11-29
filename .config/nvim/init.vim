@@ -79,6 +79,7 @@ call dein#add('vim-scripts/xterm-color-table.vim')
 call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('zoubin/vim-gotofile')
+call dein#add('micalexander/fzf-vim-plugins.vim')
 if dein#check_install()
   call dein#install()
   let pluginsExist=1
@@ -86,7 +87,6 @@ endif
 call dein#end()
 
 " }}}
-"
 
 " Environment Dependencies ---------------------------------------------------------------{{{
 let s:uname = system("echo -n \"$(uname)\"")
@@ -555,7 +555,7 @@ inoremap <expr> <c-x><c-f> fzf#vim#complete#path(
 
 if has('nvim') && exists('&winblend') && &termguicolors
 
-  hi NormalFloat guibg=#2c323c guifg=#ABB2BF
+  " hi NormalFloat guibg=#2c323c guifg=#ABB2BF
   if exists('g:fzf_colors.bg')
     call remove(g:fzf_colors, 'bg')
   endif
@@ -565,7 +565,6 @@ if has('nvim') && exists('&winblend') && &termguicolors
   endif
 
   function! FloatingFZF()
-    autocmd! FileType fzf tnoremap <buffer> <ESC> :call nvim_win_close(0, 0)<CR><ESC>
     let width = float2nr(&columns * 0.8)
     let height = float2nr(&lines * 0.6)
     let opts = { 'relative': 'editor',
@@ -1008,6 +1007,7 @@ let g:coc_global_extensions = [
       \ "coc-yaml",
       \ "coc-phpls",
       \ 'coc-prettier',
+      \ 'coc-vimlsp',
       \ "coc-html"
       \]
 " Remap for rename current word
@@ -1075,29 +1075,7 @@ let g:VM_maps = {}
 let g:VM_maps["Find Under"] = '<C-m>'
 let g:VM_maps["Find Subword Under"] = '<C-m>'
 
-function! Install_plugins(path)
-  let l:plugin = system("$HOME/Cloud/Development/vim/fzf-plugin-source '".a:path."'")
-  let l:choice = confirm('Are you sure you want to install '.substitute(l:plugin, '\n\+$', '', '').'?', "&Yes\n&No", 1)
-  if l:choice == 1
-    call dein#direct_install(substitute(l:plugin, '\n\+$', '', ''))
-  else
-    echo 'nothing will install'
-  endif
-endfunction
-
-
-function! s:fzf_plugins()
-  " let command = "command cat plugins.txt | fzf -m | awk '{print $4\"/\"$1}' | sed -E 's/(.*)/dein#add(\"\1\")/g' | pbcopy"
-  let command = "command cat ".expand('$HOME/Cloud/Development/node/jsonFzf/plugins.txt')
-
-  call fzf#run({
-        \ 'source': command,
-        \ 'sink':   function('Install_plugins'),
-        \ 'options': '-m --exact',
-        \ 'window':  'call FloatingFZF()' })
-endfunction
-
-command! Plugins call s:fzf_plugins()
+nnoremap <leader>p :Plugins<cr>
 
 " let g:rainbow_active = 1
 " let g:rainbow_conf = {
