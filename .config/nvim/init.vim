@@ -8,6 +8,7 @@ endif
 set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 
+call dein#add('tpope/vim-scriptease')
 call dein#add('HerringtonDarkholme/yats.vim')
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/dein.vim')
@@ -79,6 +80,7 @@ call dein#add('vim-scripts/xterm-color-table.vim')
 call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('zoubin/vim-gotofile')
+call dein#add('micalexander/fzf-vim-plugins.vim')
 call dein#add('micalexander/fzf-vim-plugins.vim')
 if dein#check_install()
   call dein#install()
@@ -446,16 +448,15 @@ endif
 " Indent Guides ---------------------------------------------------------------{{{
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=NONE
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2c323c ctermbg=NONE
-" autocmd InsertEnter *.json setlocal concealcursor=
-" autocmd InsertLeave *.json setlocal concealcursor=inc
 let g:vim_json_syntax_conceal = 0
 let g:indentLine_setColors = 0
-let g:indentLine_fileTypeExclude = ['fzf', 'startify']
+let g:indentLine_fileTypeExclude = ['fzf', 'startify', 'markdown']
 let g:indentLine_char = '▏'
 let g:indentLine_conceallevel=1
 let g:indentLine_color_term = 255
 set conceallevel=0
 set concealcursor+=v
+autocmd BufEnter,BufLeave *.md,*.markdown set conceallevel=2
 
 
 " let g:indent_guides_enable_on_vim_startup = 1
