@@ -8,6 +8,9 @@ endif
 set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 
+if filereadable(expand("$HOME/.config/nvim/direct_install.vim"))
+  execute "so ".expand("$HOME/.config/nvim/direct_install.vim")
+endif
 call dein#add('tpope/vim-scriptease')
 call dein#add('HerringtonDarkholme/yats.vim')
 call dein#add('Shougo/context_filetype.vim')
