@@ -102,4 +102,4 @@ vcs_main() {
     echo "$(vcs_branch) $(vcs_status) $(vcs_commits) $(vcs_tag) $(vcs_stashes)"
 }
 
-echo "$(vcs_main)"
+echo "$(vcs_branch)"

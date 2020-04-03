@@ -119,6 +119,7 @@ tnoremap <leader><ESC> <C-\><C-n>
 " Buffers
 nnoremap <leader>ll <Esc>:bp<CR>
 nnoremap <leader>l <Esc>:bn<CR>
+nnoremap // <Esc>:nohl<CR>
 
 autocmd! FileType fzf tnoremap <buffer> <ESC> <c-c>
 
@@ -452,12 +453,13 @@ endif
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=none ctermbg=NONE
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#2c323c ctermbg=NONE
 let g:vim_json_syntax_conceal = 0
+let g:vim_markdown_syntax_conceal = 0
 let g:indentLine_setColors = 0
-let g:indentLine_fileTypeExclude = ['fzf', 'startify', 'markdown']
+let g:indentLine_fileTypeExclude = ['fzf', 'startify', 'markdown', 'vimwiki', 'calendar']
 let g:indentLine_char = '▏'
 let g:indentLine_conceallevel=1
 let g:indentLine_color_term = 255
-set conceallevel=0
+set conceallevel=2
 set concealcursor+=v
 autocmd BufEnter,BufLeave *.md,*.markdown set conceallevel=2
 
@@ -899,7 +901,7 @@ nmap <CR><CR> O<Esc>
 nmap <CR> o<Esc>
 
 imap jk <Esc>
-imap jjj <Esc>:w<CR>
+nnoremap jkj <Esc>:w<CR>
 
 autocmd BufWritePre * %s/\s\+$//e
 " Disable Arrow keys in Escape mode
@@ -1012,6 +1014,7 @@ let g:coc_global_extensions = [
       \ "coc-phpls",
       \ 'coc-prettier',
       \ 'coc-vimlsp',
+      \ "coc-eslint",
       \ "coc-html"
       \]
 " Remap for rename current word
@@ -1081,8 +1084,23 @@ let g:VM_maps["Find Subword Under"] = '<C-m>'
 
 nnoremap <leader>p :Plugins<cr>
 
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
+inoremap <leader>j <Esc>:m .+1<CR>==gi
+inoremap <leader>k <Esc>:m .-2<CR>==gi
+vnoremap <leader>j :m '>+1<CR>gv=gv
+vnoremap <leader>k :m '<-2<CR>gv=gv
+
 " let g:rainbow_active = 1
 " let g:rainbow_conf = {
 " \	'guifgs': ['magenta', 'darkorange3', 'seagreen3', 'firebrick'],
 " \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
 " \}
+let g:AutoPairsShortcutToggle = '<C-p>'
+let g:AutoPairsShortcutFastWrap = '<down>'
+let g:AutoPairsShortcutJump = '<right>'
+let g:AutoPairsShortcutBackInsert = '<left>'
+
+let g:vimwiki_global_ext = 0
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
