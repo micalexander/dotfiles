@@ -346,6 +346,7 @@ set vifminfo=dhistory,chistory,state,tui,shistory,
 " filter! /^.*\.(lo|o|d|class|py[co])$|.*~$/
 
 " ------------------------------------------------------------------------------
+command! FZFfind :set noquickview | :execute 'goto "'.system('rg --files --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow -g "*.{js,tsx,jsx,scss,css,less,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}" -g "!{.git,node_modules,vendor}/*" 2> /dev/null | fzf --reverse --height 30 2> /dev/tty ').'"%IU' | redraw
 
 " Sample mappings
 
@@ -396,7 +397,7 @@ nnoremap <f5> :copy<cr>
 nnoremap <f6> :move<cr>
 nnoremap <f7> :mkdir<space>
 nnoremap <f8> :delete<cr>
-
+nnoremap <Space>f :FZFfind<CR>
 " ------------------------------------------------------------------------------
 
 " Various customization examples
@@ -548,6 +549,6 @@ let $GIT="%5* %{system('sh ~/.config/vifm/git-status.sh')}"
 
 " SET STATUSLINE "
 """"""""""""""""""
-execute 'set' 'statusline="' .$VIFM .$GIT .'"'
+au DirEnter * execute 'set' 'statusline="'.$GIT.'"'
 
 
