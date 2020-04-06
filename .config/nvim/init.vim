@@ -84,7 +84,6 @@ call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('zoubin/vim-gotofile')
 call dein#add('micalexander/fzf-vim-plugins.vim')
-call dein#add('micalexander/fzf-vim-plugins.vim')
 if dein#check_install()
   call dein#install()
   let pluginsExist=1
@@ -105,6 +104,8 @@ let g:python3_host_prog = system("echo -n \"$(which python3)\"")
 let mapleader = "\<Space>"
 " Map localleader
 let maplocalleader = "\\"
+
+nnoremap <silent> <leader>vv :e $HOME/Cloud/Development/.config/nvim/init.vim<CR>
 
 noremap <silent> <leader>d :bp\|bd! #<CR>
 " noremap <silent> <leader>w :bd<CR>
@@ -463,13 +464,6 @@ set conceallevel=2
 set concealcursor+=v
 autocmd BufEnter,BufLeave *.md,*.markdown set conceallevel=2
 
-
-" let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_start_level = 1
-" let g:indent_guides_guide_size = 2
-" let g:indent_guides_auto_colors = 0
-" let g:indent_guides_exclude_filetypes = ['fzf', 'startify']
-
 " }}}
 
 " Deoplete ---------------------------------------------------------------{{{
@@ -588,6 +582,77 @@ endif
 
 let $FZF_DEFAULT_OPTS = '--reverse'
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+command! Plugins :call Plugins()
+nnoremap <silent> <leader>p :Plugins<CR>
+function! Plugin()
+
+  function! s:get_actions()
+    return ['Install', 'List', 'Uninstall']
+  endfunction
+
+  function! s:action(item)
+    if a:item == 'Install'
+      :Plugins
+      return 0
+    elseif a:item == 'List'
+      call PluginsList()
+    endif
+  endfunction
+
+  call fzf#run({
+        \ 'source': s:get_actions(),
+        \ 'sink': function('s:action'),
+        \ 'options': '--prompt \ \ Plugins:\ ',
+        \ 'window': 'call FloatingFZF()'
+        \ })
+
+endfunction
+
+command! PluginsList :call PluginsList()
+function! PluginsList()
+  function! s:help_file(item)
+    let l:doc_dir_path = '$HOME/.config/nvim/repos/github.com/'.a:item.'/doc'
+    let l:doc_file_path = system('find '.l:doc_dir_path.' -type f -name "*.txt" 2> /dev/null | head -1')
+    execute 'silent h' fnamemodify(l:doc_file_path, ':t')
+  endfunction
+
+  call fzf#run({
+        \ 'source': "find $HOME/.config/nvim/repos/github.com -type d -depth 2 | awk -F/ '{print $(NF-1)FS$NF}'",
+        \ 'sink':   function('s:help_file'),
+        \ 'options': '--prompt \ \ Installed\ Plugins:\ ',
+        \ 'window':    'call FloatingFZF()' })
+endfunction
+
+command! WikiList :call WikiList()
+nnoremap <silent> <leader>w :WikiList<CR>
+function! WikiList()
+
+  function! s:get_wikis()
+    let l:wikis = {}
+    for wiki in g:vimwiki_list
+      let l:wikis[fnamemodify(wiki['path'], ':t')] = wiki['path'].'/index'.wiki['ext']
+    endfor
+    return l:wikis
+  endfunction
+
+  function! s:get_wiki_names()
+    return keys(s:get_wikis())
+  endfunction
+
+  function! s:wiki_file(name)
+    let l:wikis = s:get_wikis()
+    execute 'silent e' l:wikis[a:name]
+  endfunction
+
+  call fzf#run({
+        \ 'source': s:get_wiki_names(),
+        \ 'sink': function('s:wiki_file'),
+        \ 'options': '--prompt \ \ Wikis:\ ',
+        \ 'window': 'call FloatingFZF()' })
+
+endfunction
+
 " Files + devicons
 function! Fzf_dev()
   let l:fzf_files_options = '--preview "bat --style=numbers --color always {2..-1} | head -'.&lines.'"'
@@ -956,7 +1021,6 @@ let g:codi#width = '50%'
 " }}}
 " }}}
 
-
 let g:tagbar_type_javascript = {
       \ 'ctagstype': 'javascript',
       \ 'kinds': [
@@ -1082,8 +1146,6 @@ let g:VM_maps = {}
 let g:VM_maps["Find Under"] = '<C-m>'
 let g:VM_maps["Find Subword Under"] = '<C-m>'
 
-nnoremap <leader>p :Plugins<cr>
-
 nnoremap <leader>j :m .+1<CR>==
 nnoremap <leader>k :m .-2<CR>==
 inoremap <leader>j <Esc>:m .+1<CR>==gi
@@ -1102,5 +1164,7 @@ let g:AutoPairsShortcutJump = '<right>'
 let g:AutoPairsShortcutBackInsert = '<left>'
 
 let g:vimwiki_global_ext = 0
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [
+                    \ {'path': '~/Cloud/Development/vimwiki/micalexander', 'syntax': 'markdown', 'ext': '.md'},
+                    \ {'path': '~/Cloud/Development/vimwiki/Tivity', 'syntax': 'markdown', 'ext': '.md'}
+                    \ ]
