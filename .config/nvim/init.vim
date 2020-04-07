@@ -8,9 +8,14 @@ endif
 set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
 call dein#begin(expand('~/.config/nvim'))
 
-if filereadable(expand("$HOME/.config/nvim/direct_install.vim"))
-  execute "so ".expand("$HOME/.config/nvim/direct_install.vim")
+function! dein#get_direct_plugins_path() abort
+  return expand("$HOME/Cloud/Development/.config/nvim/direct_install.vim")
+endfunction
+
+if filereadable(expand("$HOME/Cloud/Development/.config/nvim/direct_install.vim"))
+  execute "so ".expand("$HOME/Cloud/Development/.config/nvim/direct_install.vim")
 endif
+
 call dein#add('tpope/vim-scriptease')
 call dein#add('HerringtonDarkholme/yats.vim')
 call dein#add('Shougo/context_filetype.vim')
@@ -1162,6 +1167,13 @@ let g:AutoPairsShortcutToggle = '<C-p>'
 let g:AutoPairsShortcutFastWrap = '<down>'
 let g:AutoPairsShortcutJump = '<right>'
 let g:AutoPairsShortcutBackInsert = '<left>'
+
+command! Diary VimwikiDiaryIndex
+augroup vimwikigroup
+    autocmd!
+    " automatically update links on read diary
+    autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
+augroup end
 
 let g:vimwiki_global_ext = 0
 let g:vimwiki_list = [
