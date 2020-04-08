@@ -1,23 +1,33 @@
 
-if (!isdirectory(expand("$HOME/.config/nvim/repos/github.com/Shougo/dein.vim")))
-  call system(expand("mkdir -p $HOME/.config/nvim/repos/github.com"))
-  call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
+if filereadable(expand('$HOME/Cloud/Development/.config/nvim/variables.vim'))
+  execute "so ".expand('$HOME/Cloud/Development/.config/nvim/variables.vim')
 endif
 
-set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim/
-call dein#begin(expand('~/.config/nvim'))
+let s:plugin_manager = "Shougo/dein.vim"
+let s:plugin_github_path = g:nvim_home_path."/repos/github.com"
+let s:plugin_manager_path = s:plugin_github_path."/".s:plugin_manager
 
-function! dein#get_direct_plugins_path() abort
-  return expand("$HOME/Cloud/Development/.config/nvim/direct_install.vim")
+function! s:source_file(file)
+  if filereadable(expand(a:file))
+    execute "so ".expand(a:file)
+  endif
 endfunction
 
-if filereadable(expand("$HOME/Cloud/Development/.config/nvim/direct_install.vim"))
-  execute "so ".expand("$HOME/Cloud/Development/.config/nvim/direct_install.vim")
+if (!isdirectory(expand(s:plugin_manager_path)))
+  call system(expand("mkdir -p ".s:plugin_github_path))
+  call system(expand("git clone https://github.com/".s:plugin_manager." ".s:plugin_manager_path))
 endif
 
-if filereadable(expand("$HOME/Cloud/Development/.config/nvim/manual_install.vim"))
-  execute "so ".expand("$HOME/Cloud/Development/.config/nvim/manual_install.vim")
-endif
+let &runtimepath.=','.s:plugin_manager_path.'/'
+
+call dein#begin(expand(g:nvim_base_path))
+
+function! dein#get_direct_plugins_path() abort
+  return expand(g:nvim_cloud_path."/direct_install.vim")
+endfunction
+
+call s:source_file(g:nvim_cloud_path."/direct_install.vim")
+call s:source_file(g:nvim_cloud_path."/manual_install.vim")
 
 if dein#check_install()
   call dein#install()

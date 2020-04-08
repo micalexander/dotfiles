@@ -1,8 +1,17 @@
-" Setup dein  ---------------------------------------------------------------{{{
+" helpers
 
-if filereadable(expand("$HOME/Cloud/Development/.config/nvim/plugins.vim"))
-  execute "so ".expand("$HOME/Cloud/Development/.config/nvim/plugins.vim")
+if filereadable(expand('$HOME/Cloud/Development/.config/nvim/variables.vim'))
+  execute "so ".expand('$HOME/Cloud/Development/.config/nvim/variables.vim')
 endif
+
+function! s:source_file(file)
+  if filereadable(expand(a:file))
+    execute "so ".expand(a:file)
+  endif
+endfunction
+
+" Setup dein  ---------------------------------------------------------------{{{
+call s:source_file("$HOME/Cloud/Development/.config/nvim/plugins.vim")
 
 
 " }}}
@@ -371,7 +380,7 @@ endif
 let g:vim_json_syntax_conceal = 0
 let g:vim_markdown_syntax_conceal = 0
 let g:indentLine_setColors = 0
-let g:indentLine_fileTypeExclude = ['fzf', 'startify', 'markdown', 'vimwiki', 'calendar']
+let g:indentLine_fileTypeExclude = ['help', 'fzf', 'startify', 'markdown', 'vimwiki', 'calendar']
 let g:indentLine_char = '▏'
 let g:indentLine_conceallevel=1
 let g:indentLine_color_term = 255
@@ -498,7 +507,6 @@ endif
 let $FZF_DEFAULT_OPTS = '--reverse'
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
-command! Plugins :call Plugins()
 nnoremap <silent> <leader>p :Plugins<CR>
 function! Plugin()
 
@@ -522,21 +530,6 @@ function! Plugin()
         \ 'window': 'call FloatingFZF()'
         \ })
 
-endfunction
-
-command! PluginsList :call PluginsList()
-function! PluginsList()
-  function! s:help_file(item)
-    let l:doc_dir_path = '$HOME/.config/nvim/repos/github.com/'.a:item.'/doc'
-    let l:doc_file_path = system('find '.l:doc_dir_path.' -type f -name "*.txt" 2> /dev/null | head -1')
-    execute 'silent h' fnamemodify(l:doc_file_path, ':t')
-  endfunction
-
-  call fzf#run({
-        \ 'source': "find $HOME/.config/nvim/repos/github.com -type d -depth 2 | awk -F/ '{print $(NF-1)FS$NF}'",
-        \ 'sink':   function('s:help_file'),
-        \ 'options': '--prompt \ \ Installed\ Plugins:\ ',
-        \ 'window':    'call FloatingFZF()' })
 endfunction
 
 command! WikiList :call WikiList()

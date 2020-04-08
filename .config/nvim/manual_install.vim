@@ -70,5 +70,4 @@ call dein#add('vim-scripts/xterm-color-table.vim')
 call dein#add('vimlab/split-term.vim')
 call dein#add('xolox/vim-misc')
 call dein#add('zoubin/vim-gotofile')
-call dein#add('micalexander/fzf-vim-plugins.vim')
-
+call dein#add('micalexander/dein-fzf.vim')
