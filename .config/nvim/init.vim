@@ -106,7 +106,8 @@ nnoremap Q :qall<CR>
 " Save the file
 " nnoremap <Leader>w :write<CR>
 
-nnoremap cgn *cgn
+nnoremap cgn *Ncgn
+
 nnoremap <Leader>a :FindAll<Space>
 " nnoremap <Leader>a ggVG:normal.<CR>``
 " Like :wq, but write only when changes have been made.
@@ -507,7 +508,8 @@ endif
 let $FZF_DEFAULT_OPTS = '--reverse'
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
-nnoremap <silent> <leader>p :Plugins<CR>
+nnoremap <silent> <leader>p :DeinFZFInstall<CR>
+nnoremap <silent> <leader>pp :DeinFZFList<CR>
 function! Plugin()
 
   function! s:get_actions()
