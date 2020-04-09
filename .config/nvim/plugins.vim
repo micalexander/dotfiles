@@ -1,4 +1,3 @@
-
 if filereadable(expand('$HOME/Cloud/Development/.config/nvim/variables.vim'))
   execute "so ".expand('$HOME/Cloud/Development/.config/nvim/variables.vim')
 endif
@@ -20,7 +19,7 @@ endif
 
 let &runtimepath.=','.s:plugin_manager_path.'/'
 
-call dein#begin(expand(g:nvim_base_path))
+call dein#begin(expand(g:nvim_home_path))
 
 function! dein#get_direct_plugins_path() abort
   return expand(g:nvim_cloud_path."/direct_install.vim")
