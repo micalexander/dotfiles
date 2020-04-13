@@ -876,7 +876,6 @@ nmap <CR><CR> O<Esc>
 nmap <CR> o<Esc>
 
 imap jk <Esc>
-nnoremap jkj <Esc>:w<CR>
 
 autocmd BufWritePre * %s/\s\+$//e
 " Disable Arrow keys in Escape mode

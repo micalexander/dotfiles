@@ -27,13 +27,14 @@ fi
 
 alias     vim='dmux vim'
 alias    difm='vifm -c ":only" -c "set vicmd=dmux\ vim";bash -l'
-alias      bp='dmux vim ~/Cloud/Development/.bash_profile'
-alias     brc='dmux vim ~/Cloud/Development/.bashrc'
-alias     vrc='dmux vim ~/Cloud/Development/.config/nvim/init.vim'
-alias      tc='dmux vim ~/Cloud/Development/.tmux.conf'
+alias      bp='dmux ~/Cloud/Development/.bash_profile'
+alias     brc='dmux ~/Cloud/Development/.bashrc'
+alias     vrc='dmux ~/Cloud/Development/.config/nvim/init.vim'
+alias      tc='dmux ~/Cloud/Development/.tmux.conf'
 alias     cat='bat --theme="OneHalfDark" --style=numbers,changes --color always'
 alias     sbp='. ~/Cloud/Development/.bash_profile'
-alias     www='cd /Cloud/Development/www'
+alias     web='cd /Cloud/Development/projects/web'
+alias     cli='cd /Cloud/Development/projects/cli'
 alias     dot='git --git-dir=$HOME/Cloud/Development/dotfiles --work-tree=$HOME/Cloud/Development/'
 alias  cowsay='cowsay -f tux'
 
@@ -48,7 +49,7 @@ cdv () {
 }
 
 
-export CDPATH=.:$HOME/Cloud/Development/binaries:$HOME/Cloud/Development/www:$HOME/Cloud/Development:$HOME/Cloud
+export CDPATH=.:$HOME/Cloud/Development/projects/cli:$HOME/Cloud/Development/projects/web:$HOME/Cloud/Development:$HOME/Cloud
 
 export ANSIBLE_NOCOWS=1
 export EDITOR=vim
