@@ -124,13 +124,22 @@ export PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # Set FZF envs
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
-
-export FZF_DEFAULT_OPTS='
---height 40% --border --inline-info
---color=dark
---color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
---color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef
-'
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+ --ansi --height 40% --no-border --reverse --inline-info
+ --margin 1,1,1,1
+ --color=dark
+ --color=fg:#d0d0d0,bg:#282c34,hl:#5f87af
+ --color=fg+:#d0d0d0,bg+:#282c34,hl+:#5fd7ff,gutter:#282c34
+ --color=info:#5c6370,prompt:#d7005f,pointer:#af5fff
+ --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+ # --color=hl:#528bff,marker:#c678dd,hl+:#ffffff,pointer:#000000,gutter:000,fg+:#000000,bg+:#528bffgc
+# export FZF_DEFAULT_OPTS='
+# --height 40% --border --inline-info
+# --color=dark
+# --color=hl:#528bff,marker:#c678dd,hl+:#ffffff,pointer:#000000,gutter:000,fg+:#000000,bg+:#528bff
+# --color=fg:-1,bg:-1,hl:#c678dd,fg+:#ffffff,bg+:#4b5263,hl+:#d858fe
+# --color=info:#98c379,prompt:#61afef,pointer:#be5046,marker:#e5c07b,spinner:#61afef,header:#61afef
+# '
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 bind -x '"\C-v": vim $(fzf);'
 

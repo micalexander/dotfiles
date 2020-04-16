@@ -996,7 +996,8 @@ nmap <leader>rn <Plug>(coc-rename)
 " autocmd! FileType fzf
 " autocmd  FileType fzf set noshowmode noruler nonu
 autocmd BufWinEnter * call system("vifm --remote -c 'go ". escape(expand("%:p"), ' '). "' -c 'redraw'")
-autocmd BufWinEnter * call system("tmux set -g status-right \"#[fg=#3b4048,bg=#2c323c,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#3b4048]  #[fg=#98c379,bg=#3b4048,nobold,nounderscore,noitalics]#[fg=#3b4048,bg=#98c379] ".expand("%:p")." #[fg=#3b4048,bg=#98c379,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#3b4048]\"")
+autocmd BufEnter * call system("tmux refresh-client")
+" autocmd BufWinEnter * call system("tmux set -g status-right \"#[fg=#3b4048,bg=#2c323c,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#3b4048]  #[fg=#98c379,bg=#3b4048,nobold,nounderscore,noitalics]#[fg=#3b4048,bg=#98c379] ".expand("%:p")." #[fg=#3b4048,bg=#98c379,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#3b4048]\"")
 
 set path=.,src
 set suffixesadd+=.js,.jsx
