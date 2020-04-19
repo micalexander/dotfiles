@@ -26,11 +26,11 @@ else
 fi
 
 alias     vim='dmux vim'
-alias    difm='vifm -c ":only" -c "set vicmd=dmux\ vim";bash -l'
-alias      bp='dmux ~/Cloud/Development/.bash_profile'
-alias     brc='dmux ~/Cloud/Development/.bashrc'
-alias     vrc='dmux ~/Cloud/Development/.config/nvim/init.vim'
-alias      tc='dmux ~/Cloud/Development/.tmux.conf'
+alias    vifm='dmux vifm'
+alias      bp='vim ~/Cloud/Development/.bash_profile'
+alias     brc='vim ~/Cloud/Development/.bashrc'
+alias     vrc='vim ~/Cloud/Development/.config/nvim/init.vim'
+alias      tc='vim ~/Cloud/Development/.tmux.conf'
 alias     cat='bat --theme="OneHalfDark" --style=numbers,changes --color always'
 alias     sbp='. ~/Cloud/Development/.bash_profile'
 alias     web='cd /Cloud/Development/projects/web'
@@ -54,7 +54,10 @@ export CDPATH=.:$HOME/Cloud/Development/projects/cli:$HOME/Cloud/Development/pro
 export ANSIBLE_NOCOWS=1
 export EDITOR=vim
 export VISUAL=vim
-
+export DMUX_PROJECTS=$HOME/Cloud/Development/projects
+export DMUX_LAYOUT='32f3,191x73,0,0{35x73,0,0,0,155x73,36,0[155x54,36,0,1,155x18,36,55,2]}'
+export LDFLAGS="-L/usr/local/opt/llvm/lib -L/usr/local/opt/curl/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include -I/usr/local/opt/curl/include"
 
 function is_interactive_shell() {
   # https://www.gnu.org/software/bash/manual/html_node/Is-this-Shell-Interactive_003f.html

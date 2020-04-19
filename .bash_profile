@@ -32,6 +32,8 @@ fi
 
 PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 # add development bin directory
+add_path /usr/local/opt/llvm/bin
+add_path /usr/local/opt/curl/bin
 add_path $HOME/.local/bin
 add_path $home/.local/bin
 add_path $HOME/Library/Python/2.7/bin

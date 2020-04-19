@@ -995,7 +995,11 @@ nmap <leader>rn <Plug>(coc-rename)
 " Terminal buffer options for fzf
 " autocmd! FileType fzf
 " autocmd  FileType fzf set noshowmode noruler nonu
-autocmd BufWinEnter * call system("vifm --remote -c 'go ". escape(expand("%:p"), ' '). "' -c 'redraw'")
+if exists('$TMUX')
+  let s:dmux_session=substitute(system('tmux display-message -p "#S"'), '\_s*$', '', '')
+  let s:dmux_window=substitute(system('tmux display-message -p "#I"'), '\_s*$', '', '')
+  autocmd BufWinEnter * call system("vifm --server-name tmux-".s:dmux_session."-".s:dmux_window."-1-vifm --remote -c 'go ". escape(expand("%:p"), ' '). "' -c 'redraw'")
+endif
 autocmd BufEnter * call system("tmux refresh-client")
 " autocmd BufWinEnter * call system("tmux set -g status-right \"#[fg=#3b4048,bg=#2c323c,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#3b4048]  #[fg=#98c379,bg=#3b4048,nobold,nounderscore,noitalics]#[fg=#3b4048,bg=#98c379] ".expand("%:p")." #[fg=#3b4048,bg=#98c379,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#3b4048]\"")
 
