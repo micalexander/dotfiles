@@ -252,7 +252,7 @@ set showbreak=>\ \ \
 " Show command typed
 set showcmd
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Terminal
 " set shell=/bin/bash\ -l
