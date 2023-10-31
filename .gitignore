@@ -21,3 +21,4 @@
 !.tmux-completion.sh
 !.config/nvim/init.vim
 !.config/pip/pip.conf
+!.aws/config
