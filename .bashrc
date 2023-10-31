@@ -141,9 +141,10 @@ declare -A TRUELINE_SYMBOLS=(
 )
 
 declare -a TRUELINE_SEGMENTS=(
-  'user,grey,special_grey'
-  'working_dir,mono,cursor_grey'
-  'git,grey,special_grey'
+  'user,grey,special_grey,normal'
+  'working_dir,mono,black,normal'
+  'git,grey,special_grey,normal'
+  'bg_jobs,grey,special_grey,normal'
 )
 
 
