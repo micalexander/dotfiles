@@ -1,17 +1,19 @@
 " helpers
 
-if filereadable(expand('$HOME/Cloud/Development/.config/nvim/variables.vim'))
-  execute "so ".expand('$HOME/Cloud/Development/.config/nvim/variables.vim')
-endif
-
 function! s:source_file(file)
   if filereadable(expand(a:file))
     execute "so ".expand(a:file)
   endif
 endfunction
 
+if filereadable(expand('$HOME/.config/nvim/variables.vim'))
+  execute "so ".expand('$HOME/.config/nvim/variables.vim')
+endif
+
 " Setup dein  ---------------------------------------------------------------{{{
-call s:source_file("$HOME/Cloud/Development/.config/nvim/plugins.vim")
+if filereadable(expand('$HOME/.config/nvim/plugins.vim'))
+  execute "so ".expand('$HOME/.config/nvim/plugins.vim')
+endif
 
 
 " }}}
@@ -29,7 +31,7 @@ let mapleader = "\<Space>"
 " Map localleader
 let maplocalleader = "\\"
 
-nnoremap <silent> <leader>vv :e $HOME/Cloud/Development/.config/nvim/init.vim<CR>
+nnoremap <silent> <leader>vv :e $HOME/.config/nvim/init.vim<CR>
 
 noremap <silent> <leader>d :bp\|bd! #<CR>
 " noremap <silent> <leader>w :bd<CR>
@@ -96,7 +98,8 @@ nnoremap <localleader>p :echo expand('%')<CR>
 " off to Clipper.
 nnoremap <Leader>cp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
 
-nnoremap <Leader>. :%s///g<left><left>
+" nnoremap <Leader>. :%s///g<left><left>
+nnoremap <leader>. <Esc>:Files<C-R>=expand("%:p:h") <CR><CR>
 
 " Quit vim
 nnoremap Q :qall<CR>
@@ -136,6 +139,21 @@ nnoremap <localleader>k :Mkdir
 " Editor Preferences ---------------------------------------------------------------{{{
 " let g:user_emmet_leader_key='<leader>,'
 let g:user_emmet_expandabbr_key='<leader>,'
+
+let g:clipboard = {
+  \   'name': 'WslClipboard',
+  \   'copy': {
+  \      '+': 'clip.exe',
+  \      '*': 'clip.exe',
+  \    },
+  \   'paste': {
+  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  \   },
+  \   'cache_enabled': 0,
+  \ }
+
+set clipboard=unnamedplus
 
 " Persistant Undo
 " Let's save undo info!
@@ -252,8 +270,6 @@ set showbreak=>\ \ \
 " Show command typed
 set showcmd
 
-set clipboard=unnamedplus
-
 " Terminal
 " set shell=/bin/bash\ -l
 
@@ -363,6 +379,7 @@ let g:airline_symbols.linenr = ''
 
 
 " Gutentags ---------------------------------------------------------------{{{
+"
 " Don't load me if there's no ctags file
 let g:gutentags_ctags_exclude = [
   \ 'node_modules/*'
@@ -436,7 +453,7 @@ let g:phpcd_auto_restart = 1
 " }}}
 
 " Supertab ---------------------------------------------------------------{{{
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+" let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 " let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 "
 " let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
@@ -960,17 +977,55 @@ let g:tagbar_type_javascript = {
       \ ]}
 
 let g:lightline#bufferline#enable_devicons = 1
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
+" Use <c-space> to trigger completion
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
@@ -1060,12 +1115,12 @@ let g:VM_maps = {}
 let g:VM_maps["Find Under"] = '<C-m>'
 let g:VM_maps["Find Subword Under"] = '<C-m>'
 
-nnoremap <leader>j :m .+1<CR>==
-nnoremap <leader>k :m .-2<CR>==
-inoremap <leader>j <Esc>:m .+1<CR>==gi
-inoremap <leader>k <Esc>:m .-2<CR>==gi
-vnoremap <leader>j :m '>+1<CR>gv=gv
-vnoremap <leader>k :m '<-2<CR>gv=gv
+" nnoremap <leader>j :m .+1<CR>==
+" nnoremap <leader>k :m .-2<CR>==
+" inoremap <leader>j <Esc>:m .+1<CR>==gi
+" inoremap <leader>k <Esc>:m .-2<CR>==gi
+" vnoremap <leader>j :m '>+1<CR>gv=gv
+" vnoremap <leader>k :m '<-2<CR>gv=gv
 
 " let g:rainbow_active = 1
 " let g:rainbow_conf = {
@@ -1086,6 +1141,6 @@ augroup end
 
 let g:vimwiki_global_ext = 0
 let g:vimwiki_list = [
-                    \ {'path': '~/Cloud/Development/vimwiki/micalexander', 'syntax': 'markdown', 'ext': '.md'},
-                    \ {'path': '~/Cloud/Development/vimwiki/Tivity', 'syntax': 'markdown', 'ext': '.md'}
+                    \ {'path': '~/vimwiki/micalexander', 'syntax': 'markdown', 'ext': '.md'},
+                    \ {'path': '~/vimwiki/Tivity', 'syntax': 'markdown', 'ext': '.md'}
                     \ ]
