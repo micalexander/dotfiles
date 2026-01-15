@@ -18,10 +18,7 @@ if (!isdirectory(expand(s:plugin_manager_path)))
 endif
 
 let &runtimepath.=','.s:plugin_manager_path.'/'
-if !empty($NVIM_CONTAINER)
-  let g:nvim_home_path = '/nvim_container_cache'
-  let g:coc_data_home = $HOME . '/nvim_container_coc'
-endif
+
 call dein#begin(expand(g:nvim_home_path))
 
 function! dein#get_direct_plugins_path() abort
