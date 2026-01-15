@@ -20,13 +20,15 @@
     "s": "action:split",
     "v": "action:vsplit"
   },
-  "tsserver.enableJavascript": true,
+  "javascript.validate.enable": true,
   "typescript.suggest.autoImports": true,
   "javascript.suggest.autoImports": true,
   "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "typescript.preferences.quoteStyle": "double",
-  "typescript.referencesCodeLens.enable": false,
-  "coc.preferences.formatOnSaveFiletypes": ["javascript", "json", "typescript","markdown", "css"]
+  "typescript.referencesCodeLens.enabled": false,
+  "coc.preferences.formatOnSave": true,
+  "[http]": {
+    "coc.preferences.formatOnSave": true
+  }
 }
-

@@ -1,5 +1,5 @@
 " helpers
-
+let g:loaded_indent_json = 1
 function! s:source_file(file)
   if filereadable(expand(a:file))
     execute "so ".expand(a:file)
@@ -55,10 +55,10 @@ autocmd! FileType fzf tnoremap <buffer> <ESC> <c-c>
 " nnoremap <leader># <Esc>:Files <C-R>=expand("%:p:h") <CR>
 
 " Edit a file from current location
-" nnoremap <leader>e <Esc>:e <C-R>=expand("%:p:h") <CR>
+nnoremap <leader>v <Esc>:e <C-R>=expand("%:p:h")<CR><CR>
 
 " Edit a file from current location
-nnoremap <leader>v :vs <C-R>=expand("%:p:h") <CR>
+" nnoremap <leader>v :vs <C-R>=expand("%:p:h") <CR>
 
 " :FZF show all git files
 nnoremap <leader>g :GFiles<CR>
@@ -87,44 +87,68 @@ nnoremap <leader>f :FilesWithIcon <CR>
 " :FZF text search
 nnoremap <leader>t :TextSearch <CR>
 
-" <Leader><Leader> -- Open last buffer.
-nnoremap <Leader><Leader> <C-^>
+" <leader><leader> -- Open last buffer.
+" nnoremap <leader><leader> <C-^>
+function! SwitchBasedOnBuffer()
+  let altbuf = bufnr("#")
 
-" <Leader>p -- Show the path of the current file (mnemonic: path; useful when
+  " Check if no alternate buffer or alternate buffer is NERD_tree buffer
+  if altbuf == -1 || empty(bufname(altbuf)) || bufname(altbuf) =~? 'NERD_tree'
+    " Fallback: switch to last buffer in buffer list
+    let lastbuf = 0
+    for buf in range(1, bufnr('$'))
+      if buflisted(buf) && buf != bufnr('%')
+        let lastbuf = buf
+      endif
+    endfor
+    if lastbuf != 0
+      execute 'buffer' lastbuf
+    endif
+    return
+  endif
+
+  " Normal switching to alternate buffer otherwise
+  echom "Switching to alternate buffer normally."
+  execute "normal! \<C-^>"
+endfunction
+
+nnoremap <silent> <leader><leader> :call SwitchBasedOnBuffer()<CR>
+
+" <leader>p -- Show the path of the current file (mnemonic: path; useful when
 " you have a lot of splits and the status line gets truncated).
 nnoremap <localleader>p :echo expand('%')<CR>
 
-" <Leader>pp -- Like <Leader>p, but additionally yanks the filename and sends it
+" <leader>pp -- Like <leader>p, but additionally yanks the filename and sends it
 " off to Clipper.
-nnoremap <Leader>cp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
+nnoremap <leader>cp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
 
-" nnoremap <Leader>. :%s///g<left><left>
+" nnoremap <leader>. :%s///g<left><left>
 nnoremap <leader>. <Esc>:Files<C-R>=expand("%:p:h") <CR><CR>
 
 " Quit vim
 nnoremap Q :qall<CR>
-" <Leader>r -- Cycle through relativenumber + number, number (only), and no
+" <leader>r -- Cycle through relativenumber + number, number (only), and no
 " numbering (mnemonic: relative).
-" nnoremap <silent> <Leader>r :call mappings#cycle_numbering()<CR>
+" nnoremap <silent> <leader>r :call mappings#cycle_numbering()<CR>
 " Save the file
-" nnoremap <Leader>w :write<CR>
+" nnoremap <leader>w :write<CR>
 
 nnoremap cgn *Ncgn
 
-nnoremap <Leader>a :FindAll<Space>
-" nnoremap <Leader>a ggVG:normal.<CR>``
+nnoremap <leader>a :FindAll<Space>
+" nnoremap <leader>a ggVG:normal.<CR>``
 " Like :wq, but write only when changes have been made.
-nnoremap <Leader>x :xit<CR>
-" <Leader>zz -- Zap trailing whitespace in the current buffer.
+nnoremap <leader>x :xit<CR>
+" <leader>zz -- Zap trailing whitespace in the current buffer.
 "
 "        As this one is somewhat destructive and relatively close to the
 "        oft-used <leader>a mapping, make this one a double key-stroke.
-nnoremap <silent> <Leader>zz :call mappings#zap()<CR>
-" <LocalLeader>c -- Fix (most) syntax highlighting problems in current buffer
+nnoremap <silent> <leader>zz :call mappings#zap()<CR>
+" <Localleader>c -- Fix (most) syntax highlighting problems in current buffer
 " (mnemonic: coloring).
-nnoremap <silent> <LocalLeader>c :syntax sync fromstart<CR>
-" <LocalLeader>e -- Edit file, starting in same directory as current file.
-nnoremap <LocalLeader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap <silent> <Localleader>c :syntax sync fromstart<CR>
+" <Localleader>e -- Edit file, starting in same directory as current file.
+nnoremap <Localleader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
 " Rename a buffer and the file on disk simultaneously.
 nnoremap <localleader>m :Move
 " Like :Move, but relative to the current file's containing directory.
@@ -132,7 +156,7 @@ nnoremap <localleader>r :Rename
 " Delete a buffer and the file on disk simultaneously.
 nnoremap <localleader>d :Delete
 " Create a directory, defaulting to the parent of the current file.
-nnoremap <localleader>k :Mkdir
+nnoremap <localleader>mk :Mkdir
 " nnoremap <localleader>t :call deoplete#toggle() <CR>
 "}}}
 
@@ -140,18 +164,18 @@ nnoremap <localleader>k :Mkdir
 " let g:user_emmet_leader_key='<leader>,'
 let g:user_emmet_expandabbr_key='<leader>,'
 
-let g:clipboard = {
-  \   'name': 'WslClipboard',
-  \   'copy': {
-  \      '+': 'clip.exe',
-  \      '*': 'clip.exe',
-  \    },
-  \   'paste': {
-  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \   },
-  \   'cache_enabled': 0,
-  \ }
+" let g:clipboard = {
+"   \   'name': 'WslClipboard',
+"   \   'copy': {
+"   \      '+': 'clip.exe',
+"   \      '*': 'clip.exe',
+"   \    },
+"   \   'paste': {
+"   \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+"   \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+"   \   },
+"   \   'cache_enabled': 0,
+"   \ }
 
 set clipboard=unnamedplus
 
@@ -293,6 +317,9 @@ let g:netrw_banner=0
 
 " set foldmethod=marker
 autocmd FileType vim setlocal foldmethod=marker
+" Disable folding in JSON files
+autocmd FileType json setlocal foldmethod=manual foldlevel=99
+let g:vim_markdown_folding_disabled = 1
 
 set cursorline
 
@@ -301,11 +328,11 @@ au BufWinEnter *.c silent! loadview
 
 let g:wordmotion_spaces = '_-.'
 
-xnoremap <Leader>iw iw
-xnoremap <Leader>aw aw
-onoremap <Leader>iw iw
-onoremap <Leader>aw aw
-" let g:wordmotion_prefix = '<Leader>'
+xnoremap <leader>iw iw
+xnoremap <leader>aw aw
+onoremap <leader>iw iw
+onoremap <leader>aw aw
+" let g:wordmotion_prefix = '<leader>'
 " let g:wordmotion_mappings = {
 " \ 'w' : '<M-w>',
 " \ 'b' : '<M-b>',
@@ -321,14 +348,16 @@ onoremap <Leader>aw aw
 
 " Vifm  --------------------------------------------------------------- {{{
 let g:vifm_replace_netrw = 1
+
 " }}}
 
 " Vim One (colorscheme) --------------------------------------------------------------- {{{
 let g:one_allow_italics = 1
 
 syntax enable
-colorscheme one
-set background=dark
+" Only call colorscheme if plugin loaded
+if !empty(globpath(&rtp, 'colors/one.vim'))
+    colorscheme one
 
 " call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
 " call one#highlight('Cursor', '99c37e', '282c33', 'none')
@@ -340,6 +369,8 @@ autocmd VimEnter,Colorscheme * :call one#highlight('IncSearch', '282c33', '62afe
 autocmd VimEnter,Colorscheme * :call one#highlight('CursorLineNr', '282c33', '99c37e', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('Cursor', '99c37e', '282c33', 'none')
 autocmd VimEnter,Colorscheme * :call one#highlight('Normal', 'none', 'none', 'none')
+endif
+set background=dark
 " }}}
 
 " Airline ---------------------------------------------------------------{{{
@@ -398,7 +429,7 @@ endif
 let g:vim_json_syntax_conceal = 0
 let g:vim_markdown_syntax_conceal = 0
 let g:indentLine_setColors = 0
-let g:indentLine_fileTypeExclude = ['help', 'fzf', 'startify', 'markdown', 'vimwiki', 'calendar']
+let g:indentLine_fileTypeExclude = ['http', 'help', 'fzf', 'startify', 'markdown', 'vimwiki', 'calendar']
 let g:indentLine_char = '▏'
 let g:indentLine_conceallevel=1
 let g:indentLine_color_term = 255
@@ -1141,6 +1172,86 @@ augroup end
 
 let g:vimwiki_global_ext = 0
 let g:vimwiki_list = [
-                    \ {'path': '~/vimwiki/micalexander', 'syntax': 'markdown', 'ext': '.md'},
-                    \ {'path': '~/vimwiki/Tivity', 'syntax': 'markdown', 'ext': '.md'}
+                    \ {'path': '~/vimwiki/wiz', 'syntax': 'markdown', 'ext': '.md'},
                     \ ]
+augroup KulalaSetup
+  autocmd!
+autocmd FileType http,rest lua require("kulala").setup({
+      \ global_keymaps = true,
+      \ global_keymaps_prefix = "<localleader>x",
+      \ kulala_keymaps_prefix = "",
+      \ })
+
+  autocmd FileType http,rest nnoremap <buffer> <localleader>xs :lua require("kulala").run()<CR>
+  autocmd FileType http,rest nnoremap <buffer> <localleader>xa :lua require("kulala").run_all()<CR>
+  autocmd FileType http,rest nnoremap <buffer> <localleader>xb :lua require("kulala").scratchpad()<CR>
+augroup END
+
+autocmd BufRead,BufNewFile *.http set filetype=http
+
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = { enable = true },
+  -- Add languages you want to ensure installed, for example:
+  ensure_installed = { "lua", "javascript", "json", "http" },
+}
+EOF
+lua << EOF
+local ok, lspconfig = pcall(require, 'lspconfig')
+if ok then
+  lspconfig.kulala_ls.setup({
+    filetypes = { "http" }
+  })
+end
+
+EOF
+
+augroup json_kulala_ui_fix
+  autocmd!
+  autocmd BufReadPost,BufWinEnter,FileType json.kulala_ui
+    \ setlocal foldmethod=manual foldlevel=99 concealcursor= conceallevel=0
+augroup END
+autocmd BufWinEnter *.kulala_ui ++nested setlocal foldmethod=manual foldlevel=99 conceallevel=0 concealcursor=
+
+lua << EOF
+-- Create augroup once
+local kulala_group = vim.api.nvim_create_augroup("KulalaNoFold", { clear = true })
+
+-- Trigger on buffer creation and window display
+vim.api.nvim_create_autocmd({ "BufNew", "BufWinEnter", "BufEnter" }, {
+  group = kulala_group,
+  callback = function(args)
+    local bufname = vim.api.nvim_buf_get_name(args.buf)
+    local filetype = vim.bo[args.buf].filetype or ""
+
+    -- Match virtual buffer or filetype
+    if string.match(bufname, "^kulala://") or string.match(filetype, "kulala") then
+      -- Set options directly on the buffer
+      vim.opt_local.foldmethod = "manual"
+      vim.opt_local.foldlevel = 99
+      vim.opt_local.conceallevel = 0
+      vim.opt_local.concealcursor = ""
+    end
+  end,
+})
+EOF
+function! DiffClip()
+  let ft=&ft
+  vertical new
+  setlocal bufhidden=wipe buftype=nofile nobuflisted noswapfile
+  setlocal foldmethod=manual foldlevel=99999
+  put +
+  silent 0d_
+  diffthis
+  setlocal nomodifiable
+  execute "set ft=" . ft
+  wincmd p
+  setlocal foldlevel=99999
+  diffthis
+  wincmd p
+  normal! zr
+  wincmd p
+  normal! zr
+endfunction
+
+command! DiffClip call DiffClip()

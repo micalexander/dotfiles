@@ -1,5 +1,5 @@
-if filereadable(expand('$HOME/Cloud/Development/.config/nvim/variables.vim'))
-  execute "so ".expand('$HOME/Cloud/Development/.config/nvim/variables.vim')
+if filereadable(expand('$HOME/.config/nvim/variables.vim'))
+  execute "so ".expand('$HOME/.config/nvim/variables.vim')
 endif
 
 let s:plugin_manager = "Shougo/dein.vim"
@@ -18,7 +18,10 @@ if (!isdirectory(expand(s:plugin_manager_path)))
 endif
 
 let &runtimepath.=','.s:plugin_manager_path.'/'
-
+if !empty($NVIM_CONTAINER)
+  let g:nvim_home_path = '/nvim_container_cache'
+  let g:coc_data_home = $HOME . '/nvim_container_coc'
+endif
 call dein#begin(expand(g:nvim_home_path))
 
 function! dein#get_direct_plugins_path() abort
