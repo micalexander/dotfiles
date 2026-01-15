@@ -19,6 +19,7 @@
 !.globalgitignore
 !.git-completion.sh
 !.tmux-completion.sh
+!.config/i3/config
 !.config/nvim/init.vim
 !.config/pip/pip.conf
 !.aws/config

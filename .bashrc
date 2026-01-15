@@ -2,14 +2,15 @@
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+HISTCONTROL=ignoreudups:erasedups
 
+PROMPT_COMMAND="history -a; history -n"
 # append to the history file, don't overwrite it
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTFILESIZE=50000
+HISTSIZE=10000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -27,16 +28,17 @@ fi
 
 alias     vim='dmux vim'
 alias    vifm='dmux vifm'
+alias      fd='fdfind'
 alias      bp='vim ~/Cloud/Development/.bash_profile'
 alias     brc='vim ~/Cloud/Development/.bashrc'
 alias     vrc='vim ~/Cloud/Development/.config/nvim/init.vim'
 alias      tc='vim ~/Cloud/Development/.tmux.conf'
-alias     cat='bat --theme="OneHalfDark" --style=numbers,changes --color always'
 alias     sbp='. ~/Cloud/Development/.bash_profile'
 alias     web='cd /Cloud/Development/projects/web'
 alias     cli='cd /Cloud/Development/projects/cli'
 alias     dot='git --git-dir=$HOME/Cloud/Development/dotfiles --work-tree=$HOME/Cloud/Development/'
 alias  cowsay='cowsay -f tux'
+alias    ctop='docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest'
 
 
 vcd () {
@@ -58,6 +60,7 @@ export DMUX_PROJECTS=$HOME/Cloud/Development/projects
 export DMUX_LAYOUT='32f3,191x73,0,0{35x73,0,0,0,155x73,36,0[155x54,36,0,1,155x18,36,55,2]}'
 export LDFLAGS="-L/usr/local/opt/llvm/lib -L/usr/local/opt/curl/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include -I/usr/local/opt/curl/include"
+export VIMRUNTIME=/opt/nvim-linux-x86_64/share/nvim/runtime
 
 function is_interactive_shell() {
   # https://www.gnu.org/software/bash/manual/html_node/Is-this-Shell-Interactive_003f.html
@@ -147,4 +150,12 @@ declare -a TRUELINE_SEGMENTS=(
   'bg_jobs,grey,special_grey,normal'
 )
 
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

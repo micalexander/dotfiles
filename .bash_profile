@@ -2,7 +2,7 @@
 unamestr=$(uname)
 
 # determine where the guest home is located
-guest_home=$(test -d $HOME/Cloud && echo $HOME/Cloud/Development || echo ${HOME}/Development )
+guest_home=$(test -d $HOME/Cloud && echo $HOME/Cloud/Development || echo ${HOME} )
 
 # check if we are in the host or in a container
 is_host=$(if [ "$unamestr" == "Darwin" ] || [ $(cat /proc/1/cgroup | grep -cim1 'docker\|lxc') -eq 0 ]; then echo true; else echo false; fi)
@@ -34,10 +34,13 @@ PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 # add development bin directory
 add_path /usr/local/opt/llvm/bin
 add_path /usr/local/opt/curl/bin
+add_path /opt/nvim-linux-x86_64/bin
 add_path $HOME/.local/bin
 add_path $home/.local/bin
 add_path $HOME/Library/Python/2.7/bin
 add_path $HOME/Library/Python/3.7/bin
+add_path $HOME/.cargo/bin
+add_path $home/.cargo/bin
 
 # find and source bash completion if possible
 if [ "$unamestr" == "Darwin" ] && [ ! -z $(which brew) ]; then
@@ -214,4 +217,5 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
 
