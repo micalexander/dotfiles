@@ -1190,9 +1190,8 @@ augroup END
 autocmd BufRead,BufNewFile *.http set filetype=http
 
 lua << EOF
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   highlight = { enable = true },
-  -- Add languages you want to ensure installed, for example:
   ensure_installed = { "lua", "javascript", "json", "http" },
 }
 EOF
