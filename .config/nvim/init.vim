@@ -1196,13 +1196,10 @@ require('nvim-treesitter.configs').setup {
 }
 EOF
 lua << EOF
-local ok, lspconfig = pcall(require, 'lspconfig')
-if ok then
-  lspconfig.kulala_ls.setup({
-    filetypes = { "http" }
-  })
-end
-
+vim.lsp.config('kulala_ls', {
+  filetypes = { "http" }
+})
+vim.lsp.enable('kulala_ls')
 EOF
 
 augroup json_kulala_ui_fix
