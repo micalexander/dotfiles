@@ -1190,9 +1190,15 @@ augroup END
 autocmd BufRead,BufNewFile *.http set filetype=http
 
 lua << EOF
-require('nvim-treesitter.configs').setup {
-  highlight = { enable = true },
+local status_ok, configs = pcall(require, 'nvim-treesitter.configs')
+if not status_ok then
+  return
+end
+
+configs.setup {
   ensure_installed = { "lua", "javascript", "json", "http" },
+  highlight = { enable = true },
+  indent = { enable = true },
 }
 EOF
 lua << EOF
@@ -1200,6 +1206,7 @@ vim.lsp.config('kulala_ls', {
   filetypes = { "http" }
 })
 vim.lsp.enable('kulala_ls')
+
 EOF
 
 augroup json_kulala_ui_fix
